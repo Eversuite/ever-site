@@ -10,7 +10,7 @@
     {#each data.heroData as hero (hero.id)}
     <Card padding='sm'>
         <div class="flex flex-col items-center pb-4">
-            <Avatar rounded size="xl" src="https://via.placeholder.com/150" />
+            <Avatar rounded size="xl" src="./assets/character-portrait/{hero.id}-portrait.png" />
             <h5>{ hero.name }</h5>
         </div>
     </Card>
