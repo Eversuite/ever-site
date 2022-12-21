@@ -5,8 +5,8 @@
 <Navbar let:toggle let:hidden>
     <NavBrand href="/">
         <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                class="mr-3 h-6 sm:h-9"
+                src="/ECH_icon.webp"
+                class="mr-3 h-6 sm:h-9 rounded-3xl"
                 alt="Flowbite Logo"
         />
         <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
