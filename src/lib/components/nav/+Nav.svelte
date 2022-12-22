@@ -5,7 +5,7 @@
 <Navbar let:toggle let:hidden>
     <NavBrand href="/">
         <img
-                src="/ECH_icon.webp"
+                src="./ECH_icon.webp"
                 class="mr-3 h-6 sm:h-9 rounded-3xl"
                 alt="Flowbite Logo"
         />
