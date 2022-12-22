@@ -1,5 +1,5 @@
 <script lang="ts">
-    import HeroCard from "../../../components/hero/HeroCard.svelte";
+    import HeroCard from "$lib/components/hero/HeroCard.svelte";
 
     export let data;
 </script>

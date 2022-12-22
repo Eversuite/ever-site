@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {PageData} from "./$types";
-    import HeroCard from "../../components/hero/HeroCard.svelte";
+    import HeroCard from "$lib/components/hero/HeroCard.svelte";
 
     export let data: PageData;
     
