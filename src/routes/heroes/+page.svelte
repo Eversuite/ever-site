@@ -1,15 +1,13 @@
-<script>
-    import { Avatar, Card } from "flowbite-svelte";
+<script lang="ts">
+    import type {PageData} from "./$types";
+    import HeroCard from "$lib/components/hero/HeroCard.svelte";
+
+    export let data: PageData;
+    
 </script>
 
-<div class="flex place-items-center">
-    <Card padding='sm'>
-        <div class="flex flex-col items-center pb-4">
-            <Avatar rounded size="xl" src="https://via.placeholder.com/150" />
-            <h5>Test Hero</h5>
-
-        </div>
-
-
-    </Card>
+<div class="flex flex-wrap justify-center gap-3">
+    {#each data.heroData as hero (hero.id)}
+        <HeroCard {hero}/>
+    {/each}
 </div>
