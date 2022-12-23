@@ -1,6 +1,7 @@
 import type {PageLoad} from "./$types";
 import {getSupabase} from "@supabase/auth-helpers-sveltekit";
 import {error} from "@sveltejs/kit";
+import type {Hero} from "$lib/components/hero/HeroTypes";
 
 
 export const load: PageLoad = async (event) => {
@@ -17,6 +18,6 @@ export const load: PageLoad = async (event) => {
     if (hero === undefined || hero === null) {
         throw error(404, `Could not find a hero for id [${event.params.heroId}]`)
     }
-    return {hero};
+    return {hero: hero as Hero};
 
 };
