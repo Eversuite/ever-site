@@ -19,6 +19,6 @@
 </script>
 
 <Nav />
-<div class="container mx-auto">
+<div class="container mx-auto w-11/12">
 	<slot />
 </div>
