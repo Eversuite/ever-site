@@ -1,7 +1,16 @@
 <script lang="ts">
-    import HeroCard from "$lib/components/hero/HeroCard.svelte";
+	import type { PageData } from './$types';
+	import { Img } from 'flowbite-svelte';
 
-    export let data;
+	export let data: PageData;
+
+	$: hero = data?.hero;
+	$: src = `/characters/preview/${hero.id}-preview.png`;
 </script>
 
-<p>Placeholder for {data.hero?.id} detail view</p>
+<div class="flex gap-3 ">
+	<Img {src} />
+	<div>
+		{hero.description}
+	</div>
+</div>

@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import HeroCard from '$lib/components/hero/HeroCard.svelte';
 	import { Hero } from '$lib/components/hero/HeroTypes';
-	import { Input, Label } from 'flowbite-svelte';
+	import { Input } from 'flowbite-svelte';
 
 	export let data: PageData;
 
