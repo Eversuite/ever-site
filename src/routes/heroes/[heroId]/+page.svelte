@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Img } from 'flowbite-svelte';
+	import {Heading, Img, P} from 'flowbite-svelte';
 
 	export let data: PageData;
 
@@ -9,9 +9,20 @@
 	$: abs = data?.abilities;
 </script>
 
-<div class="flex flex-wrap gap-3">
+<div class="flex flex-col">
+	<div class="flex flex-wrap">
+		<Img {src} size="w-full lg:w-1/3" class="border-2 rounded-lg" />
+		<div class="flex gap-3 grow text-center flex-col">
+			<Heading tag="h2">{hero.name}</Heading>
+			<Heading tag="h3">{hero.role}</Heading>
+			<P align="center" class="self-center max-w-md lg:max-w-2xl">{hero.description}</P>
+		</div>
+	</div>
+</div>
+
+<!--<div class="flex flex-wrap gap-3">
 	<Img {src} size="max-w-xl" class="border-2 rounded-lg" />
-	<div class="flex-wrap">
+	<div class="flex-wrap ">
 		<div class="border-2 rounded-lg pd-2 p-2 flex-grow">
 			{hero.description}
 		</div>
@@ -24,4 +35,4 @@
 			{/each}
 		</div>
 	</div>
-</div>
+</div>-->
