@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { error } from '@sveltejs/kit';
-import type { Hero } from '$lib/components/hero/HeroTypes';
+import type { Hero, Ability } from '$lib/components/hero/HeroTypes';
 
 export const load: PageLoad = async (event) => {
 	const { supabaseClient } = await getSupabase(event);
@@ -14,8 +14,13 @@ export const load: PageLoad = async (event) => {
 		.eq('id', event.params.heroId)
 		.single();
 
+	const { data: abilities } = await supabaseClient
+		.from('abilities')
+		.select()
+		.eq('source', event.params.heroId);
+
 	if (hero === undefined || hero === null) {
 		throw error(404, `Could not find a hero for id [${event.params.heroId}]`);
 	}
-	return { hero: hero as Hero };
+	return { hero: hero as Hero, abilities: abilities as Ability[] };
 };
