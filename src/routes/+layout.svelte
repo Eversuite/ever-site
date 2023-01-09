@@ -35,7 +35,7 @@
 	damage {
 		color: #ff0000;
 	}
-	defenes {
+	defense {
 		color: #0000ff;
 	}
 
