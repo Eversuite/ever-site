@@ -22,3 +22,45 @@
 <div class="container mx-auto w-11/12">
 	<slot />
 </div>
+
+<style global>
+    damage-sp {
+        color: #ff0000;
+    }
+
+    damage-wp {
+        color: #0000ff;
+    }
+
+    damage {
+        color: #ff0000;
+    }
+    defenes {
+        color: #0000ff;
+    }
+
+    healing {
+        color: #2fa32f;
+    }
+    health {
+        color: #41b441;
+    }
+
+    red {
+        color: #ff0000;
+    }
+    yellow {
+        color: #47c029;
+    }
+
+    speed {
+        color: #2fcc2f;
+    }
+
+    time {
+        color: #ff00ff;
+    }
+    duration {
+        color: #ff00ff;
+    }
+</style>

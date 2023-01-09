@@ -24,29 +24,12 @@
         {#each abilities as ability}
             <div class="flex flex-col center-text items-center">
                 <Img id="{ability.id}-image" src="/abilities/{ability.id}.png" size="w-32"/>
-                <P class="font-bold">{ability.name}</P>
+                <P class="font-bold">{ability.slot}</P>
             </div>
-            <Popover class="" title="{ability.name}" triggeredBy="#{ability.id}-image" trigger="click">
-                {ability.description}
+            <Popover class="" title="{ability.name}" triggeredBy="#{ability.id}-image">
+                {@html ability.description}
             </Popover>
         {/each}
     </div>
 
 </div>
-
-<!--<div class="flex flex-wrap gap-3">
-	<Img {src} size="max-w-xl" class="border-2 rounded-lg" />
-	<div class="flex-wrap ">
-		<div class="border-2 rounded-lg pd-2 p-2 flex-grow">
-			{hero.description}
-		</div>
-		<div class="flex  border-2 rounded-lg p-2 justify-between">
-			{#each abs as ability}
-				<div class="text-center">
-					<Img src="/abilities/{ability.id}.png" class="rounded-sm border-2 border-black" />
-					<div class="justify-between font-semibold">{ability.name}</div>
-				</div>
-			{/each}
-		</div>
-	</div>
-</div>-->
