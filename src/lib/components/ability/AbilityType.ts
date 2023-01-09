@@ -1,14 +1,16 @@
-export class Hero {
+export class Ability {
 	private readonly _id: string;
 	private readonly _name: string;
 	private readonly _description: string;
-	private readonly _role: string;
+	private readonly _source: string;
+	private readonly _slot: string;
 
-	constructor(id: string, name: string, description: string, role: string) {
+	constructor(id: string, name: string, description: string, source: string, slot: string) {
 		this._id = id;
 		this._name = name;
 		this._description = description;
-		this._role = role;
+		this._source = source;
+		this._slot = slot;
 	}
 
 	get id(): string {
@@ -23,7 +25,10 @@ export class Hero {
 		return this._description;
 	}
 
-	get role(): string {
-		return this._role;
+	get source(): string {
+		return this._source;
+	}
+	get slot(): string {
+		return this._slot;
 	}
 }
