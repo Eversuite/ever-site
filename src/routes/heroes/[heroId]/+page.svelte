@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Heading, Img, P, Hr, Popover } from 'flowbite-svelte';
+	import { Heading, Img, P, Hr } from 'flowbite-svelte';
 	import AbilityIcon from '$lib/components/ability/AbilityIcon.svelte';
 	import { Ability } from '$lib/components/ability/AbilityType';
 
@@ -10,9 +10,12 @@
 	$: src = `/characters/preview/${hero.id}-preview-cropped.png`;
 	$: abilities = data?.abilities;
 
-	function abilitySlot(abilities: Ability[], slot: string): Ability {
-		return abilities.find((ability) => ability.slot.toUpperCase() === slot.toUpperCase());
-	}
+  function abilitySlot(abilities: Ability[], slot: string): Ability {
+    return abilities
+      // We want to ignore every ability where the slot is unknown.
+      .filter(ab => ab.slot != undefined || ab.slot != null)
+      .find((ability) => ability.slot.toUpperCase() === slot.toUpperCase());
+  }
 </script>
 
 <div class="flex flex-col">

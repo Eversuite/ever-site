@@ -1,7 +1,8 @@
 import type { PageLoad } from './$types';
 import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { error } from '@sveltejs/kit';
-import type { Hero, Ability } from '$lib/components/hero/HeroTypes';
+import type { Hero } from '$lib/components/hero/HeroTypes';
+import type { Ability } from '$lib/components/ability/AbilityType';
 
 export const load: PageLoad = async (event) => {
 	const { supabaseClient } = await getSupabase(event);
