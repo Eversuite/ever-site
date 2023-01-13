@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Img, P, Popover } from 'flowbite-svelte';
-	import { Ability } from '$lib/components/ability/AbilityType';
+	import { Ability } from "$lib/class/Ability";
 
 	export let ability: Ability;
 </script>

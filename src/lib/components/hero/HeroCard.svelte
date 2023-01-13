@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Avatar, Card } from 'flowbite-svelte';
-	import { Hero } from '$lib/components/hero/HeroTypes';
+	import { Hero } from "$lib/class/Hero";
 
 	export let hero: Hero;
 </script>
