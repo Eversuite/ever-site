@@ -2,7 +2,8 @@
 	import type { PageData } from './$types';
 	import { Heading, Img, P, Hr } from 'flowbite-svelte';
 	import AbilityIcon from '$lib/components/ability/AbilityIcon.svelte';
-	import { Ability } from '$lib/components/ability/AbilityType';
+  import { Ability } from "$lib/class/Ability";
+
 
   export let data: PageData;
 
