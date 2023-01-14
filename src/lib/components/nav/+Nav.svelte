@@ -5,9 +5,7 @@
 <Navbar let:toggle let:hidden>
 	<NavBrand href="/">
 		<img src="./logo.webp" class="mr-3 h-6 sm:h-9 rounded-3xl" alt="Flowbite Logo" />
-		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			Ever-Site
-		</span>
+		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"> Ever-Site </span>
 	</NavBrand>
 	<NavHamburger on:click={toggle} />
 	<NavUl {hidden}>
