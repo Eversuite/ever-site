@@ -6,14 +6,7 @@ export class Talent {
 	private readonly _category: string;
 	private readonly _tier: number;
 
-	constructor(
-		id: string,
-		name: string,
-		description: string,
-		hero: string,
-		category: string,
-		tier: number
-	) {
+	constructor(id: string, name: string, description: string, hero: string, category: string, tier: number) {
 		this._id = id;
 		this._name = name;
 		this._description = description;
