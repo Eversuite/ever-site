@@ -24,14 +24,14 @@ export const load: PageLoad = async (event) => {
 		}
 	);
 
-	const talentsMap = new Map<string, Talent[]>();
-	for (let talent of talents) {
-		const talentList = talentsMap.get(talent.category) || [];
-		talentList.push(talent);
-		talentsMap.set(talent.category, talentList);
+	const talentsMap = new Map<string, Map<number, Talent[]>>();
+	for (const talent of talents) {
+		const talentCatgoryTierMap = talentsMap.get(talent.category) || new Map<number, Talent[]>();
+		const talentTierList = talentCatgoryTierMap.get(talent.tier) || [];
+		talentTierList.push(talent);
+		talentCatgoryTierMap.set(talent.tier, talentTierList);
+		talentsMap.set(talent.category, talentCatgoryTierMap);
 	}
-
-	console.log(talentsMap);
 
 	if (hero === undefined || hero === null) {
 		throw error(404, `Could not find a hero for id [${event.params.heroId}]`);
