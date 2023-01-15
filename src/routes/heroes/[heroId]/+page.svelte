@@ -49,7 +49,7 @@
 						<Heading tag='h3' class='mb-3'>Tier {tier}</Heading>
 						<div class='flex text-center justify-evenly'>
 							{#each talents as talent}
-								<p>{talent.name}</p>
+								<Img id="{talent.id}-image" src="/talents/{talent.id}.png" size="w-16 h-16" class="border border-black" />
 							{/each}
 						</div>
 					{/each}

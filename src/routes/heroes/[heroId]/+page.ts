@@ -24,12 +24,14 @@ export const load: PageLoad = async (event) => {
 		}
 	);
 
+	//TODO: Sort trees
 	const talentsMap = new Map<string, Map<number, Talent[]>>();
 	for (const talent of talents) {
-		const talentCatgoryTierMap = talentsMap.get(talent.category) || new Map<number, Talent[]>();
+		let talentCatgoryTierMap = talentsMap.get(talent.category) || new Map<number, Talent[]>();
 		const talentTierList = talentCatgoryTierMap.get(talent.tier) || [];
 		talentTierList.push(talent);
 		talentCatgoryTierMap.set(talent.tier, talentTierList);
+		talentCatgoryTierMap = new Map([...talentCatgoryTierMap.entries()].sort());
 		talentsMap.set(talent.category, talentCatgoryTierMap);
 	}
 
