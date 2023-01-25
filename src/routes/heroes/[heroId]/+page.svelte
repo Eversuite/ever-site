@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Heading, Img, P, Hr } from 'flowbite-svelte';
+	import { Heading, Img, P, Hr, Popover } from 'flowbite-svelte';
 	import AbilityIcon from '$lib/components/ability/AbilityIcon.svelte';
 	import { Ability } from '$lib/class/Ability';
 
@@ -50,6 +50,9 @@
 						<div class='flex text-center justify-evenly'>
 							{#each talents as talent}
 								<Img id="{talent.id}-image" src="/talents/{talent.id}.png" size="w-16 h-16" class="border border-black" />
+								<Popover class="max-w-xl" title={talent.name} triggeredBy="#{talent.id}-image">
+									{@html talent.description}
+								</Popover>
 							{/each}
 						</div>
 					{/each}

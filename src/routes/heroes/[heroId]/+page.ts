@@ -25,7 +25,7 @@ export const load: PageLoad = async (event) => {
 	);
 
 	//TODO: Sort trees
-	const talentsMap = new Map<string, Map<number, Talent[]>>();
+	let talentsMap = new Map<string, Map<number, Talent[]>>();
 	for (const talent of talents) {
 		let talentCatgoryTierMap = talentsMap.get(talent.category) || new Map<number, Talent[]>();
 		const talentTierList = talentCatgoryTierMap.get(talent.tier) || [];
@@ -33,6 +33,14 @@ export const load: PageLoad = async (event) => {
 		talentCatgoryTierMap.set(talent.tier, talentTierList);
 		talentCatgoryTierMap = new Map([...talentCatgoryTierMap.entries()].sort());
 		talentsMap.set(talent.category, talentCatgoryTierMap);
+		talentsMap = new Map(
+			[...talentsMap.entries()].sort(function (a, b) {
+				if (a[0] == 'default') {
+					return -1;
+				}
+				return String(a[0]).localeCompare(b[0]);
+			})
+		);
 	}
 
 	if (hero === undefined || hero === null) {
