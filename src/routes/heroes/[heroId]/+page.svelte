@@ -1,8 +1,9 @@
-<script lang="ts">
+<script lang='ts'>
 	import type { PageData } from './$types';
-	import { Heading, Img, P, Hr, Popover } from 'flowbite-svelte';
-	import AbilityIcon from '$lib/components/ability/AbilityIcon.svelte';
+	import { Heading, Img, P, Hr } from 'flowbite-svelte';
 	import { Ability } from '$lib/class/Ability';
+	import TalentIcon from './TalentIcon.svelte';
+	import AbilityIcon from './AbilityIcon.svelte';
 
 	export let data: PageData;
 
@@ -47,12 +48,9 @@
 					<Heading tag='h2' class='mb-3'>{category}</Heading>
 					{#each [...tiers] as [tier, talents]}
 						<Heading tag='h3' class='mb-3'>Tier {tier}</Heading>
-						<div class='flex text-center justify-evenly'>
+						<div class='flex text-center justify-evenly gap-x-3'>
 							{#each talents as talent}
-								<Img id="{talent.id}-image" src="/talents/{talent.id}.png" size="w-16 h-16" class="border border-black" />
-								<Popover class="max-w-xl" title={talent.name} triggeredBy="#{talent.id}-image">
-									{@html talent.description}
-								</Popover>
+								<TalentIcon {talent} />
 							{/each}
 						</div>
 					{/each}

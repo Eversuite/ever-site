@@ -9,7 +9,7 @@
 
 		if (ab.properties) {
 			for (const key of Object.keys(ab.properties)) {
-				copy = copy?.replaceAll('{' + key + '}', ab.properties[key]?.map((prop) => prop.Value).join(' - '));
+				copy = copy?.replaceAll('{' + key + '}', ab.properties[key]?.map((prop) => prop.Value).join('/'));
 			}
 		}
 		return copy;
@@ -19,7 +19,7 @@
 {#if ability !== undefined}
 	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
 	<div class="flex flex-col center-text items-center">
-		<Img id="{ability.id}-image" src="/abilities/{ability.id}.png" size="w-32 h-32" class="border border-black" />
+		<Img id="{ability.id}-image" src="/abilities/{ability.id}.png" size="w-32 h-32" class="rounded-md border-black" />
 		<P class="font-bold">{ability.name}</P>
 	</div>
 	<Popover class="max-w-xl" title={ability.name} triggeredBy="#{ability.id}-image">
