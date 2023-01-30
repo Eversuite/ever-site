@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import HeroCard from '$lib/components/hero/HeroCard.svelte';
-	import { Hero } from '$lib/components/hero/HeroTypes';
 	import { Input } from 'flowbite-svelte';
+	import { Hero } from '$lib/class/Hero';
+	import HeroCard from './HeroCard.svelte';
 
 	export let data: PageData;
 
