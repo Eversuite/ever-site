@@ -39,7 +39,7 @@
 	"type": "module",
 	"dependencies": {
 		"@supabase/auth-helpers-sveltekit": "^0.8.6",
-		"@supabase/supabase-js": "^2.2.1",
+		"@supabase/supabase-js": "^2.8.0",
 		"svelte-preprocess-import-assets": "^0.2.5"
 	}
 }
