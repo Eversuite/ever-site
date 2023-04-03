@@ -1,18 +1,17 @@
 import type { PageLoad } from './$types';
-import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import { error } from '@sveltejs/kit';
 import type { Talent } from '$lib/class/Talent';
 import type { Hero } from '$lib/class/Hero';
 import type { Ability } from '$lib/class/Ability';
 
-export const load: PageLoad = async (event) => {
-	const { supabaseClient } = await getSupabase(event);
+export const load: PageLoad = async ({params, parent}) => {
+	const { supabase } = await parent();
 
 	// Load the wanted character from the database.
 	// May be optimised by getting the overall hero data from the parent page or a store but will do for now.
-	const heroesPromise = supabaseClient.from('heroes').select().eq('id', event.params.heroId).single();
-	const abilitiesPromise = supabaseClient.from('abilities').select().eq('source', event.params.heroId);
-	const talentsPromise = supabaseClient.from('talents').select().eq('hero', event.params.heroId);
+	const heroesPromise = supabaseClient.from('heroes').select().eq('id', params.heroId).single();
+	const abilitiesPromise = supabaseClient.from('abilities').select().eq('source', params.heroId);
+	const talentsPromise = supabaseClient.from('talents').select().eq('hero', params.heroId);
 
 	const { hero, abilities, talents } = await Promise.all([heroesPromise, abilitiesPromise, talentsPromise]).then(
 		(values) => {
@@ -44,7 +43,7 @@ export const load: PageLoad = async (event) => {
 	}
 
 	if (hero === undefined || hero === null) {
-		throw error(404, `Could not find a hero for id [${event.params.heroId}]`);
+		throw error(404, `Could not find a hero for id [${params.heroId}]`);
 	}
 	return {
 		hero: hero as Hero,
