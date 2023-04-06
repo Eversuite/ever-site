@@ -9,9 +9,9 @@ export const load: PageLoad = async ({params, parent}) => {
 
 	// Load the wanted character from the database.
 	// May be optimised by getting the overall hero data from the parent page or a store but will do for now.
-	const heroesPromise = supabaseClient.from('heroes').select().eq('id', params.heroId).single();
-	const abilitiesPromise = supabaseClient.from('abilities').select().eq('source', params.heroId);
-	const talentsPromise = supabaseClient.from('talents').select().eq('hero', params.heroId);
+	const heroesPromise = supabase.from('heroes').select().eq('id', params.heroId).single();
+	const abilitiesPromise = supabase.from('abilities').select().eq('source', params.heroId);
+	const talentsPromise = supabase.from('talents').select().eq('hero', params.heroId);
 
 	const { hero, abilities, talents } = await Promise.all([heroesPromise, abilitiesPromise, talentsPromise]).then(
 		(values) => {
