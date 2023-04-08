@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Input } from 'flowbite-svelte';
 	import { Hero } from '$lib/class/Hero';
-	import HeroCard from './HeroCard.svelte';
+	import { Avatar } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
 
@@ -18,11 +17,15 @@
 	}
 </script>
 
-<!-- ml-1 and mr-1 so it doesnt fill the entire screen on mobile-->
-<Input bind:value={searchTerm} type="text" placeholder="Filter through the heroes!" class="mb-3" />
-
 <div class="flex flex-wrap justify-center gap-3">
 	{#each heroes as hero (hero.id)}
-		<HeroCard {hero} />
+		<a href="/heroes/{hero.id}">
+			<Avatar
+				border="border-4 border-surface-300-600-token hover:!border-primary-500"
+				cursor="cursor-pointer"
+				src="/characters/portraits/{hero.id}-portrait.png"
+				width="w-32"
+			/>
+		</a>
 	{/each}
 </div>

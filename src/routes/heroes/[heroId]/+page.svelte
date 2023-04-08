@@ -1,8 +1,6 @@
-<script lang='ts'>
+<script lang="ts">
 	import type { PageData } from './$types';
-	import { Heading, Img, P, Hr } from 'flowbite-svelte';
-	import { Ability } from '$lib/class/Ability';
-	import TalentIcon from './TalentIcon.svelte';
+	import type { Ability } from '../../../lib/class/Ability';
 	import AbilityIcon from './AbilityIcon.svelte';
 
 	export let data: PageData;
@@ -22,40 +20,21 @@
 	}
 </script>
 
-<div class='flex flex-col'>
-	<div class='flex flex-wrap'>
-		<Img {src} size='w-full lg:w-1/3' />
-		<div class='flex gap-y-3 grow text-center flex-col'>
-			<Heading tag='h1'>{hero.name}</Heading>
-			<Heading tag='h2'>{hero.role}</Heading>
-			<P align='center' class='self-center max-w-md lg:max-w-2xl'>{hero.description}</P>
+<div class="flex flex-col gap-3">
+	<div class="flex flex-row flex-wrap gap-3 justify-center">
+		<img {src} alt="character portrait" class="object-scale-down max-h-[700px] max-w-[700px]" />
+		<div class="basis-1/2 text-center">
+			<h3 class="mb-2">{hero.name}</h3>
+			<p class="italic">{hero.description}</p>
 		</div>
 	</div>
-	<Hr class='my-8' height='h-px' />
-	<Heading tag='h1' class='mb-3 text-center'>Abilities</Heading>
-	<div class='flex text-center justify-evenly'>
-		<AbilityIcon ability={abilitySlot(abilities, 'P')} />
-		<AbilityIcon ability={abilitySlot(abilities, 'Q')} />
-		<AbilityIcon ability={abilitySlot(abilities, 'W')} />
-		<AbilityIcon ability={abilitySlot(abilities, 'E')} />
-		<AbilityIcon ability={abilitySlot(abilities, 'R')} />
-	</div>
-	<div>
-		<Heading tag='h1' class='mb-3 text-center'>Talents</Heading>
-		<div class='flex text-center justify-evenly'>
-			{#each [...talentsMap] as [category, tiers]}
-				<div class='flex flex-col'>
-					<Heading tag='h2' class='mb-3'>{category}</Heading>
-					{#each [...tiers] as [tier, talents]}
-						<Heading tag='h3' class='mb-3'>Tier {tier}</Heading>
-						<div class='flex text-center justify-evenly gap-x-3'>
-							{#each talents as talent}
-								<TalentIcon {talent} />
-							{/each}
-						</div>
-					{/each}
-				</div>
-			{/each}
-		</div>
+	<hr class="!border-t-2" />
+	<h2 class="text-center">Abilities</h2>
+	<div class="flex flex-row flex-wrap justify-around">
+		<div><AbilityIcon ability={abilitySlot(abilities, 'P')} /></div>
+		<div><AbilityIcon ability={abilitySlot(abilities, 'Q')} /></div>
+		<div><AbilityIcon ability={abilitySlot(abilities, 'W')} /></div>
+		<div><AbilityIcon ability={abilitySlot(abilities, 'E')} /></div>
+		<div><AbilityIcon ability={abilitySlot(abilities, 'R')} /></div>
 	</div>
 </div>

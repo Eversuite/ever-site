@@ -4,24 +4,26 @@ import type { Talent } from '$lib/class/Talent';
 import type { Hero } from '$lib/class/Hero';
 import type { Ability } from '$lib/class/Ability';
 
-export const load: PageLoad = async ({params, parent}) => {
+export const load: PageLoad = async ({ params, parent }) => {
 	const { supabase } = await parent();
 
 	// Load the wanted character from the database.
 	// May be optimised by getting the overall hero data from the parent page or a store but will do for now.
-	const heroesPromise = supabaseClient.from('heroes').select().eq('id', params.heroId).single();
-	const abilitiesPromise = supabaseClient.from('abilities').select().eq('source', params.heroId);
-	const talentsPromise = supabaseClient.from('talents').select().eq('hero', params.heroId);
+	const heroesPromise = supabase.from('heroes').select().eq('id', params.heroId).single();
+	const abilitiesPromise = supabase.from('abilities').select().eq('source', params.heroId);
+	const talentsPromise = supabase.from('talents').select().eq('hero', params.heroId);
 
-	const { hero, abilities, talents } = await Promise.all([heroesPromise, abilitiesPromise, talentsPromise]).then(
-		(values) => {
-			const hero = values[0].data as Hero;
-			const abilities = values[1].data as Ability[];
-			const talents = values[2].data as Talent[];
+	const { hero, abilities, talents } = await Promise.all([
+		heroesPromise,
+		abilitiesPromise,
+		talentsPromise
+	]).then((values) => {
+		const hero = values[0].data as Hero;
+		const abilities = values[1].data as Ability[];
+		const talents = values[2].data as Talent[];
 
-			return { hero, abilities, talents };
-		}
-	);
+		return { hero, abilities, talents };
+	});
 
 	//TODO: Sort trees
 	let talentsMap = new Map<string, Map<number, Talent[]>>();
