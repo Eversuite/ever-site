@@ -9,12 +9,11 @@
 		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
-		target: `${ability.id}-popup`
+		target: `${ability !== undefined ? ability.id : 'dummy'}-popup`
 	};
 
 	function resolveDescription(ab: Ability): string {
 		let copy = ab.description;
-
 		if (ab.properties) {
 			for (const key of Object.keys(ab.properties)) {
 				copy = copy?.replaceAll(
