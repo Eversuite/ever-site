@@ -3,6 +3,7 @@ import { error } from '@sveltejs/kit';
 import type { Talent } from '$lib/class/Talent';
 import type { Hero } from '$lib/class/Hero';
 import type { Ability } from '$lib/class/Ability';
+import type { TalentTree } from '$lib/class/TalentTree';
 
 export const load: PageLoad = async ({ params, parent }) => {
 	const { supabase } = await parent();
@@ -12,44 +13,42 @@ export const load: PageLoad = async ({ params, parent }) => {
 	const heroesPromise = supabase.from('heroes').select().eq('id', params.heroId).single();
 	const abilitiesPromise = supabase.from('abilities').select().eq('source', params.heroId);
 	const talentsPromise = supabase.from('talents').select().eq('hero', params.heroId);
+	const talentTreesPromise = supabase.from('talent_trees').select().eq('source', params.heroId);
 
-	const { hero, abilities, talents } = await Promise.all([
+	const { hero, abilities, talents, talentTrees } = await Promise.all([
 		heroesPromise,
 		abilitiesPromise,
-		talentsPromise
+		talentsPromise,
+		talentTreesPromise
 	]).then((values) => {
 		const hero = values[0].data as Hero;
 		const abilities = values[1].data as Ability[];
 		const talents = values[2].data as Talent[];
+		const talentTrees = values[3].data as TalentTree[];
 
-		return { hero, abilities, talents };
+		return { hero, abilities, talents, talentTrees };
 	});
 
 	//TODO: Sort trees
-	let talentsMap = new Map<string, Map<number, Talent[]>>();
-	for (const talent of talents) {
-		let talentCatgoryTierMap = talentsMap.get(talent.category) || new Map<number, Talent[]>();
-		const talentTierList = talentCatgoryTierMap.get(talent.tier) || [];
-		talentTierList.push(talent);
-		talentCatgoryTierMap.set(talent.tier, talentTierList);
-		talentCatgoryTierMap = new Map([...talentCatgoryTierMap.entries()].sort());
-		talentsMap.set(talent.category, talentCatgoryTierMap);
-		talentsMap = new Map(
-			[...talentsMap.entries()].sort(function (a, b) {
-				if (a[0] == 'default') {
-					return -1;
-				}
-				return String(a[0]).localeCompare(b[0]);
-			})
-		);
+	const talentTreesMap = new Map<TalentTree, Map<number, Talent[]>>();
+	for (const talentTree of talentTrees) {
+		const treeTalentsMap = new Map<number, Talent[]>();
+		const treeTalents = talents.filter((talent) => talent.category === talentTree.id);
+		for (const treeTalent of treeTalents) {
+			const tierTalents = treeTalentsMap.get(treeTalent.tier) || [];
+			tierTalents.push(treeTalent);
+			treeTalentsMap.set(treeTalent.tier, tierTalents);
+		}
+		talentTreesMap.set(talentTree, treeTalentsMap);
 	}
 
 	if (hero === undefined || hero === null) {
 		throw error(404, `Could not find a hero for id [${params.heroId}]`);
 	}
+	console.log(talentTreesMap);
 	return {
 		hero: hero as Hero,
 		abilities: abilities as Ability[],
-		talentsMap: talentsMap
+		talentsMap: talentTreesMap
 	};
 };
