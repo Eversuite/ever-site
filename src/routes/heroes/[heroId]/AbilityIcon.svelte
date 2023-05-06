@@ -9,7 +9,8 @@
 		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
-		target: `${ability !== undefined ? ability.id : 'dummy'}-popup`
+		target: `${ability !== undefined ? ability.id : 'dummy'}-popup`,
+		placement: 'top'
 	};
 
 	function resolveDescription(ab: Ability): string {

@@ -45,7 +45,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 	if (hero === undefined || hero === null) {
 		throw error(404, `Could not find a hero for id [${params.heroId}]`);
 	}
-	console.log(talentTreesMap);
+
 	return {
 		hero: hero as Hero,
 		abilities: abilities as Ability[],
