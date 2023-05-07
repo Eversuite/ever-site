@@ -4,7 +4,7 @@
 	import AbilityIcon from './AbilityIcon.svelte';
 	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 	import TalentIcon from './TalentIcon.svelte';
-	import { IconChevronRight } from '@tabler/icons-svelte';
+	import { IconArrowBigRightFilled } from '@tabler/icons-svelte';
 
 	export let data: PageData;
 
@@ -44,7 +44,7 @@
 	</div>
 	<hr class="border-t-2" />
 	<h2 class="text-center">Talents</h2>
-	<TabGroup>
+	<TabGroup justify="justify-center">
 		{#each [...talentsMap] as [talentTree, talentTreeMap]}
 			<Tab bind:group={tabSet} name={talentTree.id} value={talentTree.id}>{talentTree.name}</Tab>
 		{/each}
@@ -61,7 +61,7 @@
 					</div>
 					{#if i < 2}
 						<div class="flex flex-col justify-center">
-							<IconChevronRight size="32" />
+							<IconArrowBigRightFilled size="50" />
 						</div>
 					{/if}
 				{/each}
