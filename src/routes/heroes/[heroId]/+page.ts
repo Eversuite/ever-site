@@ -29,7 +29,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 		return { hero, abilities, talents, talentTrees };
 	});
 
-	//TODO: Sort trees
+	//TODO: This sorting is currently messy, and reversed...
 	const talentTreesMap = new Map<TalentTree, Map<number, Talent[]>>();
 	for (const talentTree of talentTrees) {
 		const treeTalentsMap = new Map<number, Talent[]>();

@@ -4,7 +4,7 @@
 	import AbilityIcon from './AbilityIcon.svelte';
 	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 	import TalentIcon from './TalentIcon.svelte';
-	import { IconArrowBigRight } from '@tabler/icons-svelte';
+	import { IconChevronRight } from '@tabler/icons-svelte';
 
 	export let data: PageData;
 
@@ -53,12 +53,17 @@
 	{#each [...talentsMap] as [talentTree, talentTreeMap]}
 		{#if tabSet === talentTree.id}
 			<div class="flex flex-row-reverse flex-wrap justify-around content-center">
-				{#each [...talentTreeMap] as [tier, talents]}
+				{#each [...talentTreeMap] as [tier, talents], i}
 					<div class="flex flex-col gap-y-3">
 						{#each talents as talent}
 							<TalentIcon {talent} />
 						{/each}
 					</div>
+					{#if i < 2}
+						<div class="flex flex-col justify-center">
+							<IconChevronRight size="32" />
+						</div>
+					{/if}
 				{/each}
 			</div>
 		{/if}
