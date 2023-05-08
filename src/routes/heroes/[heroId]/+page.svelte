@@ -8,7 +8,7 @@
 
 	export let data: PageData;
 
-	let tabSet;
+	let tabSet = 0;
 
 	$: hero = data?.hero;
 	$: src = `/characters/preview/${hero.id}-preview-cropped.png`;
@@ -45,13 +45,13 @@
 	<hr class="border-t-2" />
 	<h2 class="text-center">Talents</h2>
 	<TabGroup justify="justify-center">
-		{#each [...talentsMap] as [talentTree, talentTreeMap]}
-			<Tab bind:group={tabSet} name={talentTree.id} value={talentTree.id}>{talentTree.name}</Tab>
+		{#each [...talentsMap] as [talentTree, talentTreeMap], i}
+			<Tab bind:group={tabSet} name={talentTree.id} value={i}>{talentTree.name}</Tab>
 		{/each}
 	</TabGroup>
 	<!-- Tab Panels --->
-	{#each [...talentsMap] as [talentTree, talentTreeMap]}
-		{#if tabSet === talentTree.id}
+	{#each [...talentsMap] as [talentTree, talentTreeMap], i}
+		{#if tabSet === i}
 			<div class="flex flex-row-reverse flex-wrap justify-around content-center">
 				{#each [...talentTreeMap] as [tier, talents], i}
 					<div class="flex flex-col gap-y-3">

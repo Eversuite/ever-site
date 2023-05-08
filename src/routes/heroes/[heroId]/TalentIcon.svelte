@@ -10,7 +10,7 @@
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
 		target: `${talent !== undefined ? talent.id : 'dummy'}-popup`,
-		placement: 'right'
+		placement: 'left'
 	};
 </script>
 
