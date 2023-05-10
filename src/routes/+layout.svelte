@@ -16,13 +16,14 @@
 	const storeValue: Writable<number> = writable(0);
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 	const heroTileUrl = '/heroes';
+	const shardTileUrl = '/shards';
 
 	//Supabase stuff
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	import { IconCrown } from '@tabler/icons-svelte';
+	import { IconCrown, IconSparkles } from '@tabler/icons-svelte';
 	export let data: LayoutData;
 
 	$: ({ supabase, session } = data);
@@ -57,9 +58,15 @@
 				href={heroTileUrl}
 				class={heroTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
 				label="Heroes"
-				value={0}><IconCrown size={32} /></AppRailTile
+				value={0}><IconCrown size="32" /></AppRailTile
 			>
-			<AppRailTile label="Tile 2" value={1}>(icon)</AppRailTile>
+			<AppRailTile
+				tag="a"
+				href={shardTileUrl}
+				class={shardTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
+				label="Shards"
+				value={0}><IconSparkles size="32" /></AppRailTile
+			>
 			<AppRailTile label="Tile 3" value={2}>(icon)</AppRailTile>
 		</AppRail>
 	</svelte:fragment>
