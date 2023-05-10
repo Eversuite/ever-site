@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { Ability } from '../../../lib/class/Ability';
+	import type { Ability } from '$lib/class/Ability';
 	import AbilityIcon from './AbilityIcon.svelte';
 	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 	import TalentIcon from './TalentIcon.svelte';

@@ -30,6 +30,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 	});
 
 	//TODO: This sorting is currently messy, and reversed...
+	//TODO: Make sure default is always first
 	const talentTreesMap = new Map<TalentTree, Map<number, Talent[]>>();
 	for (const talentTree of talentTrees) {
 		const treeTalentsMap = new Map<number, Talent[]>();

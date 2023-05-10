@@ -1,26 +1,15 @@
 import type { Property } from '$lib/class/Property';
 
-export class Ability {
+export class Shard {
 	private readonly _id: string;
 	private readonly _name: string;
 	private readonly _description: string;
-	private readonly _source: string;
-	private readonly _slot: string;
 	private readonly _properties: Map<string, Property[]>;
 
-	constructor(
-		id: string,
-		name: string,
-		description: string,
-		source: string,
-		slot: string,
-		properties: Map<string, Property[]>
-	) {
+	constructor(id: string, name: string, description: string, properties: Map<string, Property[]>) {
 		this._id = id;
 		this._name = name;
 		this._description = description;
-		this._source = source;
-		this._slot = slot;
 		this._properties = properties;
 	}
 
@@ -34,13 +23,6 @@ export class Ability {
 
 	get description(): string {
 		return this._description;
-	}
-
-	get source(): string {
-		return this._source;
-	}
-	get slot(): string {
-		return this._slot;
 	}
 
 	get properties(): Map<string, Property[]> {
