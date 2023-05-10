@@ -1,12 +1,4 @@
-export class Property {
-	Time: number;
-	Value: number;
-
-	constructor(time: number, value: number) {
-		this.Time = time;
-		this.Value = value;
-	}
-}
+import type { Property } from '$lib/class/Property';
 
 export class Ability {
 	private readonly _id: string;
