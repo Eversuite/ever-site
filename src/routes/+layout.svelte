@@ -25,6 +25,7 @@
 	import type { LayoutData } from './$types';
 
 	import { IconCrown, IconSparkles } from '@tabler/icons-svelte';
+
 	export let data: LayoutData;
 
 	$: ({ supabase, session } = data);
@@ -48,9 +49,11 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">Eversite</strong>
+				<strong class="text-3xl uppercase header-text">Eversite</strong>
 			</svelte:fragment>
-			<svelte:fragment slot="trail"><LightSwitch /></svelte:fragment>
+			<svelte:fragment slot="trail">
+				<LightSwitch />
+			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
@@ -60,15 +63,19 @@
 				href={heroTileUrl}
 				class={heroTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
 				label="Heroes"
-				value={1}><IconCrown size="32" /></AppRailTile
+				value={1}
 			>
+				<IconCrown size="32" />
+			</AppRailTile>
 			<AppRailTile
 				tag="a"
 				href={shardTileUrl}
 				class={shardTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
 				label="Shards"
-				value={2}><IconSparkles size="32" /></AppRailTile
+				value={2}
 			>
+				<IconSparkles size="32" />
+			</AppRailTile>
 		</AppRail>
 	</svelte:fragment>
 	<!-- Page Route Content -->
@@ -76,3 +83,62 @@
 		<slot />
 	</div>
 </AppShell>
+
+<style lang="postcss" global>
+	@font-face {
+		font-family: 'Futura PT Web Book';
+		src: url('/fonts/FuturaPTWeb-Book.woff2') format('woff2'),
+			url('/fonts/FuturaPTWeb-Book.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'EVERCORE';
+		src: url('/fonts/EVERCORE-Medium.woff2') format('woff2'),
+			url('/fonts/EVERCORE-Medium.woff') format('woff');
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Futura PT Web';
+		src: url('/fonts/FuturaPTWeb-Heavy.woff2') format('woff2'),
+			url('/fonts/FuturaPTWeb-Heavy.woff') format('woff');
+		font-weight: 900;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Futura PT Web';
+		src: url('/fonts/FuturaPTWeb-MediumObl.woff2') format('woff2'),
+			url('/fonts/FuturaPTWeb-MediumObl.woff') format('woff');
+		font-weight: 500;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'ArdelaEdgeX01';
+		src: url('/fonts/ArdelaEdgeX01-ExtraBold.woff2') format('woff2'),
+			url('/fonts/ArdelaEdgeX01-ExtraBold.woff') format('woff');
+		font-weight: bold;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	.header-text {
+		font-family: 'EVERCORE';
+		font-weight: 500;
+		font-style: normal;
+	}
+
+	* {
+		font-family: 'Futura PT Web Book', sans-serif;
+		font-weight: normal;
+		font-style: normal;
+	}
+</style>

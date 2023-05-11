@@ -29,21 +29,30 @@
 	<div class="flex flex-row flex-wrap gap-3 justify-center">
 		<img {src} alt="character portrait" class="object-scale-down max-h-[500px] max-w-[500px]" />
 		<div class="basis-1/2 text-center">
-			<h3 class="mb-2">{hero.name}</h3>
+			<h1 class="mb-2 text-5xl">{hero.name.toUpperCase()}</h1>
 			<p class="italic">{hero.description}</p>
 		</div>
 	</div>
+	<h2 class="text-center text-4xl mt-8">ABILITIES</h2>
 	<hr class="border-t-2" />
-	<h2 class="text-center">Abilities</h2>
 	<div class="flex flex-row flex-wrap justify-around">
-		<div><AbilityIcon ability={abilitySlot(abilities, 'P')} /></div>
-		<div><AbilityIcon ability={abilitySlot(abilities, 'Q')} /></div>
-		<div><AbilityIcon ability={abilitySlot(abilities, 'W')} /></div>
-		<div><AbilityIcon ability={abilitySlot(abilities, 'E')} /></div>
-		<div><AbilityIcon ability={abilitySlot(abilities, 'R')} /></div>
+		<div>
+			<AbilityIcon ability={abilitySlot(abilities, 'P')} />
+		</div>
+		<div>
+			<AbilityIcon ability={abilitySlot(abilities, 'Q')} />
+		</div>
+		<div>
+			<AbilityIcon ability={abilitySlot(abilities, 'W')} />
+		</div>
+		<div>
+			<AbilityIcon ability={abilitySlot(abilities, 'E')} />
+		</div>
+		<div>
+			<AbilityIcon ability={abilitySlot(abilities, 'R')} />
+		</div>
 	</div>
-	<hr class="border-t-2" />
-	<h2 class="text-center">Talents</h2>
+	<h2 class="mt-8 text-center text-4xl">TALENTS</h2>
 	<TabGroup justify="justify-center">
 		{#each [...talentsMap] as [talentTree, talentTreeMap], i}
 			<Tab bind:group={tabSet} name={talentTree.id} value={i}>{talentTree.name}</Tab>
@@ -69,3 +78,12 @@
 		{/if}
 	{/each}
 </div>
+
+<style>
+	h1,
+	h2 {
+		font-family: 'EVERCORE';
+		font-weight: 500;
+		font-style: normal;
+	}
+</style>
