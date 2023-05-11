@@ -1,8 +1,8 @@
 <script lang="ts">
 	// The ordering of these imports is critical to your app working properly
-	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+	import '../theme.postcss';
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
-	import '@skeletonlabs/skeleton/styles/all.css';
+	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 
@@ -12,6 +12,7 @@
 	import { page } from '$app/stores';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import { LightSwitch } from '@skeletonlabs/skeleton';
 
 	const storeValue: Writable<number> = writable(0);
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
@@ -49,6 +50,7 @@
 			<svelte:fragment slot="lead">
 				<strong class="text-xl uppercase">Eversite</strong>
 			</svelte:fragment>
+			<svelte:fragment slot="trail"><LightSwitch /></svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
@@ -58,16 +60,15 @@
 				href={heroTileUrl}
 				class={heroTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
 				label="Heroes"
-				value={0}><IconCrown size="32" /></AppRailTile
+				value={1}><IconCrown size="32" /></AppRailTile
 			>
 			<AppRailTile
 				tag="a"
 				href={shardTileUrl}
 				class={shardTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
 				label="Shards"
-				value={0}><IconSparkles size="32" /></AppRailTile
+				value={2}><IconSparkles size="32" /></AppRailTile
 			>
-			<AppRailTile label="Tile 3" value={2}>(icon)</AppRailTile>
 		</AppRail>
 	</svelte:fragment>
 	<!-- Page Route Content -->
