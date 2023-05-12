@@ -26,7 +26,7 @@
 	</div>
 	<div data-popup="{talent.id}-popup" class="card p-4">
 		<header class="card-header text-lg font-bold text-center">{talent.name}</header>
-		<hr class="!border-t-2" />
+		<hr class="border" />
 		<section class="p-4">{@html talent.description}</section>
 	</div>
 {/if}

@@ -84,61 +84,10 @@
 	</div>
 </AppShell>
 
-<style lang="postcss" global>
-	@font-face {
-		font-family: 'Futura PT Web Book';
-		src: url('/fonts/FuturaPTWeb-Book.woff2') format('woff2'),
-			url('/fonts/FuturaPTWeb-Book.woff') format('woff');
-		font-weight: normal;
-		font-style: normal;
-		font-display: swap;
-	}
-
-	@font-face {
-		font-family: 'EVERCORE';
-		src: url('/fonts/EVERCORE-Medium.woff2') format('woff2'),
-			url('/fonts/EVERCORE-Medium.woff') format('woff');
-		font-weight: 500;
-		font-style: normal;
-		font-display: swap;
-	}
-
-	@font-face {
-		font-family: 'Futura PT Web';
-		src: url('/fonts/FuturaPTWeb-Heavy.woff2') format('woff2'),
-			url('/fonts/FuturaPTWeb-Heavy.woff') format('woff');
-		font-weight: 900;
-		font-style: normal;
-		font-display: swap;
-	}
-
-	@font-face {
-		font-family: 'Futura PT Web';
-		src: url('/fonts/FuturaPTWeb-MediumObl.woff2') format('woff2'),
-			url('/fonts/FuturaPTWeb-MediumObl.woff') format('woff');
-		font-weight: 500;
-		font-style: italic;
-		font-display: swap;
-	}
-
-	@font-face {
-		font-family: 'ArdelaEdgeX01';
-		src: url('/fonts/ArdelaEdgeX01-ExtraBold.woff2') format('woff2'),
-			url('/fonts/ArdelaEdgeX01-ExtraBold.woff') format('woff');
-		font-weight: bold;
-		font-style: normal;
-		font-display: swap;
-	}
-
+<style global lang="postcss">
 	.header-text {
 		font-family: 'EVERCORE';
 		font-weight: 500;
-		font-style: normal;
-	}
-
-	* {
-		font-family: 'Futura PT Web Book', sans-serif;
-		font-weight: normal;
 		font-style: normal;
 	}
 </style>

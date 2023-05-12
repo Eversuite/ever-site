@@ -38,7 +38,10 @@
 	</div>
 	<div data-popup="{ability.id}-popup" class="card p-4">
 		<header class="card-header text-lg font-bold text-center">{ability.name}</header>
-		<hr class="!border-t-2" />
+		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(ability)}</section>
 	</div>
 {/if}
+
+<style>
+</style>

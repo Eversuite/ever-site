@@ -34,7 +34,7 @@
 		</div>
 	</div>
 	<h2 class="text-center text-4xl mt-8">ABILITIES</h2>
-	<hr class="border-t-2" />
+	<hr class="border" />
 	<div class="flex flex-row flex-wrap justify-around">
 		<div>
 			<AbilityIcon ability={abilitySlot(abilities, 'P')} />
@@ -53,7 +53,7 @@
 		</div>
 	</div>
 	<h2 class="mt-8 text-center text-4xl">TALENTS</h2>
-	<TabGroup justify="justify-center">
+	<TabGroup justify="justify-center border-b-2">
 		{#each [...talentsMap] as [talentTree, talentTreeMap], i}
 			<Tab bind:group={tabSet} name={talentTree.id} value={i}>{talentTree.name}</Tab>
 		{/each}
