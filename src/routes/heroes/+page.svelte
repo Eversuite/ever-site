@@ -20,11 +20,10 @@
 <div class="flex flex-wrap justify-center gap-3">
 	{#each heroes as hero (hero.id)}
 		<a href="/heroes/{hero.id}">
-			<Avatar
-				border="border-4 border-surface-300-600-token hover:!border-primary-500"
-				cursor="cursor-pointer"
+			<img
+				class="w-32 32 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 				src="/characters/portraits/{hero.id}-portrait.png"
-				width="w-32"
+				alt="Avatar image of {hero.name}"
 			/>
 		</a>
 	{/each}
