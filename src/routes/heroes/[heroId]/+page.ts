@@ -29,18 +29,26 @@ export const load: PageLoad = async ({ params, parent }) => {
 		return { hero, abilities, talents, talentTrees };
 	});
 
-	//TODO: This sorting is currently messy, and reversed...
-	//TODO: Make sure default is always first
-	const talentTreesMap = new Map<TalentTree, Map<number, Talent[]>>();
+	// Sort talentTrees with "Default" first, then alphabetically
+	talentTrees.sort((a, b) => {
+		if (a.name === 'Default') return -1;
+		if (b.name === 'Default') return 1;
+		return a.name.localeCompare(b.name);
+	});
+
+	let talentTreesMap = new Map<TalentTree, Map<number, Talent[]>>();
 	for (const talentTree of talentTrees) {
 		const treeTalentsMap = new Map<number, Talent[]>();
 		const treeTalents = talents.filter((talent) => talent.category === talentTree.id);
 		for (const treeTalent of treeTalents) {
 			const tierTalents = treeTalentsMap.get(treeTalent.tier) || [];
 			tierTalents.push(treeTalent);
+			tierTalents.sort((a, b) => a.name - b.name); // sort tierTalents by id
 			treeTalentsMap.set(treeTalent.tier, tierTalents);
 		}
-		talentTreesMap.set(talentTree, treeTalentsMap);
+		// Sort treeTalentsMap by tier
+		const sortedTreeTalentsMap = new Map([...treeTalentsMap.entries()].sort((a, b) => a[0] - b[0]));
+		talentTreesMap.set(talentTree, sortedTreeTalentsMap);
 	}
 
 	if (hero === undefined || hero === null) {
