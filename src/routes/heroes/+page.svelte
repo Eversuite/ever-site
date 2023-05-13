@@ -38,10 +38,10 @@
 	bind:value={searchTerm}
 	type="text"
 	placeholder="Filter through the heroes"
-	class="mb-3 input"
+	class="mb-3 input p-2"
 />
 
-<div class="grid max-sm:grid-cols-1 grid-cols-3 gap-3">
+<div class="grid max-sm:grid-cols-1 grid-cols-3 gap-3 p-2">
 	{#each Array.from(byRole.keys()) as role}
 		<div>
 			<div class="text-center h1 font-evercore">{role.toUpperCase()}</div>
