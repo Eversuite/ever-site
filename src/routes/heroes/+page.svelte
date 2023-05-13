@@ -35,23 +35,23 @@
 	}
 </script>
 
-<div class="grid grid-cols-{roles.length} gap-3">
+<div class="grid max-sm:grid-cols-1 grid-cols-{roles.length} gap-3">
 	{#each roles as role}
-		<div class="text-center h1">{role}</div>
-	{/each}
-
-	{#each roles as role}
-		<div class="flex flex-wrap justify-center gap-3 p-4 variant-ghost rounded">
-			{#each byRole.get(role) as hero (hero.id)}
-				<a href="/heroes/{hero.id}" class="text-center">
-					<Avatar
-						border="border-4 border-surface-300-600-token hover:!border-primary-500"
-						cursor="cursor-pointer"
-						src="/characters/portraits/{hero.id}-portrait.png"
-						width="w-32"
-					/>{hero.name}
-				</a>
-			{/each}
+		<div>
+			<div class="text-center h1">{role}</div>
+			<div class="flex justify-center flex-wrap gap-3 variant-ghost p-4 rounded">
+				{#each byRole.get(role) as hero (hero.id)}
+					<a href="/heroes/{hero.id}" class="text-center">
+						<Avatar
+							rounded="rounded-2xl"
+							border="border-4 border-surface-300-600-token hover:!border-primary-500"
+							cursor="cursor-pointer"
+							src="/characters/portraits/{hero.id}-portrait.png"
+							width="w-32"
+						/>{hero.name}
+					</a>
+				{/each}
+			</div>
 		</div>
 	{/each}
 </div>
