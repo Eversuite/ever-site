@@ -61,7 +61,7 @@
 	<!-- Tab Panels --->
 	{#each [...talentsMap] as [talentTree, talentTreeMap], i}
 		{#if tabSet === i}
-			<div class="flex flex-row-reverse flex-wrap justify-around content-center">
+			<div class="flex flex-wrap justify-around content-center">
 				{#each [...talentTreeMap] as [tier, talents], i}
 					<div class="flex flex-col gap-y-3">
 						{#each talents as talent}
