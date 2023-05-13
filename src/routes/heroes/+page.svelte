@@ -22,7 +22,6 @@
 	};
 
 	$: byRole = groupBy(heroes, (hero) => hero.role);
-	$: roles = Array.from(byRole.keys());
 
 	function heroFilter(heroes: Hero[] | undefined, term: string): Hero[] {
 		heroes = heroes || []; // heroes is either the defined array or an empty array
@@ -43,9 +42,9 @@
 />
 
 <div class="grid max-sm:grid-cols-1 grid-cols-3 gap-3">
-	{#each roles as role}
+	{#each Array.from(byRole.keys()) as role}
 		<div>
-			<div class="text-center h1 font-evercore">{role}</div>
+			<div class="text-center h1 font-evercore">{role.toUpperCase()}</div>
 			<div class="flex justify-center flex-wrap gap-3 variant-ghost p-4 rounded">
 				{#each byRole.get(role) as hero (hero.id)}
 					<a href="/heroes/{hero.id}" class="text-center">
