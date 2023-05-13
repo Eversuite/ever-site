@@ -42,10 +42,10 @@
 	class="mb-3 input"
 />
 
-<div class="grid max-sm:grid-cols-1 grid-cols-{roles.length} gap-3">
+<div class="grid max-sm:grid-cols-1 grid-cols-3 gap-3">
 	{#each roles as role}
 		<div>
-			<div class="text-center h1">{role}</div>
+			<div class="text-center h1 font-evercore">{role}</div>
 			<div class="flex justify-center flex-wrap gap-3 variant-ghost p-4 rounded">
 				{#each byRole.get(role) as hero (hero.id)}
 					<a href="/heroes/{hero.id}" class="text-center">
