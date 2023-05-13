@@ -7,8 +7,26 @@
 
 	let searchTerm = '';
 	$: heroes = heroFilter(data?.heroData, searchTerm);
+	let groupBy = function <TItem, K>(list: TItem[], keyGetter: (TItem) => K): Map<K, TItem[]> {
+		const map = new Map();
+		list.forEach((item) => {
+			const key = keyGetter(item);
+			const collection = map.get(key);
+			if (!collection) {
+				map.set(key, [item]);
+			} else {
+				collection.push(item);
+			}
+		});
+		return map;
+	};
 
-	function heroFilter(heroes: Hero[], term: string): Hero[] {
+	$: byRole = groupBy(heroes, (hero) => hero.role);
+	$: roles = Array.from(byRole.keys());
+
+	function heroFilter(heroes: Hero[] | undefined, term: string): Hero[] {
+		heroes = heroes || []; // heroes is either the defined array or an empty array
+
 		return heroes.filter((hero) => contains(hero.name, term) || contains(hero.role, term));
 	}
 
@@ -17,14 +35,23 @@
 	}
 </script>
 
-<div class="flex flex-wrap justify-center gap-3">
-	{#each heroes as hero (hero.id)}
-		<a href="/heroes/{hero.id}">
-			<img
-				class="w-32 32 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
-				src="/characters/portraits/{hero.id}-portrait.png"
-				alt="Avatar image of {hero.name}"
-			/>
-		</a>
+<div class="grid grid-cols-{roles.length} gap-3">
+	{#each roles as role}
+		<div class="text-center h1">{role}</div>
+	{/each}
+
+	{#each roles as role}
+		<div class="flex flex-wrap justify-center gap-3 p-4 variant-ghost rounded">
+			{#each byRole.get(role) as hero (hero.id)}
+				<a href="/heroes/{hero.id}" class="text-center">
+					<Avatar
+						border="border-4 border-surface-300-600-token hover:!border-primary-500"
+						cursor="cursor-pointer"
+						src="/characters/portraits/{hero.id}-portrait.png"
+						width="w-32"
+					/>{hero.name}
+				</a>
+			{/each}
+		</div>
 	{/each}
 </div>
