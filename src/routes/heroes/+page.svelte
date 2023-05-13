@@ -35,6 +35,13 @@
 	}
 </script>
 
+<input
+	bind:value={searchTerm}
+	type="text"
+	placeholder="Filter through the heroes"
+	class="mb-3 input"
+/>
+
 <div class="grid max-sm:grid-cols-1 grid-cols-{roles.length} gap-3">
 	{#each roles as role}
 		<div>
