@@ -9,7 +9,7 @@
 	$: heroes = heroFilter(data?.heroData, searchTerm);
 	let groupBy = function <TItem, K>(list: TItem[], keyGetter: (TItem) => K): Map<K, TItem[]> {
 		const map = new Map();
-		list.forEach((item) => {
+		for (const item of list) {
 			const key = keyGetter(item);
 			const collection = map.get(key);
 			if (!collection) {
@@ -17,7 +17,7 @@
 			} else {
 				collection.push(item);
 			}
-		});
+		}
 		return map;
 	};
 
@@ -54,7 +54,8 @@
 							cursor="cursor-pointer"
 							src="/characters/portraits/{hero.id}-portrait.png"
 							width="w-32"
-						/>{hero.name}
+						/>
+						{hero.name}
 					</a>
 				{/each}
 			</div>

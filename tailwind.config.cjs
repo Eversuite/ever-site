@@ -7,8 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily:{
-        'evercore': ['EVERCORE']
+      fontFamily: {
+        "evercore": ["EVERCORE"],
+        "ardela": ["ArdelaEdgeX01"]
       }
     }
   },
