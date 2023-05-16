@@ -61,6 +61,9 @@
 	<!-- Tab Panels --->
 	{#each [...talentsMap] as [talentTree, talentTreeMap], i}
 		{#if tabSet === i}
+			<p class="text-center italic font-light opacity-70">
+				{talentTree.description}
+			</p>
 			<div class="flex flex-wrap justify-around content-center">
 				{#each [...talentTreeMap] as [tier, talents], i}
 					<div class="flex flex-col gap-y-3">
