@@ -17,9 +17,14 @@
 	}
 </script>
 
-<input bind:value={searchTerm} type="text" placeholder="Filter through shards" class="mb-3 input" />
+<input
+	bind:value={searchTerm}
+	type="text"
+	placeholder="Filter through shards"
+	class="mb-12 input"
+/>
 
-<div class="flex flex-wrap justify-center gap-3">
+<div class="flex flex-wrap justify-center gap-x-10 gap-y-8">
 	{#each shards as shard (shard.id)}
 		<ShardIcon {shard} />
 	{/each}
