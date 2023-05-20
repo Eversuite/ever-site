@@ -49,7 +49,9 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-3xl uppercase header-text">Eversite</strong>
+				<a class="flex flex-row place-items-center" href="/" title="Go to Homepage">
+					<strong class="text-3xl uppercase header-text text-primary-500">Evercore Vault</strong>
+				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<LightSwitch />
