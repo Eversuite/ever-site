@@ -38,7 +38,7 @@
 	bind:value={searchTerm}
 	type="text"
 	placeholder="Filter through the heroes"
-	class="mb-3 input p-2"
+	class="mb-3 input p-2 rounded-xl"
 />
 
 <div class="grid max-sm:grid-cols-1 grid-cols-3 gap-3 p-2">
