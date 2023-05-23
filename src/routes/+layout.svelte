@@ -16,6 +16,9 @@
 
 	const storeValue: Writable<number> = writable(0);
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	const heroTileUrl = '/heroes';
+	const shardTileUrl = '/shards';
+	const consumableTileUrl = '/consumables';
 
 	//Supabase stuff
 	import { invalidate } from '$app/navigation';
