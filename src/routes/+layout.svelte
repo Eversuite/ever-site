@@ -84,6 +84,16 @@
 	<div class="container mx-auto my-4">
 		<slot />
 	</div>
+	<svelte:fragment slot="pageFooter">
+		<div class="card p-4 text-center text-sm">
+			<p class="opacity-50">
+				Evercore Vault is an unofficial fansite created by fans for fans and is not affiliated with
+				or endorsed by Vela Games. All trademarks, copyrights, and other intellectual property
+				related to Evercore Heroes belong to their respective owners. No copyright infringement is
+				intended.
+			</p>
+		</div>
+	</svelte:fragment>
 </AppShell>
 
 <style global lang="postcss">
