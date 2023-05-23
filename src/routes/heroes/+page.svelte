@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Hero } from '$lib/class/Hero';
+	import type { Hero } from '$lib/class/Hero';
 	import { Avatar } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
@@ -38,7 +38,7 @@
 	bind:value={searchTerm}
 	type="text"
 	placeholder="Filter through the heroes"
-	class="mb-3 input p-2 rounded-xl"
+	class="mb-8 input"
 />
 
 <div class="grid max-sm:grid-cols-1 grid-cols-3 gap-3 p-2">

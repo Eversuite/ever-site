@@ -21,7 +21,7 @@
 	bind:value={searchTerm}
 	type="text"
 	placeholder="Filter through shards"
-	class="mb-12 input"
+	class="mb-8 input"
 />
 
 <div class="flex flex-wrap justify-center gap-x-10 gap-y-8">
