@@ -8,8 +8,8 @@
 	let searchTerm = '';
 	$: shards = shardFilter(data?.shardData, searchTerm);
 
-	function shardFilter(shards: Shard[], term: string): Shard[] {
-		return shards.filter((shard) => contains(shard.name, term));
+	function shardFilter(shards: Shard[] | undefined, term: string): Shard[] {
+		return (shards || []).filter((shard) => contains(shard.name, term));
 	}
 
 	function contains(source: string, term: string): boolean {
@@ -21,7 +21,7 @@
 	bind:value={searchTerm}
 	type="text"
 	placeholder="Filter through shards"
-	class="mb-12 input"
+	class="mb-8 input"
 />
 
 <div class="flex flex-wrap justify-center gap-x-10 gap-y-8">

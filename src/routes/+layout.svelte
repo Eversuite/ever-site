@@ -18,13 +18,14 @@
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 	const heroTileUrl = '/heroes';
 	const shardTileUrl = '/shards';
+	const consumableTileUrl = '/consumables';
 
 	//Supabase stuff
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	import { IconCrown, IconSparkles } from '@tabler/icons-svelte';
+	import { IconCrown, IconSparkles, IconMoneybag } from '@tabler/icons-svelte';
 
 	export let data: LayoutData;
 
@@ -77,6 +78,15 @@
 				value={2}
 			>
 				<IconSparkles size="32" />
+			</AppRailTile>
+			<AppRailTile
+				tag="a"
+				href={consumableTileUrl}
+				class={consumableTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
+				label="Consumables"
+				value={3}
+			>
+				<IconMoneybag size="32" />
 			</AppRailTile>
 		</AppRail>
 	</svelte:fragment>
