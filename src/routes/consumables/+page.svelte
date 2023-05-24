@@ -8,8 +8,8 @@
 	let searchTerm = '';
 	$: consumables = consumableFilter(data?.consumableData, searchTerm);
 
-	function consumableFilter(consumables: Consumable[], term: string): Consumable[] {
-		return consumables.filter((consumable) => contains(consumable.name, term));
+	function consumableFilter(consumables: Consumable[] | undefined, term: string): Consumable[] {
+		return (consumables || []).filter((consumable) => contains(consumable.name, term));
 	}
 
 	function contains(source: string, term: string): boolean {
