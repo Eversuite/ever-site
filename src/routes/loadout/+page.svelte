@@ -54,7 +54,9 @@
 	}
 
 	function addShard(shard: Shard) {
-		selectedShards = [...selectedShards, shard];
+		if(shard) {
+			selectedShards = [...selectedShards, shard];
+		}
 	}
 </script>
 
