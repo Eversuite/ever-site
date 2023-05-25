@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import type { Hero } from '$lib/class/Hero';
-	import { Avatar } from '@skeletonlabs/skeleton';
 
 	export let data: PageData;
 
@@ -48,12 +47,10 @@
 			<div class="flex justify-center flex-wrap gap-3 variant-ghost p-4 rounded">
 				{#each byRole.get(role) as hero (hero.id)}
 					<a href="/heroes/{hero.id}" class="text-center">
-						<Avatar
-							rounded="rounded-2xl"
-							border="border-4 border-surface-300-600-token hover:!border-primary-500"
-							cursor="cursor-pointer"
-							src="/characters/portraits/{hero.id}-portrait.png"
-							width="w-32"
+						<img
+							alt="Image for {hero.name}"
+							class="w-32 h-32 border-4 rounded-2xl border-surface-300-600-token hover:!border-primary-500 cursor-pointer"
+							src="/characters/portraits/{hero.id}.png"
 						/>
 						{hero.name}
 					</a>
