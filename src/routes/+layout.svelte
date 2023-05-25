@@ -7,7 +7,7 @@
 	import '../app.postcss';
 
 	//Skeleton stuff
-	import { AppShell, AppBar, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, AppRail, AppRailTile, Modal } from '@skeletonlabs/skeleton';
 	import { writable, type Writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -43,6 +43,8 @@
 		return () => subscription.unsubscribe();
 	});
 </script>
+
+<Modal />
 
 <!-- App Shell -->
 <AppShell>
