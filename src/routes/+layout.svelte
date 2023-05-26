@@ -7,7 +7,7 @@
 	import '../app.postcss';
 
 	//Skeleton stuff
-	import { AppShell, AppBar, AppRail, AppRailTile } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 	import { writable, type Writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -16,9 +16,6 @@
 
 	const storeValue: Writable<number> = writable(0);
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
-	const heroTileUrl = '/heroes';
-	const shardTileUrl = '/shards';
-	const consumableTileUrl = '/consumables';
 
 	//Supabase stuff
 	import { invalidate } from '$app/navigation';
@@ -61,33 +58,30 @@
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
 		<AppRail selected={storeValue}>
-			<AppRailTile
-				tag="a"
-				href={heroTileUrl}
-				class={heroTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
-				label="Heroes"
-				value={1}
+			<AppRailAnchor
+				regionLead="flex justify-center"
+				href={'/heroes'}
+				selected={$page.url.pathname === '/heroes'}
 			>
-				<IconCrown size="32" />
-			</AppRailTile>
-			<AppRailTile
-				tag="a"
-				href={shardTileUrl}
-				class={shardTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
-				label="Shards"
-				value={2}
+				<svelte:fragment slot="lead"><IconCrown size="35" /></svelte:fragment>
+				<span>Heroes</span>
+			</AppRailAnchor>
+			<AppRailAnchor
+				regionLead="flex justify-center"
+				href={'/shards'}
+				selected={$page.url.pathname === '/shards'}
 			>
-				<IconSparkles size="32" />
-			</AppRailTile>
-			<AppRailTile
-				tag="a"
-				href={consumableTileUrl}
-				class={consumableTileUrl === $page.url.pathname ? '!bg-primary-500' : ''}
-				label="Consumables"
-				value={3}
+				<svelte:fragment slot="lead"><IconSparkles size="35" /></svelte:fragment>
+				<span>Shards</span>
+			</AppRailAnchor>
+			<AppRailAnchor
+				regionLead="flex justify-center"
+				href={'/consumables'}
+				selected={$page.url.pathname === '/consumables'}
 			>
-				<IconMoneybag size="32" />
-			</AppRailTile>
+				<svelte:fragment slot="lead"><IconMoneybag size="35" /></svelte:fragment>
+				<span>Consumables</span>
+			</AppRailAnchor>
 		</AppRail>
 	</svelte:fragment>
 	<!-- Page Route Content -->
