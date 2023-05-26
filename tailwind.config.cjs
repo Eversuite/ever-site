@@ -9,7 +9,8 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				evercore: ['EVERCORE'],
-				ardela: ['ArdelaEdgeX01']
+				ardela: ['ArdelaEdgeX01'],
+				futura: ['Futura PT Web Book']
 			}
 		}
 	},

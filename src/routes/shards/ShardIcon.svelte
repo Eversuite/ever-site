@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Shard } from '$lib/class/Shard';
+	import type { Shard } from '$lib/class/Shard';
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
@@ -10,7 +10,6 @@
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
 		target: `${shard !== undefined ? shard.id : 'dummy'}-popup`,
-		placement: 'top'
 	};
 
 	function resolveDescription(sh: Shard): string {

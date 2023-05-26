@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { Hero } from '$lib/class/Hero';
+	import type type { Hero } from '$lib/class/Hero';
 
 	export let data: PageData;
 
