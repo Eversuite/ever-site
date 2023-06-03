@@ -4,7 +4,7 @@
 	// Props
 	/** Exposes parent props to this component. */
 	export let parent: any;
-	console.log($modalStore[0].meta)
+	console.log($modalStore[0].meta);
 
 	// Local
 	let selectedItem = $modalStore[0].meta.items[0];
@@ -27,25 +27,25 @@
 		<header class={cHeader}>{$modalStore[0].title ?? '(title missing)'}</header>
 		<article>{$modalStore[0].body ?? '(body missing)'}</article>
 		<ListBox class="border border-surface-500 p-4 max h-[40vh] overflow-y-auto">
-		{#each $modalStore[0].meta.items as item}
-		<ListBoxItem bind:group={selectedItem} name={item.name} value={item}>
-			<svelte:fragment slot="lead">
-				<Avatar
-				rounded="rounded-xl"
-				border="border-2 border-surface-300-600-token"
-				cursor="cursor-pointer"
-				src="{$modalStore[0].meta.path}/{item.id}.png"
-				width="w-12"
-			/>
-			</svelte:fragment>
-			{item.name}
-		</ListBoxItem>
-		{/each}
-	</ListBox>
+			{#each $modalStore[0].meta.items as item}
+				<ListBoxItem bind:group={selectedItem} name={item.name} value={item}>
+					<svelte:fragment slot="lead">
+						<Avatar
+							rounded="rounded-xl"
+							border="border-2 border-surface-300-600-token"
+							cursor="cursor-pointer"
+							src="{$modalStore[0].meta.path}/{item.id}.png"
+							width="w-12"
+						/>
+					</svelte:fragment>
+					{item.name}
+				</ListBoxItem>
+			{/each}
+		</ListBox>
 		<!-- prettier-ignore -->
 		<footer class="modal-footer {parent.regionFooter}">
         <button class="btn {parent.buttonNeutral}" on:click={parent.onClose}>{parent.buttonTextCancel}</button>
-        <button class="btn {parent.buttonPositive}" on:click={onFormSubmit}>Select Flavors</button>
+        <button class="btn {parent.buttonPositive}" on:click={onFormSubmit}>Select</button>
     </footer>
 	</div>
 {/if}
