@@ -112,11 +112,11 @@
 	
 	.heroDetailsContainer {
 		flex: 1;
+	}
 
-		img {
-			@media (max-width: 1600px) {
-				display: none;
-			}
+	@media (max-width: 1600px) {
+		img.heroImage {
+			display: none;
 		}
 	}
 
