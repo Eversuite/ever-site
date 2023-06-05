@@ -129,7 +129,7 @@
 		<img
 			on:click={handleHeroClick}
 			alt="Image for {selectedHero.name}"
-			class="w-32 h-32 {borderCss} self-center"
+			class="w-28 h-28 {borderCss} self-center"
 			src="/characters/portraits/{selectedHero.id}.png"
 			on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 		/>
@@ -139,13 +139,12 @@
 			on:click={handleHeroClick}
 			on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 		>
-			<IconCrown class="w-32 h-32" />
+			<IconCrown class="w-28 h-28" />
 		</div>
 	{/if}
 
 	{#if selectedHeroAbilities && selectedHeroAbilities.length > 0}
 		<div class="h1 font-evercore mt-12">ABILITIES</div>
-		<div class="border rounded-2xl border-surface-300-600-token">
 			<div class="flex flex-col items-center mt-4">
 				<div class="flex mb-4">
 					<div
@@ -207,19 +206,19 @@
 				</div>
 				<div />
 			</div>
-		</div>
 	{/if}
 
+	<div class="flex flex-row justify-around content-center gap-x-12">
+		<div class="flex flex-col">
 	<div class="h1 font-evercore mt-12">SHARDS</div>
-	<div class="border flex flex-col justify-center border rounded-2xl border-surface-300-600-token">
 	<div
-		class="{borderCss} self-center mb-4 mt-4"
+		class="{borderCss} self-center mb-4"
 		on:click={handleShardClick}
 		on:keyup={(e) => e.key === 'Enter' && handleShardClick()}
 	>
-		<IconPlus class="w-10 h-10" />
+		<IconPlus class="w-14 h-14" />
 	</div>
-	<div class="flex flex-row gap-x-4 items-center self-center">
+	<div class="flex flex-row flex-wrap gap-x-4 items-center self-center">
 		{#each selectedShards as shard}
 			<div on:click={() => removeShard(shard)}>
 				<ShardLoadoutIcon {shard} />
@@ -228,12 +227,13 @@
 		{/each}
 	</div>
 </div>
+<div class="flex flex-col">
 	<div class="h1 font-evercore mt-12">CONSUMABLE</div>
 	{#if selectedConsumable}
 		<img
 			on:click={handleConsumeableClick}
 			alt="Image for {selectedConsumable.name}"
-			class="w-32 h-32 {borderCss} self-center"
+			class="w-24 h-24 {borderCss} self-center"
 			src="/consumables/{selectedConsumable.id}.png"
 			on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 		/>
@@ -243,9 +243,12 @@
 			on:click={handleConsumeableClick}
 			on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 		>
-			<IconMoneybag class="w-32 h-32" />
+			<IconMoneybag class="w-24 h-24" />
 		</div>
+
 	{/if}
+</div>
+	</div>
 	<button on:click={shareBuild} type="button" class="btn variant-filled mt-12">
 		<span>Share</span>
 	</button>
