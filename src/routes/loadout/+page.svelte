@@ -10,13 +10,15 @@
 	import { abilitySlot } from '$lib/Utility';
 	import AbilityLoadoutIcon from './AbilityLoadoutIcon.svelte';
 	import ShardLoadoutIcon from './ShardLoadoutIcon.svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	export let data: PageData;
-	let selectedHero: Hero;
-	let selectedHeroAbilities: Ability[];
-	let abilityLadder = new Array(20).fill(null);
-	let selectedConsumable: Consumable;
-	let selectedShards: Shard[] = [];
+	let selectedHero: Hero = data?.selectedHero ?? undefined;
+	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
+	let abilityLadder = data?.abilityLadder ?? new Array(15).fill(null);
+	let selectedConsumable:Consumable = data?.selectedConsumable ?? undefined;
+	let selectedShards: Shard[] = data?.selectedShards ?? [];
 
 	const borderCss =
 		'border-4 rounded-2xl border-surface-300-600-token hover:!border-primary-500 cursor-pointer';
@@ -53,16 +55,12 @@
 		response: (r: Consumable) => (selectedConsumable = r)
 	};
 
-	function remainingShards() {
-		console.log("boop")
-		return allShards.filter(item => !selectedShards.includes(item))
-	}
-	
 	function handleHeroClick() {
 		modalStore.trigger(heroModal);
 	}
 
 	async function heroSelected(hero: Hero) {
+		console.log("hero selehced: " + hero)
 		const [abilitiesResult, talentsResult, talentTreesResult] = await Promise.all([
 			data.supabase.from('abilities').select().eq('source', hero.id),
 			data.supabase.from('talents').select().eq('hero', hero.id),
@@ -78,10 +76,9 @@
 		abilityLadder[nullIndex] = abilitySlot(selectedHeroAbilities, slot);
 	}
 
-	function removeAbility(index: index) {
-		abilityLadder[index] = null
+	function removeAbility(index: number) {
+		abilityLadder[index] = null;
 	}
-
 
 	function handleShardClick() {
 		modalStore.trigger(shardModal);
@@ -95,12 +92,34 @@
 		if (shard) {
 			selectedShards = [...selectedShards, shard];
 		}
-		shardModal.meta.items = data?.shards.filter(item => !selectedShards.includes(item))
+		shardModal.meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
 	}
 
 	function removeShard(removedShard: Shard) {
 		selectedShards = selectedShards.filter((shard) => shard !== removedShard);
-		shardModal.meta.items = data?.shards.filter(item => !selectedShards.includes(item))
+		shardModal.meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
+	}
+
+	function shareBuild() {
+		let abilityLadderIds = abilityLadder.map((ability) => {
+			if (ability) {
+				return ability.id;
+			} else {
+				return null;
+			}
+		});
+		let selectedShardsIds = selectedShards.map((shard) => shard.id);
+		let loadout = {
+			heroId: selectedHero.id,
+			abilityIds: abilityLadderIds,
+			consumableId: selectedConsumable.id,
+			shardIds: selectedShardsIds
+		};
+		let jsonLoadout = JSON.stringify(loadout);
+		let encoded = window.btoa(jsonLoadout);
+
+		$page.url.searchParams.set('build', encoded);
+		goto(`?${$page.url.searchParams.toString()}`);
 	}
 </script>
 
@@ -166,7 +185,7 @@
 						{#if ability}
 							<span>{index + 1}</span>
 							<img
-								on:click={() => (removeAbility(index))}
+								on:click={() => removeAbility(index)}
 								on:keyup={(e) => e.key === 'Enter' && removeAbility(ability)}
 								id="{ability.id}-image"
 								src="/abilities/{ability.id}.png"
@@ -219,4 +238,7 @@
 			<IconMoneybag class="w-32 h-32" />
 		</div>
 	{/if}
+	<button on:click={shareBuild} type="button" class="btn variant-filled">
+		<span>Share</span>
+	</button>
 </div>
