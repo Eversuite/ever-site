@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
-	import { IconCrown, IconSparkles, IconMoneybag, IconMathGreater } from '@tabler/icons-svelte';
+	import { IconCrown, IconPlus, IconMoneybag, IconMathGreater } from '@tabler/icons-svelte';
 	import ModalListSelect from './ModalListSelect.svelte';
 	import type { PageData } from '../$types';
 	import type { Shard } from '$lib/class/Shard';
@@ -17,7 +17,7 @@
 	let selectedHero: Hero = data?.selectedHero ?? undefined;
 	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
 	let abilityLadder = data?.abilityLadder ?? new Array(15).fill(null);
-	let selectedConsumable:Consumable = data?.selectedConsumable ?? undefined;
+	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
 	let selectedShards: Shard[] = data?.selectedShards ?? [];
 
 	const borderCss =
@@ -60,7 +60,7 @@
 	}
 
 	async function heroSelected(hero: Hero) {
-		console.log("hero selehced: " + hero)
+		console.log('hero selehced: ' + hero);
 		const [abilitiesResult, talentsResult, talentTreesResult] = await Promise.all([
 			data.supabase.from('abilities').select().eq('source', hero.id),
 			data.supabase.from('talents').select().eq('hero', hero.id),
@@ -123,18 +123,19 @@
 	}
 </script>
 
-<div class="flex flex-col gap-3 items-center">
+<div class="flex flex-col flex-wrap justify-center text-center">
+	<div class="h1 font-evercore">HERO</div>
 	{#if selectedHero}
 		<img
 			on:click={handleHeroClick}
 			alt="Image for {selectedHero.name}"
-			class="w-32 h-32 {borderCss}"
+			class="w-32 h-32 {borderCss} self-center"
 			src="/characters/portraits/{selectedHero.id}.png"
 			on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 		/>
 	{:else}
 		<div
-			class={borderCss}
+			class="{borderCss} self-center"
 			on:click={handleHeroClick}
 			on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 		>
@@ -143,102 +144,109 @@
 	{/if}
 
 	{#if selectedHeroAbilities && selectedHeroAbilities.length > 0}
-		<div class="flex flex-col items-center">
-			<div class="flex mb-4">
-				<div
-					on:click={() => addAbility('Q')}
-					on:keyup={(e) => e.key === 'Enter' && addAbility('Q')}
-				>
-					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'Q')} />
-				</div>
-				<div
-					on:click={() => addAbility('W')}
-					on:keyup={(e) => e.key === 'Enter' && addAbility('W')}
-				>
-					<AbilityLoadoutIcon
-						on:click={() => addAbility('W')}
-						ability={abilitySlot(selectedHeroAbilities, 'W')}
-					/>
-				</div>
-				<div
-					on:click={() => addAbility('E')}
-					on:keyup={(e) => e.key === 'Enter' && addAbility('E')}
-				>
-					<AbilityLoadoutIcon
-						on:click={() => addAbility('E')}
-						ability={abilitySlot(selectedHeroAbilities, 'E')}
-					/>
-				</div>
-				<div
-					on:click={() => addAbility('R')}
-					on:keyup={(e) => e.key === 'Enter' && addAbility('R')}
-				>
-					<AbilityLoadoutIcon
-						on:click={() => addAbility('R')}
-						ability={abilitySlot(selectedHeroAbilities, 'R')}
-					/>
-				</div>
-			</div>
-			<div class="flex">
-				{#each abilityLadder as ability, index}
-					<div class="flex flex-col items-center">
-						{#if ability}
-							<span>{index + 1}</span>
-							<img
-								on:click={() => removeAbility(index)}
-								on:keyup={(e) => e.key === 'Enter' && removeAbility(ability)}
-								id="{ability.id}-image"
-								src="/abilities/{ability.id}.png"
-								alt="image for {ability.name}"
-								class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500"
-							/>
-							<span>{ability.slot}</span>
-						{:else}
-							<span>{index + 1}</span>
-							<div
-								class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 cursor-pointer mb-6"
-							/>
-						{/if}
+		<div class="h1 font-evercore mt-12">ABILITIES</div>
+		<div class="border rounded-2xl border-surface-300-600-token">
+			<div class="flex flex-col items-center mt-4">
+				<div class="flex mb-4">
+					<div
+						on:click={() => addAbility('Q')}
+						on:keyup={(e) => e.key === 'Enter' && addAbility('Q')}
+					>
+						<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'Q')} />
 					</div>
-				{/each}
+					<div
+						on:click={() => addAbility('W')}
+						on:keyup={(e) => e.key === 'Enter' && addAbility('W')}
+					>
+						<AbilityLoadoutIcon
+							on:click={() => addAbility('W')}
+							ability={abilitySlot(selectedHeroAbilities, 'W')}
+						/>
+					</div>
+					<div
+						on:click={() => addAbility('E')}
+						on:keyup={(e) => e.key === 'Enter' && addAbility('E')}
+					>
+						<AbilityLoadoutIcon
+							on:click={() => addAbility('E')}
+							ability={abilitySlot(selectedHeroAbilities, 'E')}
+						/>
+					</div>
+					<div
+						on:click={() => addAbility('R')}
+						on:keyup={(e) => e.key === 'Enter' && addAbility('R')}
+					>
+						<AbilityLoadoutIcon
+							on:click={() => addAbility('R')}
+							ability={abilitySlot(selectedHeroAbilities, 'R')}
+						/>
+					</div>
+				</div>
+				<div class="flex">
+					{#each abilityLadder as ability, index}
+						<div class="flex flex-col items-center">
+							{#if ability}
+								<span>{index + 1}</span>
+								<img
+									on:click={() => removeAbility(index)}
+									on:keyup={(e) => e.key === 'Enter' && removeAbility(ability)}
+									id="{ability.id}-image"
+									src="/abilities/{ability.id}.png"
+									alt="image for {ability.name}"
+									class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500"
+								/>
+								<span>{ability.slot}</span>
+							{:else}
+								<span>{index + 1}</span>
+								<div
+									class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 cursor-pointer mb-3"
+								/>
+							{/if}
+						</div>
+					{/each}
+				</div>
+				<div />
 			</div>
-			<div />
 		</div>
 	{/if}
 
-	<div class="flex flex-row gap-x-3 items-center">
+	<div class="h1 font-evercore mt-12">SHARDS</div>
+	<div class="border flex flex-col justify-center border rounded-2xl border-surface-300-600-token">
+	<div
+		class="{borderCss} self-center mb-4 mt-4"
+		on:click={handleShardClick}
+		on:keyup={(e) => e.key === 'Enter' && handleShardClick()}
+	>
+		<IconPlus class="w-10 h-10" />
+	</div>
+	<div class="flex flex-row gap-x-4 items-center self-center">
 		{#each selectedShards as shard}
 			<div on:click={() => removeShard(shard)}>
 				<ShardLoadoutIcon {shard} />
 			</div>
 			<IconMathGreater class="w-10 h-10" />
 		{/each}
-		<div
-			class={borderCss}
-			on:click={handleShardClick}
-			on:keyup={(e) => e.key === 'Enter' && handleShardClick()}
-		>
-			<IconSparkles class="w-32 h-32" />
-		</div>
 	</div>
+</div>
+	<div class="h1 font-evercore mt-12">CONSUMABLE</div>
 	{#if selectedConsumable}
 		<img
 			on:click={handleConsumeableClick}
 			alt="Image for {selectedConsumable.name}"
-			class="w-32 h-32 {borderCss}"
+			class="w-32 h-32 {borderCss} self-center"
 			src="/consumables/{selectedConsumable.id}.png"
 			on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 		/>
 	{:else}
 		<div
-			class={borderCss}
+			class="{borderCss} self-center"
 			on:click={handleConsumeableClick}
 			on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 		>
 			<IconMoneybag class="w-32 h-32" />
 		</div>
 	{/if}
-	<button on:click={shareBuild} type="button" class="btn variant-filled">
+	<button on:click={shareBuild} type="button" class="btn variant-filled mt-12">
 		<span>Share</span>
 	</button>
 </div>
