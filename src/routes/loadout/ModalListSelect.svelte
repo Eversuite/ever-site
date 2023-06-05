@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Avatar, ListBox, ListBoxItem, modalStore } from '@skeletonlabs/skeleton';
+	import { Avatar, ListBox, ListBoxItem, modalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
+	import ModalListItem from './ModalListItem.svelte';
 
 	// Props
 	/** Exposes parent props to this component. */
 	export let parent: any;
-	console.log($modalStore[0].meta);
 
 	// Local
 	let selectedItem = $modalStore[0].meta.items[0];
@@ -17,7 +17,7 @@
 
 	// Base Classes
 	const cBase = 'card p-4 w-modal shadow-xl space-y-4';
-	const cHeader = 'text-2xl font-bold';
+	const cHeader = 'text-2xl font-ardela text-center';
 </script>
 
 <!-- @component This example creates a simple form modal. -->
@@ -25,7 +25,6 @@
 {#if $modalStore[0]}
 	<div class="modal-example-form {cBase}">
 		<header class={cHeader}>{$modalStore[0].title ?? '(title missing)'}</header>
-		<article>{$modalStore[0].body ?? '(body missing)'}</article>
 		<ListBox class="border border-surface-500 p-4 max h-[40vh] overflow-y-auto">
 			{#each $modalStore[0].meta.items as item}
 				<ListBoxItem bind:group={selectedItem} name={item.name} value={item}>
@@ -39,6 +38,9 @@
 						/>
 					</svelte:fragment>
 					{item.name}
+				<svelte:fragment slot="trail">
+				<ModalListItem {item} />
+				</svelte:fragment>
 				</ListBoxItem>
 			{/each}
 		</ListBox>

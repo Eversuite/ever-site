@@ -10,9 +10,9 @@ export const load: PageLoad = async ({ parent, url }) => {
 
 	// Load the wanted character from the database.
 	const [heroesResult, shardsResult, consumablesResult] = await Promise.all([
-		supabase.from('heroes').select(),
-		supabase.from('shards').select(),
-		supabase.from('consumables').select()
+		supabase.from('heroes').select().order('name'),
+		supabase.from('shards').select().order('name'),
+		supabase.from('consumables').select().order('name')
 	]);
 
 	const heroes = heroesResult.data as Hero[];
