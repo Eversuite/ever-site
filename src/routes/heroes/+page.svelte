@@ -72,27 +72,29 @@
 				</div>
 			{/each}
 		</div>
-		{#if selectedHero}
-			<div class="flex flex-col items-center p-4 heroDetailsContainer">
-				<div>
-					<div class="flex flex-row" style="transition all .2s ease-in-out">
-						<div class="flex flex-col items-start">
-							<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.id.toUpperCase()}</h1>
-							<p class="mb-2 text-2xl heroDescription" style="">{selectedHero?.description.toUpperCase()}</p>
+		<div class="detailsContainer">
+			{#if selectedHero}
+				<div class="flex flex-col items-center p-4 heroDetailsContainer">
+					<div>
+						<div class="flex flex-row" style="transition all .2s ease-in-out">
+							<div class="flex flex-col items-start">
+								<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.id.toUpperCase()}</h1>
+								<p class="mb-2 text-2xl heroDescription" style="">{selectedHero?.description.toUpperCase()}</p>
+							</div>
+							<img src={`/characters/preview/${selectedHero?.id}-preview-cropped.png`} class="object-scale-down max-h-[500px] max-w-[500px] heroImage"/>
 						</div>
-						<img src={`/characters/preview/${selectedHero?.id}-preview-cropped.png`} class="object-scale-down max-h-[500px] max-w-[500px] heroImage"/>
-					</div>
-					<div class="flex flex-row">
+						<div class="flex flex-row">
 
+						</div>
 					</div>
 				</div>
-			</div>
-		{/if}
-		{#if !selectedHero}
-			<div class="flex flex-col items-center justify-center p-4"  style="flex: 1;">
-				<p class="mb-2 text-5xl heroDescription text-center">{"SELECT A HERO"}</p>
-			</div>
-		{/if}
+			{/if}
+			{#if !selectedHero}
+				<div class="flex flex-col items-center justify-center p-4"  style="flex: 1;">
+					<p class="mb-2 text-5xl heroDescription text-center">{"SELECT A HERO"}</p>
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -104,12 +106,22 @@
 	.heroListContainer {
 		overflow-y: scroll;
 		height: calc(100vh - 96px);
+		
+		@media (max-width: 1050px) {
+			flex: 1;
+		}
 	}
 
 	.heroList {
 		grid-template-columns: (auto-fit, minmax(0, 1fr));
 	}
 	
+	.detailsContainer {
+		@media (max-width: 1050px) {
+			display: none;
+		}
+	}
+
 	.heroDetailsContainer {
 		flex: 1;
 	}
