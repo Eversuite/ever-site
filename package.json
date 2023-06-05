@@ -37,6 +37,6 @@
 	"dependencies": {
 		"@floating-ui/dom": "^1.2.9",
 		"@supabase/auth-helpers-sveltekit": "^0.9.4",
-		"@tabler/icons-svelte": "^2.20.0"
+		"@tabler/icons-svelte": "^2.21.0"
 	}
 }
