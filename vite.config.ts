@@ -4,11 +4,4 @@ import postcssNesting from 'postcss-nesting';
 
 export default defineConfig({
 	plugins: [sveltekit()],
-	css: {
-        postcss: {
-            plugins: [
-                postcssNesting
-            ],
-        },
-    }
 });
