@@ -32,102 +32,33 @@
 	function contains(source: string, term: string): boolean {
 		return source.toLowerCase().indexOf(term.toLowerCase()) !== -1;
 	}
-
-	let selectedHero: Hero | undefined = undefined;
-	$selectedHero
-
-	function selectHero (heroDetails: Hero) {
-		selectedHero = heroDetails;
-	}
-
 </script>
 
-<div class="heroPageContainer">
-	<input
-		bind:value={searchTerm}
-		type="text"
-		placeholder="Filter through the heroes"
-		class="mb-8 input"
-	/>
+<input
+	bind:value={searchTerm}
+	type="text"
+	placeholder="Filter through the heroes"
+	class="mb-8 input"
+/>
 
-	<div class="flex justify-start gap-4">
-		<div class="flex flex-col heroListContainer">
-			{#each Array.from(byRole.keys()) as role}
-				<div class="mb-4 mr-4">
-					<div class="text-left h2 font-evercore">{role.toUpperCase()}</div>
-					<!-- <div class="flex justify-start flex-wrap gap-3 p-4"> -->
-					<div class="grid max-sm:grid-cols-1 grid-cols-4 gap-3">
-						{#each byRole.get(role) as hero (hero.id)}
-							<div class="flex flex-col justify-center items-center m-2" on:click|once={() => selectHero(hero)}>
-								<Avatar
-									rounded="rounded-2xl"
-									border="border-4 border-surface-300-600-token hover:!border-primary-500"
-									cursor="cursor-pointer"
-									src="/characters/portraits/{hero.id}-portrait.png"
-									width="w-20"
-								/>
-							</div>
-						{/each}
-					</div>
-				</div>
-			{/each}
+<div class="grid max-sm:grid-cols-1 grid-cols-3 gap-3 p-2">
+	{#each Array.from(byRole.keys()) as role}
+		<div>
+			<div class="text-center h1 font-evercore">{role.toUpperCase()}</div>
+			<div class="flex justify-center flex-wrap gap-3 variant-ghost p-4 rounded">
+				{#each byRole.get(role) as hero (hero.id)}
+					<a href="/heroes/{hero.id}" class="text-center">
+						<Avatar
+							rounded="rounded-2xl"
+							border="border-4 border-surface-300-600-token hover:!border-primary-500"
+							cursor="cursor-pointer"
+							src="/characters/portraits/{hero.id}-portrait.png"
+							width="w-32"
+						/>
+						{hero.name}
+					</a>
+				{/each}
+			</div>
 		</div>
-		{#if selectedHero}
-			<div class="flex flex-col items-center p-4 heroDetailsContainer">
-				<div>
-					<div class="flex flex-row" style="transition all .2s ease-in-out">
-						<div class="flex flex-col items-start">
-							<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.id.toUpperCase()}</h1>
-							<p class="mb-2 text-2xl heroDescription" style="">{selectedHero?.description.toUpperCase()}</p>
-						</div>
-						<img src={`/characters/preview/${selectedHero?.id}-preview-cropped.png`} class="object-scale-down max-h-[500px] max-w-[500px] heroImage"/>
-					</div>
-					<div class="flex flex-row">
-
-					</div>
-				</div>
-			</div>
-		{/if}
-		{#if !selectedHero}
-			<div class="flex flex-col items-center justify-center p-4"  style="flex: 1;">
-				<p class="mb-2 text-5xl heroDescription text-center">{"SELECT A HERO"}</p>
-			</div>
-		{/if}
-	</div>
+	{/each}
 </div>
-
-<style global lang="postcss">
-	.heroPageContainer {
-		height: calc(100vh - 32px);
-	}
-	
-	.heroListContainer {
-		overflow-y: scroll;
-		height: calc(100vh - 96px);
-	}
-
-	.heroList {
-		grid-template-columns: (auto-fit, minmax(0, 1fr));
-	}
-	
-	.heroDetailsContainer {
-		flex: 1;
-
-		img {
-			@media (max-width: 1600px) {
-				display: none;
-			}
-		}
-	}
-
-	.heroLabel {
-		max-width: 350px;
-		font-family: 'EVERCORE';
-		color: white;
-	}
-
-	.heroDescription {
-		max-width: 350px;
-		color: white;
-	}
-</style>
