@@ -44,59 +44,62 @@
 <!-- App Shell -->
 <AppShell>
 	<svelte:fragment slot="header">
-		<!-- App Bar -->
-		<AppBar>
-			<svelte:fragment slot="lead">
-				<a class="flex flex-row place-items-center" href="/" title="Go to Homepage">
-					<strong class="text-3xl uppercase header-text text-primary-600">Evercore Vault</strong>
-				</a>
-			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<LightSwitch />
-			</svelte:fragment>
-		</AppBar>
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
-		<AppRail selected={storeValue}>
-			<AppRailAnchor
-				regionLead="flex justify-center"
-				href={'/heroes'}
-				selected={$page.url.pathname === '/heroes'}
-			>
-				<svelte:fragment slot="lead"><IconCrown size="35" /></svelte:fragment>
-				<span>Heroes</span>
-			</AppRailAnchor>
-			<AppRailAnchor
-				regionLead="flex justify-center"
-				href={'/shards'}
-				selected={$page.url.pathname === '/shards'}
-			>
-				<svelte:fragment slot="lead"><IconSparkles size="35" /></svelte:fragment>
-				<span>Shards</span>
-			</AppRailAnchor>
-			<AppRailAnchor
-				regionLead="flex justify-center"
-				href={'/consumables'}
-				selected={$page.url.pathname === '/consumables'}
-			>
-				<svelte:fragment slot="lead"><IconMoneybag size="35" /></svelte:fragment>
-				<span>Consumables</span>
-			</AppRailAnchor>
+		<AppRail selected={storeValue} width="w-60">
+			<div class="sideBarContentContainer">
+				<div>
+					<a class="flex flex-row place-items-center p-2 bg-dark" href="/" title="Go to Homepage">
+						<strong class="text-3xl uppercase header-text text-primary-600">Evercore Vault</strong>
+					</a>	
+					<div class="sideBarContentAnchor">
+						<AppRailAnchor
+							regionLead="flex flex-row justify-start items-center"
+							href={'/heroes'}
+							selected={$page.url.pathname === '/heroes'}
+						>
+							<svelte:fragment slot="lead"><IconCrown size="35" /></svelte:fragment>
+							<span>HEROES</span>
+						</AppRailAnchor>
+					</div>
+					<div class="sideBarContentAnchor">
+						<AppRailAnchor
+							regionLead="flex justify-center"
+							href={'/shards'}
+							selected={$page.url.pathname === '/shards'}
+						>
+							<svelte:fragment slot="lead"><IconSparkles size="35" /></svelte:fragment>
+							<span>SHARDS</span>
+						</AppRailAnchor>
+					</div>
+					<div class="sideBarContentAnchor">
+						<AppRailAnchor
+							regionLead="flex justify-center"
+							href={'/consumables'}
+							selected={$page.url.pathname === '/consumables'}
+						>
+							<svelte:fragment slot="lead"><IconMoneybag size="35" /></svelte:fragment>
+							<span>CONSUMABLES</span>
+						</AppRailAnchor>
+					</div>
+				</div>
+				<div class="p-4 text-center text-sm disclosure bg-dark">
+					<p class="opacity-50">
+						Evercore Vault is an unofficial fansite created by fans for fans and is not affiliated with
+						or endorsed by Vela Games. All trademarks, copyrights, and other intellectual property
+						related to Evercore Heroes belong to their respective owners. No copyright infringement is
+						intended.
+					</p>
+				</div>
+			</div>
 		</AppRail>
 	</svelte:fragment>
 	<!-- Page Route Content -->
-	<div class="container mx-auto my-4">
-		<slot />
-	</div>
-	<svelte:fragment slot="pageFooter">
-		<div class="card p-4 text-center text-sm">
-			<p class="opacity-50">
-				Evercore Vault is an unofficial fansite created by fans for fans and is not affiliated with
-				or endorsed by Vela Games. All trademarks, copyrights, and other intellectual property
-				related to Evercore Heroes belong to their respective owners. No copyright infringement is
-				intended.
-			</p>
+		<div class="mainContentContainer">
+			<slot />
 		</div>
+	<svelte:fragment slot="pageFooter">
+		
 	</svelte:fragment>
 </AppShell>
 
@@ -105,5 +108,81 @@
 		font-family: 'EVERCORE';
 		font-weight: 500;
 		font-style: normal;
+		transition: ease-in-out .2s all;
+		@media (max-width: 1175px) {
+			display: none;
+		}
+	}
+
+	:global(.app-rail) {
+		transition: ease-in-out .2s all;
+		@media (max-width: 1175px) {
+			width: 67px;
+		}
+	}
+
+	.sideBarContentContainer {
+		overflow-x: hidden;
+		overflow-y: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+		background:
+        	linear-gradient(to bottom, #0E1216 0%, #0E1216 25%, #181B1F 100% ),
+        	linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+	}
+		
+	.sideBarContentAnchor {
+		transition: ease-in-out .2s all;
+		@media (max-width: 1175px) {
+			width: 67px;
+		}
+		:global(.app-rail-wrapper){
+			aspect-ratio: inherit;
+			padding: 1rem;
+
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-start;
+
+			@media (max-width: 1175px) {
+				width: 67px;
+			}
+		}
+
+		:global(.app-rail-label){
+		font-family: 'EVERCORE';
+			font-size: 1rem;
+			padding-left: 1rem;
+
+			@media (max-width: 1175px) {
+				display: none;
+			}
+		}
+	}
+		
+	.bg-dark {
+		background-color: #080A0D;
+	}
+
+	.disclosure {
+		transition: ease-in-out .2s all;
+		margin-top: auto;
+
+		@media (max-width: 1175px) {
+			display: none;
+		}
+	}
+
+	.mainContentContainer {
+		margin: 0;
+		width: 100%;
+		min-height: 100vh;
+		padding: 1rem;
+		background:
+        	linear-gradient(to bottom, #171B21 0%, #171B21 25%, #0F1114 100% ),
+        	linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
 	}
 </style>
