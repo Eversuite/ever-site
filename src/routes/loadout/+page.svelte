@@ -31,8 +31,7 @@
 	const heroModal: ModalSettings = {
 		type: 'component',
 		component: modalComponent,
-		title: 'Custom List Component',
-		body: 'Make your selection then press submit.',
+		title: 'Select a hero',
 		meta: { items: data?.heroes, path: '/characters/portraits/' },
 		response: (hero: Hero) => heroSelected(hero)
 	};
@@ -40,8 +39,7 @@
 	let shardModal: ModalSettings = {
 		type: 'component',
 		component: modalComponent,
-		title: 'Custom List Component',
-		body: 'Make your selection then press submit.',
+		title: 'Select a shard',
 		meta: { items: data?.shards, path: '/shards/' },
 		response: (shard: Shard) => addShard(shard)
 	};
@@ -49,8 +47,7 @@
 	const consumableModal: ModalSettings = {
 		type: 'component',
 		component: modalComponent,
-		title: 'Custom List Component',
-		body: 'Make your selection then press submit.',
+		title: 'Select a consumable',
 		meta: { items: data?.consumables, path: '/consumables/' },
 		response: (r: Consumable) => (selectedConsumable = r)
 	};
@@ -60,11 +57,8 @@
 	}
 
 	async function heroSelected(hero: Hero) {
-		console.log('hero selehced: ' + hero);
-		const [abilitiesResult, talentsResult, talentTreesResult] = await Promise.all([
+		const [abilitiesResult] = await Promise.all([
 			data.supabase.from('abilities').select().eq('source', hero.id),
-			data.supabase.from('talents').select().eq('hero', hero.id),
-			data.supabase.from('talent_trees').select().eq('source', hero.id)
 		]);
 
 		selectedHero = hero;
