@@ -14,8 +14,6 @@
 	$: src = `/characters/preview/${hero.id}-preview-cropped.png`;
 	$: abilities = data?.abilities;
 	$: talentsMap = data?.talentsMap;
-
-	
 </script>
 
 <div class="flex flex-col gap-3">

@@ -21,11 +21,11 @@
 	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
 	<div class="flex center-text items-center">
 		<img
-            draggable="false"
+			draggable="false"
 			id="{ability.id}-image"
 			src="/abilities/{ability.id}.png"
 			alt="image for {ability.name}"
-			class="w-16 h-16 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
+			class="w-16 h-16 border-2 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 		/>
 	</div>
 {/if}

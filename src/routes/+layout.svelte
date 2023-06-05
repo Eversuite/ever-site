@@ -7,7 +7,7 @@
 	import '../app.postcss';
 
 	//Skeleton stuff
-	import { AppShell, AppBar, AppRail, AppRailTile, Modal } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, AppRail, AppRailAnchor, Modal } from '@skeletonlabs/skeleton';
 	import { writable, type Writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -25,7 +25,7 @@
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	import { IconCrown, IconSparkles, IconMoneybag } from '@tabler/icons-svelte';
+	import { IconCrown, IconSparkles, IconMoneybag, IconHammer } from '@tabler/icons-svelte';
 
 	export let data: LayoutData;
 
@@ -85,6 +85,16 @@
 							<svelte:fragment slot="lead"><IconMoneybag size="35" /></svelte:fragment>
 							<span>CONSUMABLES</span>
 						</AppRailAnchor>
+					</div>
+					<div class="sideBarContentAnchor">
+						<AppRailAnchor
+							regionLead="flex justify-center"
+							href={'/build'}
+							selected={$page.url.pathname === '/build'}
+						>
+						<svelte:fragment slot="lead"><IconHammer size="35" /></svelte:fragment>
+						<span>Build</span>
+					</AppRailAnchor>
 					</div>
 				</div>
 				<div class="p-4 text-center text-sm disclosure bg-dark">
