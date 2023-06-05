@@ -22,7 +22,7 @@
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	import { IconCrown, IconSparkles, IconMoneybag } from '@tabler/icons-svelte';
+	import { IconCrown, IconSparkles, IconMoneybag, IconHammer } from '@tabler/icons-svelte';
 
 	export let data: LayoutData;
 
@@ -83,6 +83,14 @@
 			>
 				<svelte:fragment slot="lead"><IconMoneybag size="35" /></svelte:fragment>
 				<span>Consumables</span>
+			</AppRailAnchor>
+			<AppRailAnchor
+				regionLead="flex justify-center"
+				href={'/build'}
+				selected={$page.url.pathname === '/build'}
+			>
+				<svelte:fragment slot="lead"><IconHammer size="35" /></svelte:fragment>
+				<span>Build</span>
 			</AppRailAnchor>
 		</AppRail>
 	</svelte:fragment>

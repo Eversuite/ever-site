@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { Avatar, ListBox, ListBoxItem, modalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
+	import {
+		Avatar,
+		ListBox,
+		ListBoxItem,
+		modalStore,
+		popup,
+		type PopupSettings
+	} from '@skeletonlabs/skeleton';
 	import ModalListItem from './ModalListItem.svelte';
 
 	// Props
@@ -38,9 +45,9 @@
 						/>
 					</svelte:fragment>
 					{item.name}
-				<svelte:fragment slot="trail">
-				<ModalListItem {item} />
-				</svelte:fragment>
+					<svelte:fragment slot="trail">
+						<ModalListItem {item} />
+					</svelte:fragment>
 				</ListBoxItem>
 			{/each}
 		</ListBox>
