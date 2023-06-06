@@ -4,8 +4,6 @@
 		ListBox,
 		ListBoxItem,
 		modalStore,
-		popup,
-		type PopupSettings
 	} from '@skeletonlabs/skeleton';
 	import ModalListItem from './ModalListItem.svelte';
 
