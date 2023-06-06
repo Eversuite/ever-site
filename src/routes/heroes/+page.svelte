@@ -2,11 +2,15 @@
 	import type { PageData } from './$types';
 	import type { Hero } from '$lib/class/Hero';
 	import { Avatar } from '@skeletonlabs/skeleton';
+	import type { Ability } from '$lib/class/Ability';
+	import AbilityIcon from './[heroId]/AbilityIcon.svelte';
+	import { IconBoxPadding } from '@tabler/icons-svelte';
 
 	export let data: PageData;
 
 	let searchTerm = '';
 	$: heroes = heroFilter(data?.heroData, searchTerm);
+	console.log(data);
 	let groupBy = function <TItem, K>(list: TItem[], keyGetter: (TItem) => K): Map<K, TItem[]> {
 		const map = new Map();
 		for (const item of list) {
@@ -34,12 +38,25 @@
 	}
 
 	let selectedHero: Hero | undefined = undefined;
-	$selectedHero
+	$selectedHero;
 
-	function selectHero (heroDetails: Hero) {
+	async function selectHero(heroDetails: Hero) {
+		if(window.innerWidth < 1050) {
+			location.href = `/heroes/${heroDetails.id}`
+		}
+		selectedHero = undefined;
 		selectedHero = heroDetails;
 	}
 
+	function abilitySlot(selectedHeroObject: Hero, slot: string): Ability | undefined {
+		const fetchedAbilities = data.abilitiesData?.filter(
+			(ability) => ability.source === selectedHeroObject?.id
+		);
+
+		return fetchedAbilities
+			?.filter((ab) => ab.slot != undefined || ab.slot != null)
+			.find((ability) => ability.slot.toUpperCase() === slot.toUpperCase());
+	}
 </script>
 
 <div class="heroPageContainer">
@@ -58,7 +75,10 @@
 					<!-- <div class="flex justify-start flex-wrap gap-3 p-4"> -->
 					<div class="grid max-sm:grid-cols-1 grid-cols-4 gap-3">
 						{#each byRole.get(role) as hero (hero.id)}
-							<div class="flex flex-col justify-center items-center m-2" on:click|once={() => selectHero(hero)}>
+							<div
+								class="flex flex-col justify-center items-center m-2"
+								on:click|once={() => selectHero(hero)}
+							>
 								<Avatar
 									rounded="rounded-2xl"
 									border="border-4 border-surface-300-600-token hover:!border-primary-500"
@@ -75,23 +95,47 @@
 		<div class="detailsContainer">
 			{#if selectedHero}
 				<div class="flex flex-col items-center p-4 heroDetailsContainer">
-					<div>
-						<div class="flex flex-row" style="transition all .2s ease-in-out">
-							<div class="flex flex-col items-start">
-								<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.id.toUpperCase()}</h1>
-								<p class="mb-2 text-2xl heroDescription" style="">{selectedHero?.description.toUpperCase()}</p>
-							</div>
-							<img src={`/characters/preview/${selectedHero?.id}-preview-cropped.png`} class="object-scale-down max-h-[500px] max-w-[500px] heroImage"/>
+					<div class="flex flex-row" style="transition all .2s ease-in-out">
+						<div class="flex flex-col items-start">
+							<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.id.toUpperCase()}</h1>
+							<p class="mb-2 text-2xl heroDescription" style="">
+								{selectedHero?.description.toUpperCase()}
+							</p>
 						</div>
-						<div class="flex flex-row">
-
+						<img
+							src={`/characters/preview/${selectedHero?.id}-preview-cropped.png`}
+							class="object-scale-down max-h-[500px] max-w-[500px] heroImage"
+						/>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<div class="flex flex flex-row flex-wrap justify-around gap-3" style="flex: 1">
+							<div>
+								<AbilityIcon ability={abilitySlot(selectedHero, 'P')} />
+							</div>
+							<div>
+								<AbilityIcon ability={abilitySlot(selectedHero, 'Q')} />
+							</div>
+							<div>
+								<AbilityIcon ability={abilitySlot(selectedHero, 'W')} />
+							</div>
+							<div>
+								<AbilityIcon ability={abilitySlot(selectedHero, 'E')} />
+							</div>
+							<div>
+								<AbilityIcon ability={abilitySlot(selectedHero, 'R')} />
+							</div>
+						</div>
+						<div class="flex flex flex-row flex-wrap justify-around gap-3">
+							<a href={`/heroes/${selectedHero.id}`}>
+								<div class="heroRedirectButton">Learn More</div>
+							</a>
 						</div>
 					</div>
 				</div>
 			{/if}
 			{#if !selectedHero}
-				<div class="flex flex-col items-center justify-center p-4"  style="flex: 1;">
-					<p class="mb-2 text-5xl heroDescription text-center">{"SELECT A HERO"}</p>
+				<div class="flex flex-col items-center justify-center p-4" style="flex: 1; height: 50%;">
+					<p class="mb-2 text-5xl heroDescription text-center">{'SELECT A HERO'}</p>
 				</div>
 			{/if}
 		</div>
@@ -102,11 +146,11 @@
 	.heroPageContainer {
 		height: calc(100vh - 32px);
 	}
-	
+
 	.heroListContainer {
 		overflow-y: scroll;
 		height: calc(100vh - 96px);
-		
+
 		@media (max-width: 1050px) {
 			flex: 1;
 		}
@@ -115,8 +159,10 @@
 	.heroList {
 		grid-template-columns: (auto-fit, minmax(0, 1fr));
 	}
-	
+
 	.detailsContainer {
+		flex: 1;
+		display: flex;
 		@media (max-width: 1050px) {
 			display: none;
 		}
@@ -141,5 +187,15 @@
 	.heroDescription {
 		max-width: 350px;
 		color: white;
+	}
+	
+	.heroRedirectButton {
+		background-color: #1E5E6D;
+		border: 4px solid #B7D4E9;
+		border-radius: 10px;
+		width: 100%;
+		padding: 2rem 4rem;
+		margin: 1rem;
+		font-size: 32px;
 	}
 </style>
