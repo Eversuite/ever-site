@@ -9,7 +9,7 @@
 		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
-		target: `${shard !== undefined ? shard.id : 'dummy'}-popup`,
+		target: `${shard !== undefined ? shard.id : 'dummy'}-popup`
 	};
 
 	function resolveDescription(sh: Shard): string {

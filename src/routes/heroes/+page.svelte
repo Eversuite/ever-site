@@ -188,10 +188,10 @@
 		max-width: 350px;
 		color: white;
 	}
-	
+
 	.heroRedirectButton {
-		background-color: #1E5E6D;
-		border: 4px solid #B7D4E9;
+		background-color: #1e5e6d;
+		border: 4px solid #b7d4e9;
 		border-radius: 10px;
 		width: 100%;
 		padding: 2rem 4rem;

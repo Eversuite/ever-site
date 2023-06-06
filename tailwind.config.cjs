@@ -16,7 +16,7 @@ module.exports = {
 	},
 	plugins: [
 		require('postcss-import'),
-    	require('tailwindcss/nesting')(require('postcss-nesting')),
+		require('tailwindcss/nesting')(require('postcss-nesting')),
 		require('@tailwindcss/forms'),
 		require('@tailwindcss/typography'),
 		...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')()
