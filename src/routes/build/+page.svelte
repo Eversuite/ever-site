@@ -33,7 +33,7 @@
 		type: 'component',
 		component: modalComponent,
 		title: 'Select a hero',
-		meta: { items: data?.heroes, path: '/characters/portraits/' },
+		meta: { items: data?.heroes, path: '/characters/portraits' },
 		response: (hero: Hero) => heroSelected(hero)
 	};
 
@@ -41,7 +41,7 @@
 		type: 'component',
 		component: modalComponent,
 		title: 'Select a shard',
-		meta: { items: data?.shards, path: '/shards/' },
+		meta: { items: data?.shards, path: '/shards' },
 		response: (shard: Shard) => addShard(shard)
 	};
 
@@ -49,7 +49,7 @@
 		type: 'component',
 		component: modalComponent,
 		title: 'Select a consumable',
-		meta: { items: data?.consumables, path: '/consumables/' },
+		meta: { items: data?.consumables, path: '/consumables' },
 		response: (r: Consumable) => (selectedConsumable = r)
 	};
 
