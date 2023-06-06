@@ -5,6 +5,7 @@
 	import type { Ability } from '$lib/class/Ability';
 	import AbilityIcon from './[heroId]/AbilityIcon.svelte';
 	import { IconBoxPadding } from '@tabler/icons-svelte';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -42,7 +43,7 @@
 
 	async function selectHero(heroDetails: Hero) {
 		if(window.innerWidth < 1050) {
-			location.href = `/heroes/${heroDetails.id}`
+			goto(`/heroes/${heroDetails.id}`);
 		}
 		selectedHero = undefined;
 		selectedHero = heroDetails;
@@ -72,12 +73,11 @@
 			{#each Array.from(byRole.keys()) as role}
 				<div class="mb-4 mr-4">
 					<div class="text-left h2 font-evercore">{role.toUpperCase()}</div>
-					<!-- <div class="flex justify-start flex-wrap gap-3 p-4"> -->
 					<div class="grid max-sm:grid-cols-1 grid-cols-4 gap-3">
 						{#each byRole.get(role) as hero (hero.id)}
 							<div
 								class="flex flex-col justify-center items-center m-2"
-								on:click|once={() => selectHero(hero)}
+								on:click={() => selectHero(hero)}
 							>
 								<Avatar
 									rounded="rounded-2xl"
@@ -97,9 +97,9 @@
 				<div class="flex flex-col items-center p-4 heroDetailsContainer">
 					<div class="flex flex-row" style="transition all .2s ease-in-out">
 						<div class="flex flex-col items-start">
-							<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.id.toUpperCase()}</h1>
+							<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.name.toUpperCase()}</h1>
 							<p class="mb-2 text-2xl heroDescription" style="">
-								{selectedHero?.description.toUpperCase()}
+								{selectedHero?.description}
 							</p>
 						</div>
 						<img

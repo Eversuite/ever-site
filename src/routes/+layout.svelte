@@ -45,7 +45,7 @@
 <AppShell>
 	<svelte:fragment slot="header">
 	</svelte:fragment>
-	<svelte:fragment slot="sidebarLeft">
+		<svelte:fragment slot="sidebarLeft">
 		<AppRail selected={storeValue} width="w-60">
 			<div class="sideBarContentContainer">
 				<div>
@@ -94,18 +94,13 @@
 			</div>
 		</AppRail>
 	</svelte:fragment>
-	<!-- Page Route Content -->
-		<div class="mainContentContainer">
-			<slot />
-		</div>
-	<svelte:fragment slot="pageFooter">
-		
-	</svelte:fragment>
+	<div class="mainContentContainer">
+		<slot />
+	</div>
 </AppShell>
 
 <style global lang="postcss">
 	.header-text {
-		font-family: 'EVERCORE';
 		font-weight: 500;
 		font-style: normal;
 		transition: ease-in-out .2s all;
