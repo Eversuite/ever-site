@@ -102,6 +102,7 @@
 
 <style global lang="postcss">
 	.header-text {
+		font-family: 'EVERCORE';
 		font-weight: 500;
 		font-style: normal;
 		transition: ease-in-out 0.2s all;

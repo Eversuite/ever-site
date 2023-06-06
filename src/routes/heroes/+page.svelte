@@ -39,7 +39,7 @@
 	}
 
 	let selectedHero: Hero | undefined = undefined;
-	$selectedHero;
+	$: selectedHero;
 
 	async function selectHero(heroDetails: Hero) {
 		if(window.innerWidth < 1050) {
