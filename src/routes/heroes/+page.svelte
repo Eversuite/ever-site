@@ -11,7 +11,7 @@
 
 	let searchTerm = '';
 	$: heroes = heroFilter(data?.heroData, searchTerm);
-	console.log(data);
+	
 	let groupBy = function <TItem, K>(list: TItem[], keyGetter: (TItem) => K): Map<K, TItem[]> {
 		const map = new Map();
 		for (const item of list) {
