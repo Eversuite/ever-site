@@ -3,7 +3,7 @@
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
-	export let ability: Ability;
+	export let ability: Ability | undefined;
 
 	let abilityPopup: PopupSettings = {
 		event: 'hover',
