@@ -49,6 +49,7 @@ export const load: PageLoad = async ({ parent, url }) => {
 		const selectedShards = build.shardIds.map((id) => shards.find((shard) => shard.id === id));
 
 		return {
+			buildTitle: build.buildTitle,
 			selectedHero,
 			selectedHeroAbilities,
 			selectedConsumable,

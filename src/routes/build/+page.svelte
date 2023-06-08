@@ -21,6 +21,8 @@
 	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
 	let selectedShards: Shard[] = data?.selectedShards ?? [];
 
+	let buildTitle = data?.buildTitle ?? '';
+
 	const borderCss =
 		'border-4 rounded-2xl border-surface-300-600-token hover:!border-primary-500 cursor-pointer';
 
@@ -101,6 +103,7 @@
 		});
 		let selectedShardsIds = selectedShards.map((shard) => shard.id);
 		let build = {
+			buildTitle: buildTitle,
 			heroId: selectedHero.id,
 			abilityIds: abilityLadderIds,
 			consumableId: selectedConsumable.id,
@@ -116,6 +119,17 @@
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
+	<div style="margin-bottom: 5rem;">
+		<div class="b-2 text-7xl font-bold heroDescription">BUILD CREATOR</div>
+		<div style="max-width: 850px;">These are the recommended shards to look out for when building for Skye, as determined by community votes, If you are already familiar with how to play Skye this is a great resource to quickly get a good rune selection for Patch 0.1 CB. However, if you are a new Skye player we highly recommend reading through some of the guides above to learn why this build is strong on Skye!</div>
+	</div>
+	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
+	<input
+		bind:value={buildTitle}
+		type="text"
+		placeholder="Enter your build title here..."
+		class="mb-8 input buildInput"
+	/>
 	<div>
 		<div class="h3 font-evercore mb-3">HERO*</div>
 		{#if selectedHero}
@@ -136,7 +150,7 @@
 			</div>
 		{/if}
 	</div>
-	<div class="flex flex-row justify-evenly content-center gap-x-12">
+	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
 		<div class="flex flex-col">
 			<div class="h1 font-evercore mt-12">SHARDS</div>
 			<div class="flex flex-row items-center">
@@ -233,6 +247,11 @@
 </div>
 
 <style global lang="postcss">
+	.buildInput {
+		max-width: 380px;
+		border-radius: 14px;
+	}
+
 	.abilityQ {
 		color: #3fa6d2;
 	}
