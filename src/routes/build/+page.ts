@@ -3,11 +3,9 @@ import type { Hero } from '$lib/class/Hero';
 import type { Shard } from '$lib/class/Shard';
 import type { Consumable } from '$lib/class/Consumable';
 import type { Ability } from '$lib/class/Ability';
-import { Buffer } from 'Buffer';
 import { browser } from '$app/environment';
 export const load: PageLoad = async ({ parent, url }) => {
 	const { supabase } = await parent();
-	window.Buffer = Buffer;
 	// Load the wanted character from the database.
 	const [heroesResult, shardsResult, consumablesResult] = await Promise.all([
 		supabase.from('heroes').select().order('name'),
