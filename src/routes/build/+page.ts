@@ -21,7 +21,9 @@ export const load: PageLoad = async ({ parent, url }) => {
 
 	const encodedBuild = url.searchParams.get('code');
 
-	console.log(url)
+	console.log(url);
+	console.log(url.searchParams);
+	console.log(encodedBuild);
 	if (encodedBuild) {
 		let build;
 		if (browser) {
