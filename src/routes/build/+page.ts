@@ -4,6 +4,7 @@ import type { Shard } from '$lib/class/Shard';
 import type { Consumable } from '$lib/class/Consumable';
 import type { Ability } from '$lib/class/Ability';
 import { browser } from '$app/environment';
+
 export const load: PageLoad = async ({ parent, url }) => {
 	const { supabase } = await parent();
 	// Load the wanted character from the database.
