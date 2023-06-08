@@ -3,6 +3,7 @@ import type { Hero } from '$lib/class/Hero';
 import type { Shard } from '$lib/class/Shard';
 import type { Consumable } from '$lib/class/Consumable';
 import type { Ability } from '$lib/class/Ability';
+import * as Buffer from 'node:buffer';
 import { browser } from '$app/environment';
 
 export const load: PageLoad = async ({ parent, url }) => {
