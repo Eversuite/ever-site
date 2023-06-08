@@ -83,7 +83,7 @@
 									rounded="rounded-2xl"
 									border="border-4 border-surface-300-600-token hover:!border-primary-500"
 									cursor="cursor-pointer"
-									src="/characters/portraits/{hero.id}-portrait.png"
+									src="/characters/portraits/{hero.id}.png"
 									width="w-20"
 								/>
 							</div>

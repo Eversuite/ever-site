@@ -34,7 +34,7 @@
 			id="{shard.id}-image"
 			src="/shards/{shard.id}.png"
 			alt="image for {shard.name}"
-			class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
+			class="w-24 h-24 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 		/>
 	</div>
 	<div data-popup="{shard.id}-popup" class="card p-4">
