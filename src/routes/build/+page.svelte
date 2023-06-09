@@ -2,6 +2,7 @@
 	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
 	import { IconCrown, IconPlus, IconMoneybag, IconMathGreater } from '@tabler/icons-svelte';
 	import ModalListSelect from './ModalListSelect.svelte';
+	import ModalListStrings from './ModalListStrings.svelte';
 	import type { PageData } from '../$types';
 	import type { Shard } from '$lib/class/Shard';
 	import type { Consumable } from '$lib/class/Consumable';
@@ -31,12 +32,26 @@
 		ref: ModalListSelect
 	};
 
+	const abilityValidationModalComponent: ModalComponent = {
+		ref: ModalListStrings
+	}
+
 	const heroModal: ModalSettings = {
 		type: 'component',
 		component: modalComponent,
 		title: 'Select a hero',
 		meta: { items: data?.heroes, path: '/characters/portraits' },
 		response: (hero: Hero) => heroSelected(hero)
+	};
+
+	function abilityValidationModal(messages): ModalSettings {
+		return {
+			type: 'component',
+			component: abilityValidationModalComponent,
+			title: 'Select a hero',
+			meta: { messages: messages },
+			response: (accepted: boolean) => shareBuild(accepted)
+		}
 	};
 
 	let shardModal: ModalSettings = {
@@ -55,6 +70,71 @@
 		response: (r: Consumable) => (selectedConsumable = r)
 	};
 
+	const maxAbilityFrom1To2 = 1;
+	const maxAbilityFrom3To5 = 2;
+	const maxAbilityFrom6To9 = 3;
+	const maxAbilityFrom10To12 = 4;
+	const maxAbilityFrom13To15 = 5;
+	const slotButtons = ["Q","W","E","R"]
+	
+	const validationMessageFormat = (message: string, slot: string, checkPoint: number) => {
+		return {message, name: `${checkPoint}-${slot}`}
+	} 
+
+	function validateAbilityChoice() {
+		const abilityCount = [0,0,0,0];
+		const validityMessages = [];
+		
+		for(var i = 0; i < 15; i++){
+			abilityCount[slotButtons.indexOf(abilityLadder[i].slot)]++;
+
+			if(i === 1) {
+				abilityCount.forEach((count, index) => {
+					if(count > maxAbilityFrom1To2) {
+						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 2 (${maxAbilityFrom1To2}).`, slotButtons[index], i))
+					}
+				})
+			} else if(i === 4) {
+				abilityCount.forEach((count, index) => {
+					if(count > maxAbilityFrom3To5) {
+						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 5 (${maxAbilityFrom3To5}).`, slotButtons[index], i))
+					}
+				})
+
+				if(abilityCount[3] >= 1) {
+					validityMessages.push(validationMessageFormat(`You have more Rs than possible before level 6 (1).`, "R", i))
+				}
+			} else if(i === 8) {
+				abilityCount.forEach((count, index) => {
+					if(count > maxAbilityFrom3To5) {
+						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 9 (${maxAbilityFrom6To9}).`, slotButtons[index], i))
+					}
+				})
+			} else if(i === 11) {
+				abilityCount.forEach((count, index) => {
+					if(count > maxAbilityFrom10To12) {
+						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 12 (${maxAbilityFrom10To12}).`, slotButtons[index], i))
+					}
+				})
+
+				if(abilityCount[3] >= 2) {
+					validityMessages.push(validationMessageFormat(`You have more Rs than possible before level 12 (2).`, "R", i))
+				}
+			} else if(i === 14) {
+				abilityCount.forEach((count, index) => {
+					if(count > maxAbilityFrom10To12) {
+						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 15 (${maxAbilityFrom13To15}).`, slotButtons[index], i))
+					}
+				})
+				if(abilityCount[3] > 3) {
+					validityMessages.push(validationMessageFormat(`You have more Rs than possible at level 15 (3).`, "R", i))
+				}
+			}
+		}
+
+		return validityMessages;
+	}
+
 	function handleHeroClick() {
 		modalStore.trigger(heroModal);
 	}
@@ -64,7 +144,6 @@
 			data.supabase.from('abilities').select().eq('source', hero.id)
 		]);
 
-		console.log(abilitiesResult);
 		selectedHero = hero;
 		selectedHeroAbilities = abilitiesResult.data as Ability[];
 	}
@@ -81,6 +160,15 @@
 		modalStore.trigger(consumableModal);
 	}
 
+	async function handleBuildClick() {
+		let messages = validateAbilityChoice();
+		if(messages.length === 0) {
+			return shareBuild(true)
+		}
+
+		modalStore.trigger(abilityValidationModal(messages));
+	}
+
 	function addShard(shard: Shard) {
 		if (shard) {
 			selectedShards = [...selectedShards, shard];
@@ -93,7 +181,9 @@
 		shardModal.meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
 	}
 
-	function shareBuild() {
+	function shareBuild(accepted: boolean) {
+		if (!accepted) return;
+
 		let abilityLadderIds = abilityLadder.map((ability) => {
 			if (ability) {
 				return ability.id;
@@ -115,13 +205,20 @@
 		$page.url.searchParams.set('code', encodedBuild);
 		goto(`?${$page.url.searchParams.toString()}`);
 		copyText($page.url.toString());
+		validateAbilityChoice()
 	}
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
 	<div style="margin-bottom: 5rem;">
 		<div class="b-2 text-7xl font-bold heroDescription">BUILD CREATOR</div>
-		<div style="max-width: 850px;">These are the recommended shards to look out for when building for Skye, as determined by community votes, If you are already familiar with how to play Skye this is a great resource to quickly get a good rune selection for Patch 0.1 CB. However, if you are a new Skye player we highly recommend reading through some of the guides above to learn why this build is strong on Skye!</div>
+		<div style="max-width: 850px;">
+			These are the recommended shards to look out for when building for Skye, as determined by
+			community votes, If you are already familiar with how to play Skye this is a great resource to
+			quickly get a good rune selection for Patch 0.1 CB. However, if you are a new Skye player we
+			highly recommend reading through some of the guides above to learn why this build is strong on
+			Skye!
+		</div>
 	</div>
 	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
 	<input
@@ -153,7 +250,7 @@
 	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
 		<div class="flex flex-col">
 			<div class="h1 font-evercore mt-12">SHARDS</div>
-			<div class="flex flex-row items-center">
+			<div class="flex flex-row items-center flex-wrap">
 				{#each selectedShards as shard, index}
 					<div
 						on:click={() => removeShard(shard)}
@@ -167,7 +264,7 @@
 				{/each}
 				{#each Array(5 - selectedShards.length) as _, index (index)}
 					<div
-						class="{borderCss} self-center p-3 w-24 h-24 flex flex-col items-center justify-center"
+						class="{borderCss} self-center p-3 w-20 h-20 flex flex-col items-center justify-center"
 						on:click={handleShardClick}
 						on:keyup={(e) => e.key === 'Enter' && handleShardClick()}
 					>
@@ -188,7 +285,7 @@
 				<img
 					on:click={handleConsumeableClick}
 					alt="Image for {selectedConsumable.name}"
-					class="w-24 h-24 {borderCss} self-center"
+					class="w-20 h-20 {borderCss} self-center"
 					src="/consumables/{selectedConsumable.id}.png"
 					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 				/>
@@ -205,21 +302,29 @@
 	</div>
 	{#if selectedHeroAbilities && selectedHeroAbilities.length > 0}
 		<div class="h1 font-evercore mt-12">ABILITIES</div>
-		<div class="flex flex-row justify items-center mt-4">
-			<div class="flex flex-col items-center m-4 gap-x-1 gap-1">
-				<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'P')} />
-
-				<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'Q')} />
-
-				<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'W')} />
-
-				<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'E')} />
-
-				<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'R')} />
+		<div class="flex swapToCol justify items-center mt-4">
+			<div
+				class={`flex swapToRow items-center m-4 gap-x-1 gap-1`}
+			>
+				<div class="w-12 h-12">
+					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'P')} />
+				</div>
+				<div class="w-12 h-12">
+					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'Q')} />
+				</div>
+				<div class="w-12 h-12">
+					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'W')} />
+				</div>
+				<div class="w-12 h-12">
+					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'E')} />
+				</div>
+				<div class="w-12 h-12">
+					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'R')} />
+				</div>
 			</div>
-			<div class="flex">
+			<div class="flex swapToCol">
 				{#each abilityLadder as ability, index}
-					<div class="flex flex-col items-center gap-1">
+					<div class="flex swapToRow items-center gap-1">
 						<div class="w-12 h-12 flex flex-col items-center justify-center">
 							<span style="font-weight: bold; font-size: 1.2rem;">{index + 1}</span>
 						</div>
@@ -230,7 +335,9 @@
 								class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 flex flex-col items-center justify-center"
 							>
 								{#if ability?.slot === slot}
-									<span style="font-weight: bold; font-size: 1.2rem;" class={`ability${slot}`}>{ability.slot}</span>
+									<span style="font-weight: bold; font-size: 1.2rem;" class={`ability${slot}`}
+										>{ability.slot}</span
+									>
 								{/if}
 							</div>
 						{/each}
@@ -241,7 +348,7 @@
 		</div>
 	{/if}
 
-	<button on:click={shareBuild} type="button" class="btn variant-filled mt-12">
+	<button on:click={handleBuildClick} type="button" class="btn variant-filled mt-12">
 		<span>Copy shareable link</span>
 	</button>
 </div>
@@ -266,5 +373,19 @@
 
 	.abilityR {
 		color: #dfaf51;
+	}
+
+	.swapToRow {
+		flex-direction: column;
+		@media (max-width: 940px) {
+			flex-direction: row;
+		}
+	}
+
+	.swapToCol {
+		flex-direction: row;
+		@media (max-width: 940px) {
+			flex-direction: column;
+		}
 	}
 </style>
