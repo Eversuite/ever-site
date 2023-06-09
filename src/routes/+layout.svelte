@@ -54,6 +54,7 @@
 			<div class="sideBarContentContainer">
 				<div>
 					<a class="flex flex-row place-items-center p-2 bg-dark" href="/" title="Go to Homepage">
+						<img alt="heroes-nav-icon" src="/logo/ECV-Logo-Transparent.png" width="60px" height="60px"/>
 						<strong class="text-3xl uppercase header-text text-primary-600">Evercore Vault</strong>
 					</a>
 					<div class="sideBarContentAnchor">
@@ -62,7 +63,7 @@
 							href={'/heroes'}
 							selected={$page.url.pathname === '/heroes'}
 						>
-							<svelte:fragment slot="lead"><IconCrown size="35" /></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="heroes-nav-icon" src="/nav-icons/heroes.png" width="35px" height="35px"/></svelte:fragment>
 							<span>HEROES</span>
 						</AppRailAnchor>
 					</div>
@@ -72,7 +73,7 @@
 							href={'/shards'}
 							selected={$page.url.pathname === '/shards'}
 						>
-							<svelte:fragment slot="lead"><IconSparkles size="35" /></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="shards-nav-icon" src="/nav-icons/shards.png" width="35px" height="35px"/></svelte:fragment>
 							<span>SHARDS</span>
 						</AppRailAnchor>
 					</div>
@@ -82,7 +83,7 @@
 							href={'/consumables'}
 							selected={$page.url.pathname === '/consumables'}
 						>
-							<svelte:fragment slot="lead"><IconMoneybag size="35" /></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="consumable-nav-icon" src="/nav-icons/consumables.png" width="35px" height="35px"/></svelte:fragment>
 							<span>CONSUMABLES</span>
 						</AppRailAnchor>
 					</div>
