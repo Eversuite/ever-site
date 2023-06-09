@@ -279,23 +279,25 @@
 			</div>
 			<div class="flex flex-row flex-wrap w-[35vw] gap-4 items-center self-center" />
 		</div>
-		<div class="flex flex-col">
+		<div class="flex flex-col justify-start">
 			<div class="h1 font-evercore mt-12">CONSUMABLE</div>
 			{#if selectedConsumable}
 				<img
 					on:click={handleConsumeableClick}
 					alt="Image for {selectedConsumable.name}"
 					class="w-20 h-20 {borderCss} self-center"
+					style="margin-right: auto; "
 					src="/consumables/{selectedConsumable.id}.png"
 					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 				/>
 			{:else}
 				<div
 					class="{borderCss} self-center"
+					style="margin-right: auto; "
 					on:click={handleConsumeableClick}
 					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 				>
-					<IconMoneybag class="w-20 h-20" />
+					<img alt="consumable-nav-icon" src="/nav-icons/consumables.png" class="w-20 h-20" />
 				</div>
 			{/if}
 		</div>
@@ -332,10 +334,11 @@
 							<div
 								on:click={() => setAbility(index, slot)}
 								on:keyup={(e) => e.key === 'Enter' && setAbility(index, slot)}
-								class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 flex flex-col items-center justify-center"
+								style= "border-radius: 4px;"
+								class= "w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 flex flex-col items-center justify-center mr-2"
 							>
 								{#if ability?.slot === slot}
-									<span style="font-weight: bold; font-size: 1.2rem;" class={`ability${slot}`}
+									<span style="font-weight: bold; font-size: 1.5rem;" class={`ability${slot}`}
 										>{ability.slot}</span
 									>
 								{/if}
