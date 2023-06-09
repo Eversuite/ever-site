@@ -20,7 +20,7 @@
 	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
 	let abilityLadder = data?.abilityLadder ?? new Array(15).fill(null);
 	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
-	let selectedShards: Shard[] = data?.selectedShards ?? [];
+	let selectedShards: Shard[] = data?.selectedShards ?? new Array<Shard>(5);
 
 	let buildTitle = data?.buildTitle ?? '';
 
@@ -54,12 +54,14 @@
 		}
 	};
 
-	let shardModal: ModalSettings = {
-		type: 'component',
-		component: modalComponent,
-		title: 'Select a shard',
-		meta: { items: data?.shards, path: '/shards' },
-		response: (shard: Shard) => addShard(shard)
+	function shardModal(index: number): ModalSettings {
+		return {
+			type: 'component',
+			component: modalComponent,
+			title: 'Select a shard',
+			meta: { items: data?.shards, path: '/shards' },
+			response: (shard: Shard) => addShard(shard, index)
+		}
 	};
 
 	const consumableModal: ModalSettings = {
@@ -152,8 +154,8 @@
 		abilityLadder[index] = abilitySlot(selectedHeroAbilities, slot);
 	}
 
-	function handleShardClick() {
-		modalStore.trigger(shardModal);
+	function handleShardClick(index) {
+		modalStore.trigger(shardModal(index));
 	}
 
 	function handleConsumeableClick() {
@@ -169,16 +171,11 @@
 		modalStore.trigger(abilityValidationModal(messages));
 	}
 
-	function addShard(shard: Shard) {
+	function addShard(shard: Shard, index: number) {
 		if (shard) {
-			selectedShards = [...selectedShards, shard];
+			selectedShards[index] = shard; 
 		}
-		shardModal.meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
-	}
-
-	function removeShard(removedShard: Shard) {
-		selectedShards = selectedShards.filter((shard) => shard !== removedShard);
-		shardModal.meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
+		shardModal(index).meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
 	}
 
 	function shareBuild(accepted: boolean) {
@@ -246,6 +243,18 @@
 				CLICK TO CHOOSE HERO
 			</div>
 		{/if}
+		{#each Array(5 - selectedShards.length) as _, index (index)}
+			<div
+				class="{borderCss} self-center p-3 w-20 h-20 flex flex-col items-center justify-center"
+				on:click={() => handleShardClick(index)}
+				on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
+			>
+				
+			</div>
+			{#if selectedShards.length + index !== 4}
+				<IconMathGreater class="w-10 h-10" />
+			{/if}
+		{/each}
 	</div>
 	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
 		<div class="flex flex-col">
@@ -253,26 +262,16 @@
 			<div class="flex flex-row items-center flex-wrap">
 				{#each selectedShards as shard, index}
 					<div
-						on:click={() => removeShard(shard)}
-						on:keyup={(e) => e.key === 'Enter' && removeShard(shard)}
-					>
-						<ShardLoadoutIcon {shard} />
-					</div>
-					{#if index !== 4}
-						<IconMathGreater class="w-10 h-10" />
-					{/if}
-				{/each}
-				{#each Array(5 - selectedShards.length) as _, index (index)}
-					<div
-						class="{borderCss} self-center p-3 w-20 h-20 flex flex-col items-center justify-center"
-						on:click={handleShardClick}
-						on:keyup={(e) => e.key === 'Enter' && handleShardClick()}
-					>
-						{#if index === 0}
-							<IconPlus class="w-20 h-20" />
+						on:click={() => handleShardClick(index)}
+						on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
+					>	
+						{#if shard}
+							<ShardLoadoutIcon {shard} />
+						{:else}
+							<IconPlus class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500" />
 						{/if}
 					</div>
-					{#if selectedShards.length + index !== 4}
+					{#if index !== 4}
 						<IconMathGreater class="w-10 h-10" />
 					{/if}
 				{/each}
