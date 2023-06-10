@@ -240,7 +240,7 @@
 				on:click={handleHeroClick}
 				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 			>
-				CLICK TO CHOOSE HERO
+				CLICK TO CHOOSE A HERO
 			</div>
 		{/if}
 		{#each Array(5 - selectedShards.length) as _, index (index)}
