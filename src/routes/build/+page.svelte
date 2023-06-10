@@ -48,7 +48,7 @@
 		return {
 			type: 'component',
 			component: abilityValidationModalComponent,
-			title: 'Select a hero',
+			title: 'Build validation issues',
 			meta: { messages: messages },
 			response: (accepted: boolean) => shareBuild(accepted)
 		}
@@ -212,11 +212,7 @@
 	<div style="margin-bottom: 5rem;">
 		<div class="b-2 text-7xl font-bold heroDescription">BUILD CREATOR</div>
 		<div style="max-width: 850px;">
-			These are the recommended shards to look out for when building for Skye, as determined by
-			community votes, If you are already familiar with how to play Skye this is a great resource to
-			quickly get a good rune selection for Patch 0.1 CB. However, if you are a new Skye player we
-			highly recommend reading through some of the guides above to learn why this build is strong on
-			Skye!
+			Placeholder for future versions.
 		</div>
 	</div>
 	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
