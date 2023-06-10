@@ -7,7 +7,7 @@
 	import '../app.postcss';
 
 	//Skeleton stuff
-	import { AppShell, AppBar, AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, AppRail, AppRailAnchor, Modal } from '@skeletonlabs/skeleton';
 	import { writable, type Writable } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -16,13 +16,16 @@
 
 	const storeValue: Writable<number> = writable(0);
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	const heroTileUrl = '/heroes';
+	const shardTileUrl = '/shards';
+	const consumableTileUrl = '/consumables';
 
 	//Supabase stuff
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	import { IconCrown, IconSparkles, IconMoneybag } from '@tabler/icons-svelte';
+	import { IconCrown, IconSparkles, IconMoneybag, IconHammer } from '@tabler/icons-svelte';
 
 	export let data: LayoutData;
 
@@ -41,6 +44,8 @@
 	});
 </script>
 
+<Modal />
+
 <!-- App Shell -->
 <AppShell>
 	<svelte:fragment slot="header" />
@@ -49,6 +54,7 @@
 			<div class="sideBarContentContainer">
 				<div>
 					<a class="flex flex-row place-items-center p-2 bg-dark" href="/" title="Go to Homepage">
+						<img alt="heroes-nav-icon" src="/logo/ECV-Logo-Transparent.png" width="60px" height="60px"/>
 						<strong class="text-3xl uppercase header-text text-primary-600">Evercore Vault</strong>
 					</a>
 					<div class="sideBarContentAnchor">
@@ -57,7 +63,7 @@
 							href={'/heroes'}
 							selected={$page.url.pathname === '/heroes'}
 						>
-							<svelte:fragment slot="lead"><IconCrown size="35" /></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="heroes-nav-icon" src="/nav-icons/heroes.png" width="35px" height="35px"/></svelte:fragment>
 							<span>HEROES</span>
 						</AppRailAnchor>
 					</div>
@@ -67,7 +73,7 @@
 							href={'/shards'}
 							selected={$page.url.pathname === '/shards'}
 						>
-							<svelte:fragment slot="lead"><IconSparkles size="35" /></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="shards-nav-icon" src="/nav-icons/shards.png" width="35px" height="35px"/></svelte:fragment>
 							<span>SHARDS</span>
 						</AppRailAnchor>
 					</div>
@@ -77,9 +83,19 @@
 							href={'/consumables'}
 							selected={$page.url.pathname === '/consumables'}
 						>
-							<svelte:fragment slot="lead"><IconMoneybag size="35" /></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="consumable-nav-icon" src="/nav-icons/consumables.png" width="35px" height="35px"/></svelte:fragment>
 							<span>CONSUMABLES</span>
 						</AppRailAnchor>
+					</div>
+					<div class="sideBarContentAnchor">
+						<AppRailAnchor
+							regionLead="flex justify-center"
+							href={'/build'}
+							selected={$page.url.pathname === '/build'}
+						>
+						<svelte:fragment slot="lead"><IconHammer size="35" /></svelte:fragment>
+						<span>Build</span>
+					</AppRailAnchor>
 					</div>
 				</div>
 				<div class="p-4 text-center text-sm disclosure bg-dark">

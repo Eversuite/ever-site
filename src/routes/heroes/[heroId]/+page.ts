@@ -9,25 +9,19 @@ export const load: PageLoad = async ({ params, parent }) => {
 	const { supabase } = await parent();
 
 	// Load the wanted character from the database.
-	// May be optimised by getting the overall hero data from the parent page or a store but will do for now.
-	const heroesPromise = supabase.from('heroes').select().eq('id', params.heroId).single();
-	const abilitiesPromise = supabase.from('abilities').select().eq('source', params.heroId);
-	const talentsPromise = supabase.from('talents').select().eq('hero', params.heroId);
-	const talentTreesPromise = supabase.from('talent_trees').select().eq('source', params.heroId);
+	const [heroesResult, abilitiesResult, talentsResult, talentTreesResult] = await Promise.all([
+		supabase.from('heroes').select().eq('id', params.heroId).single(),
+		supabase.from('abilities').select().eq('source', params.heroId),
+		supabase.from('talents').select().eq('hero', params.heroId),
+		supabase.from('talent_trees').select().eq('source', params.heroId)
+	]);
 
-	const { hero, abilities, talents, talentTrees } = await Promise.all([
-		heroesPromise,
-		abilitiesPromise,
-		talentsPromise,
-		talentTreesPromise
-	]).then((values) => {
-		const hero = values[0].data as Hero;
-		const abilities = values[1].data as Ability[];
-		const talents = values[2].data as Talent[];
-		const talentTrees = values[3].data as TalentTree[];
+	if (heroesResult.error) throw error(404, `Could not find a hero for id [${params.heroId}]`);
 
-		return { hero, abilities, talents, talentTrees };
-	});
+	const hero = heroesResult.data as Hero;
+	const abilities = abilitiesResult.data as Ability[];
+	const talents = talentsResult.data as Talent[];
+	const talentTrees = talentTreesResult.data as TalentTree[];
 
 	// Sort talentTrees with "Default" first, then alphabetically
 	talentTrees.sort((a, b) => {
@@ -36,28 +30,27 @@ export const load: PageLoad = async ({ params, parent }) => {
 		return a.name.localeCompare(b.name);
 	});
 
-	let talentTreesMap = new Map<TalentTree, Map<number, Talent[]>>();
+	const talentTreesMap = new Map<TalentTree, Map<number, Talent[]>>();
+
 	for (const talentTree of talentTrees) {
 		const treeTalentsMap = new Map<number, Talent[]>();
 		const treeTalents = talents.filter((talent) => talent.category === talentTree.id);
+
 		for (const treeTalent of treeTalents) {
 			const tierTalents = treeTalentsMap.get(treeTalent.tier) || [];
 			tierTalents.push(treeTalent);
 			tierTalents.sort((a, b) => a.name - b.name); // sort tierTalents by id
 			treeTalentsMap.set(treeTalent.tier, tierTalents);
 		}
+
 		// Sort treeTalentsMap by tier
 		const sortedTreeTalentsMap = new Map([...treeTalentsMap.entries()].sort((a, b) => a[0] - b[0]));
 		talentTreesMap.set(talentTree, sortedTreeTalentsMap);
 	}
 
-	if (hero === undefined || hero === null) {
-		throw error(404, `Could not find a hero for id [${params.heroId}]`);
-	}
-
 	return {
-		hero: hero as Hero,
-		abilities: abilities as Ability[],
+		hero,
+		abilities,
 		talentsMap: talentTreesMap
 	};
 };

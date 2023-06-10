@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { Ability } from '$lib/class/Ability';
 	import AbilityIcon from './AbilityIcon.svelte';
 	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 	import TalentIcon from './TalentIcon.svelte';
 	import { IconArrowBigRightFilled } from '@tabler/icons-svelte';
+	import { abilitySlot } from '$lib/Utility';
 
 	export let data: PageData;
 
@@ -14,15 +14,6 @@
 	$: src = `/characters/preview/${hero.id}-preview-cropped.png`;
 	$: abilities = data?.abilities;
 	$: talentsMap = data?.talentsMap;
-
-	function abilitySlot(abilities: Ability[], slot: string): Ability {
-		return (
-			abilities
-				// We want to ignore every ability where the slot is unknown.
-				.filter((ab) => ab.slot != undefined || ab.slot != null)
-				.find((ability) => ability.slot.toUpperCase() === slot.toUpperCase())
-		);
-	}
 </script>
 
 <div class="flex flex-col gap-3">
