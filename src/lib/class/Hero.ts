@@ -3,12 +3,20 @@ export class Hero {
 	private readonly _name: string;
 	private readonly _description: string;
 	private readonly _role: string;
+	private readonly _stance_map: Map<number, string>;
 
-	constructor(id: string, name: string, description: string, role: string) {
+	constructor(
+		id: string,
+		name: string,
+		description: string,
+		role: string,
+		stance_map: Map<number, string>
+	) {
 		this._id = id;
 		this._name = name;
 		this._description = description;
 		this._role = role;
+		this._stance_map = stance_map;
 	}
 
 	get id(): string {
@@ -25,5 +33,9 @@ export class Hero {
 
 	get role(): string {
 		return this._role;
+	}
+
+	get stance_map(): Map<number, string> {
+		return this._stance_map;
 	}
 }

@@ -1,18 +1,20 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import AbilityIcon from './AbilityIcon.svelte';
-	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
+	import { RadioGroup, RadioItem, Tab, TabGroup } from '@skeletonlabs/skeleton';
 	import TalentIcon from './TalentIcon.svelte';
 	import { IconArrowBigRightFilled } from '@tabler/icons-svelte';
 	import { abilitySlot } from '$lib/Utility';
+	import { filterAbility } from '$lib/heroes/functions';
 
 	export let data: PageData;
 
 	let tabSet = 0;
-
+	let selectedStance = 1;
+	console.log(`Data ${hero?.stance_map} ${selectedStance}`);
 	$: hero = data?.hero;
 	$: src = `/characters/preview/${hero.id}-preview-cropped.png`;
-	$: abilities = data?.abilities;
+	$: abilities = filterAbility(data?.abilities, selectedStance);
 	$: talentsMap = data?.talentsMap;
 </script>
 
@@ -26,6 +28,17 @@
 	</div>
 	<h2 class="text-center text-4xl mt-8">ABILITIES</h2>
 	<hr class="border" />
+	{#if hero.stance_map}
+		<div class="flex justify-center">
+			<RadioGroup active="variant-filled-primary rounded-md" hover="hover:variant-soft-primary">
+				{#each [...Object.entries(hero.stance_map)] as [stanceNumber, stanceName]}
+					<RadioItem bind:group={selectedStance} name="justify" value={stanceNumber}
+						>{stanceName}</RadioItem
+					>
+				{/each}
+			</RadioGroup>
+		</div>
+	{/if}
 	<div class="flex flex-row flex-wrap justify-around">
 		<div>
 			<AbilityIcon ability={abilitySlot(abilities, 'P')} />
