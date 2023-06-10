@@ -88,7 +88,9 @@
 		const validityMessages = [];
 		
 		for(var i = 0; i < 15; i++){
-			abilityCount[slotButtons.indexOf(abilityLadder[i].slot)]++;
+			if(abilityLadder[i]) {
+				abilityCount[slotButtons.indexOf(abilityLadder[i].slot)]++;
+			}
 
 			if(i === 1) {
 				abilityCount.forEach((count, index) => {
@@ -193,7 +195,7 @@
 			buildTitle: buildTitle,
 			heroId: selectedHero.id,
 			abilityIds: abilityLadderIds,
-			consumableId: selectedConsumable.id,
+			consumableId: selectedConsumable?.id,
 			shardIds: selectedShardsIds
 		};
 		let jsonBuild = JSON.stringify(build);
