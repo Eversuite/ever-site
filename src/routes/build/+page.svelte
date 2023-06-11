@@ -189,7 +189,34 @@
 	}
 
 	function setAbility(index: number, slot: string) {
-		abilityLadder[index] = abilitySlot(selectedHeroAbilities, slot);
+		let ability = abilitySlot(selectedHeroAbilities, slot);
+		if (abilityLadder[index - 1] === ability || (ability.slot == 'R' && !canSkillUltimate(index))) {
+			return;
+		}
+		abilityLadder[index] = ability;
+	}
+
+	function canSkillUltimate(index: number): boolean {
+		let arr = abilityLadder.slice(0, index);
+		let ultimates = 0;
+
+		for (let ult of arr) {
+			if (ult?.slot === 'R') {
+				ultimates += 1;
+			}
+		}
+
+		if (index >= 14) {
+			return ultimates < 3;
+		}
+
+		if (index >= 11) {
+			return ultimates < 2;
+		}
+
+		if (index >= 5) {
+			return ultimates < 1;
+		}
 	}
 
 	function handleShardClick(index) {
