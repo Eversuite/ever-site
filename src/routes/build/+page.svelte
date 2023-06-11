@@ -272,10 +272,10 @@
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
-	<div style="margin-bottom: 5rem;">
-		<div class="b-2 text-7xl font-bold heroDescription">BUILD CREATOR</div>
-		<div style="max-width: 850px;">Placeholder for future versions.</div>
-	</div>
+		<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
+		<!-- <div style="max-width: 850px;">
+			Placeholder for future versions.
+		</div> -->
 	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
 	<input
 		bind:value={buildTitle}
@@ -290,7 +290,7 @@
 				on:click={handleHeroClick}
 				alt="Image for {selectedHero.name}"
 				class="w-48 h-48 {borderCss} self-center"
-				src="/characters/portraits/{selectedHero.id}.png"
+				src="/characters/portraits/{selectedHero.id}.webp"
 				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 			/>
 		{:else}
@@ -345,7 +345,7 @@
 					alt="Image for {selectedConsumable.name}"
 					class="w-20 h-20 {borderCss} self-center"
 					style="margin-right: auto; "
-					src="/consumables/{selectedConsumable.id}.png"
+					src="/consumables/{selectedConsumable.id}.webp"
 					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 				/>
 			{:else}
@@ -355,7 +355,7 @@
 					on:click={handleConsumeableClick}
 					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 				>
-					<img alt="consumable-nav-icon" src="/nav-icons/consumables.png" class="w-20 h-20" />
+					<img alt="consumable-nav-icon" src="/nav-icons/consumables.svg" class="w-20 h-20" />
 				</div>
 			{/if}
 		</div>
