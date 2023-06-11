@@ -20,7 +20,7 @@
 		<img
 			use:popup={consumablePopup}
 			id="{consumable.id}-image"
-			src="/consumables/{consumable.id}.png"
+			src="/consumables/{consumable.id}.webp"
 			alt="image for {consumable.name}"
 			class="w-24 h-24 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 		/>
