@@ -11,7 +11,7 @@
 	let tabSet = 0;
 
 	$: hero = data?.hero;
-	$: src = `/characters/preview/${hero.id}-preview-cropped.png`;
+	$: src = `/characters/skins/${hero.id}-default.webp`;
 	$: abilities = data?.abilities;
 	$: talentsMap = data?.talentsMap;
 </script>

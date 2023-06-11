@@ -63,7 +63,7 @@
 							href={'/heroes'}
 							selected={$page.url.pathname === '/heroes'}
 						>
-							<svelte:fragment slot="lead"><img alt="heroes-nav-icon" src="/nav-icons/heroes.png" width="35px" height="35px"/></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="heroes-nav-icon" src="/nav-icons/heroes.svg" width="35px" height="35px"/></svelte:fragment>
 							<span>HEROES</span>
 						</AppRailAnchor>
 					</div>
@@ -73,7 +73,7 @@
 							href={'/shards'}
 							selected={$page.url.pathname === '/shards'}
 						>
-							<svelte:fragment slot="lead"><img alt="shards-nav-icon" src="/nav-icons/shards.png" width="35px" height="35px"/></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="shards-nav-icon" src="/nav-icons/shards.svg" width="35px" height="35px"/></svelte:fragment>
 							<span>SHARDS</span>
 						</AppRailAnchor>
 					</div>
@@ -83,7 +83,7 @@
 							href={'/consumables'}
 							selected={$page.url.pathname === '/consumables'}
 						>
-							<svelte:fragment slot="lead"><img alt="consumable-nav-icon" src="/nav-icons/consumables.png" width="35px" height="35px"/></svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="consumable-nav-icon" src="/nav-icons/consumables.svg" width="35px" height="35px"/></svelte:fragment>
 							<span>CONSUMABLES</span>
 						</AppRailAnchor>
 					</div>

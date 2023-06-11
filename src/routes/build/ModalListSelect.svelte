@@ -38,7 +38,7 @@
 							rounded="rounded-xl"
 							border="border-2 border-surface-300-600-token"
 							cursor="cursor-pointer"
-							src="{$modalStore[0].meta.path}/{item.id}.png"
+							src="{$modalStore[0].meta.path}/{item.id}.webp"
 							width="w-12"
 						/>
 					</svelte:fragment>

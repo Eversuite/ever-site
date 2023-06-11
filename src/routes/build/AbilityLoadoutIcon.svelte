@@ -23,7 +23,7 @@
 		<img
 			draggable="false"
 			id="{ability.id}-image"
-			src="/abilities/{ability.id}.png"
+			src="/abilities/{ability.id}.webp"
 			alt="image for {ability.name}"
 			class="w-12 h-12 border-2 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 		/>
