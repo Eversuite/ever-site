@@ -63,17 +63,7 @@
 							href={'/heroes'}
 							selected={$page.url.pathname === '/heroes'}
 						>
-							<svelte:fragment slot="lead">
-								<svg width="38" height="39" viewBox="0 0 38 39">
-								<rect x="0.313232" y="0.923279" width="37.1486" height="37.1486" fill="url(#pattern0)"/>
-								<defs>
-								<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-								<use xlink:href="#image0_26_30" transform="scale(0.0104167)"/>
-								</pattern>
-								<image id="image0_26_30" width="96" height="96" xlink:href="data:image/png;base64,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"/>
-								</defs>
-								</svg>
-								</svelte:fragment>
+							<svelte:fragment slot="lead"><img alt="heroes-nav-icon" src="/nav-icons/heroes.svg" width="35px" height="35px"/></svelte:fragment>
 							<span>HEROES</span>
 						</AppRailAnchor>
 					</div>
