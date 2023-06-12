@@ -75,12 +75,13 @@
 							<div
 								class="flex flex-col justify-center items-center m-2"
 								on:click={() => selectHero(hero)}
+								on:keyup={(e) => e.key === 'Enter' && selectHero(hero)}
 							>
 								<Avatar
 									rounded="rounded-2xl"
 									border="border-4 border-surface-300-600-token hover:!border-primary-500"
 									cursor="cursor-pointer"
-									src="/characters/portraits/{hero.id}.png"
+									src="/characters/portraits/{hero.id}.webp"
 									width="w-20"
 								/>
 							</div>
@@ -102,8 +103,9 @@
 							</p>
 						</div>
 						<img
-							src={`/characters/preview/${selectedHero?.id}-preview-cropped.png`}
+							src={`/characters/skins/${selectedHero?.id}-default.webp`}
 							class="object-scale-down max-h-[500px] max-w-[500px] heroImage"
+							alt="image of {selectedHero?.name}"
 						/>
 					</div>
 					<div class="flex flex-col items-center justify-center">
@@ -153,10 +155,6 @@
 		@media (max-width: 1050px) {
 			flex: 1;
 		}
-	}
-
-	.heroList {
-		grid-template-columns: (auto-fit, minmax(0, 1fr));
 	}
 
 	.detailsContainer {

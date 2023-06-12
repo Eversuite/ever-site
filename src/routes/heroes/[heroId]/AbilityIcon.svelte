@@ -31,7 +31,7 @@
 		<img
 			use:popup={abilityPopup}
 			id="{ability.id}-image"
-			src="/abilities/{ability.id}.png"
+			src="/abilities/{ability.id}.webp"
 			alt="image for {ability.name}"
 			class="w-24 h-24 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 		/>

@@ -34,7 +34,7 @@
 
 	const abilityValidationModalComponent: ModalComponent = {
 		ref: ModalListStrings
-	}
+	};
 
 	const heroModal: ModalSettings = {
 		type: 'component',
@@ -51,8 +51,8 @@
 			title: 'Build validation issues',
 			meta: { messages: messages },
 			response: (accepted: boolean) => shareBuild(accepted)
-		}
-	};
+		};
+	}
 
 	function shardModal(index: number): ModalSettings {
 		return {
@@ -61,8 +61,8 @@
 			title: 'Select a shard',
 			meta: { items: data?.shards, path: '/shards' },
 			response: (shard: Shard) => addShard(shard, index)
-		}
-	};
+		};
+	}
 
 	const consumableModal: ModalSettings = {
 		type: 'component',
@@ -77,61 +77,97 @@
 	const maxAbilityFrom6To9 = 3;
 	const maxAbilityFrom10To12 = 4;
 	const maxAbilityFrom13To15 = 5;
-	const slotButtons = ["Q","W","E","R"]
-	
+	const slotButtons = ['Q', 'W', 'E', 'R'];
+
 	const validationMessageFormat = (message: string, slot: string, checkPoint: number) => {
-		return {message, name: `${checkPoint}-${slot}`}
-	} 
+		return { message, name: `${checkPoint}-${slot}` };
+	};
 
 	function validateAbilityChoice() {
-		const abilityCount = [0,0,0,0];
+		const abilityCount = [0, 0, 0, 0];
 		const validityMessages = [];
-		
-		for(var i = 0; i < 15; i++){
-			if(abilityLadder[i]) {
+
+		for (var i = 0; i < 15; i++) {
+			if (abilityLadder[i]) {
 				abilityCount[slotButtons.indexOf(abilityLadder[i].slot)]++;
 			}
 
-			if(i === 1) {
+			if (i === 1) {
 				abilityCount.forEach((count, index) => {
-					if(count > maxAbilityFrom1To2) {
-						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 2 (${maxAbilityFrom1To2}).`, slotButtons[index], i))
+					if (count > maxAbilityFrom1To2) {
+						validityMessages.push(
+							validationMessageFormat(
+								`You have more ${slotButtons[index]}s than possible at level 2 (${maxAbilityFrom1To2}).`,
+								slotButtons[index],
+								i
+							)
+						);
 					}
-				})
-			} else if(i === 4) {
+				});
+			} else if (i === 4) {
 				abilityCount.forEach((count, index) => {
-					if(count > maxAbilityFrom3To5) {
-						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 5 (${maxAbilityFrom3To5}).`, slotButtons[index], i))
+					if (count > maxAbilityFrom3To5) {
+						validityMessages.push(
+							validationMessageFormat(
+								`You have more ${slotButtons[index]}s than possible at level 5 (${maxAbilityFrom3To5}).`,
+								slotButtons[index],
+								i
+							)
+						);
 					}
-				})
+				});
 
-				if(abilityCount[3] >= 1) {
-					validityMessages.push(validationMessageFormat(`You have more Rs than possible before level 6 (1).`, "R", i))
+				if (abilityCount[3] >= 1) {
+					validityMessages.push(
+						validationMessageFormat(`You have more Rs than possible before level 6 (1).`, 'R', i)
+					);
 				}
-			} else if(i === 8) {
+			} else if (i === 8) {
 				abilityCount.forEach((count, index) => {
-					if(count > maxAbilityFrom3To5) {
-						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 9 (${maxAbilityFrom6To9}).`, slotButtons[index], i))
+					if (count > maxAbilityFrom3To5) {
+						validityMessages.push(
+							validationMessageFormat(
+								`You have more ${slotButtons[index]}s than possible at level 9 (${maxAbilityFrom6To9}).`,
+								slotButtons[index],
+								i
+							)
+						);
 					}
-				})
-			} else if(i === 11) {
+				});
+			} else if (i === 11) {
 				abilityCount.forEach((count, index) => {
-					if(count > maxAbilityFrom10To12) {
-						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 12 (${maxAbilityFrom10To12}).`, slotButtons[index], i))
+					if (count > maxAbilityFrom10To12) {
+						validityMessages.push(
+							validationMessageFormat(
+								`You have more ${slotButtons[index]}s than possible at level 12 (${maxAbilityFrom10To12}).`,
+								slotButtons[index],
+								i
+							)
+						);
 					}
-				})
+				});
 
-				if(abilityCount[3] >= 2) {
-					validityMessages.push(validationMessageFormat(`You have more Rs than possible before level 12 (2).`, "R", i))
+				if (abilityCount[3] >= 2) {
+					validityMessages.push(
+						validationMessageFormat(`You have more Rs than possible before level 12 (2).`, 'R', i)
+					);
 				}
-			} else if(i === 14) {
+			} else if (i === 14) {
 				abilityCount.forEach((count, index) => {
-					if(count > maxAbilityFrom10To12) {
-						validityMessages.push(validationMessageFormat(`You have more ${slotButtons[index]}s than possible at level 15 (${maxAbilityFrom13To15}).`, slotButtons[index], i))
+					if (count > maxAbilityFrom10To12) {
+						validityMessages.push(
+							validationMessageFormat(
+								`You have more ${slotButtons[index]}s than possible at level 15 (${maxAbilityFrom13To15}).`,
+								slotButtons[index],
+								i
+							)
+						);
 					}
-				})
-				if(abilityCount[3] > 3) {
-					validityMessages.push(validationMessageFormat(`You have more Rs than possible at level 15 (3).`, "R", i))
+				});
+				if (abilityCount[3] > 3) {
+					validityMessages.push(
+						validationMessageFormat(`You have more Rs than possible at level 15 (3).`, 'R', i)
+					);
 				}
 			}
 		}
@@ -153,7 +189,34 @@
 	}
 
 	function setAbility(index: number, slot: string) {
-		abilityLadder[index] = abilitySlot(selectedHeroAbilities, slot);
+		let ability = abilitySlot(selectedHeroAbilities, slot);
+		if (abilityLadder[index - 1] === ability || (ability.slot == 'R' && !canSkillUltimate(index))) {
+			return;
+		}
+		abilityLadder[index] = ability;
+	}
+
+	function canSkillUltimate(index: number): boolean {
+		let arr = abilityLadder.slice(0, index);
+		let ultimates = 0;
+
+		for (let ult of arr) {
+			if (ult?.slot === 'R') {
+				ultimates += 1;
+			}
+		}
+
+		if (index >= 14) {
+			return ultimates < 3;
+		}
+
+		if (index >= 11) {
+			return ultimates < 2;
+		}
+
+		if (index >= 5) {
+			return ultimates < 1;
+		}
 	}
 
 	function handleShardClick(index) {
@@ -166,8 +229,8 @@
 
 	async function handleBuildClick() {
 		let messages = validateAbilityChoice();
-		if(messages.length === 0) {
-			return shareBuild(true)
+		if (messages.length === 0) {
+			return shareBuild(true);
 		}
 
 		modalStore.trigger(abilityValidationModal(messages));
@@ -175,7 +238,7 @@
 
 	function addShard(shard: Shard, index: number) {
 		if (shard) {
-			selectedShards[index] = shard; 
+			selectedShards[index] = shard;
 		}
 		shardModal(index).meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
 	}
@@ -204,17 +267,15 @@
 		$page.url.searchParams.set('code', encodedBuild);
 		goto(`?${$page.url.searchParams.toString()}`);
 		copyText($page.url.toString());
-		validateAbilityChoice()
+		validateAbilityChoice();
 	}
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
-	<div style="margin-bottom: 5rem;">
-		<div class="b-2 text-7xl font-bold heroDescription">BUILD CREATOR</div>
-		<div style="max-width: 850px;">
+		<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
+		<!-- <div style="max-width: 850px;">
 			Placeholder for future versions.
-		</div>
-	</div>
+		</div> -->
 	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
 	<input
 		bind:value={buildTitle}
@@ -229,7 +290,7 @@
 				on:click={handleHeroClick}
 				alt="Image for {selectedHero.name}"
 				class="w-48 h-48 {borderCss} self-center"
-				src="/characters/portraits/{selectedHero.id}.png"
+				src="/characters/portraits/{selectedHero.id}.webp"
 				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 			/>
 		{:else}
@@ -246,9 +307,7 @@
 				class="{borderCss} self-center p-3 w-20 h-20 flex flex-col items-center justify-center"
 				on:click={() => handleShardClick(index)}
 				on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
-			>
-				
-			</div>
+			/>
 			{#if selectedShards.length + index !== 4}
 				<IconMathGreater class="w-10 h-10" />
 			{/if}
@@ -262,11 +321,13 @@
 					<div
 						on:click={() => handleShardClick(index)}
 						on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
-					>	
+					>
 						{#if shard}
 							<ShardLoadoutIcon {shard} />
 						{:else}
-							<IconPlus class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500" />
+							<IconPlus
+								class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
+							/>
 						{/if}
 					</div>
 					{#if index !== 4}
@@ -284,7 +345,7 @@
 					alt="Image for {selectedConsumable.name}"
 					class="w-20 h-20 {borderCss} self-center"
 					style="margin-right: auto; "
-					src="/consumables/{selectedConsumable.id}.png"
+					src="/consumables/{selectedConsumable.id}.webp"
 					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 				/>
 			{:else}
@@ -294,7 +355,7 @@
 					on:click={handleConsumeableClick}
 					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
 				>
-					<img alt="consumable-nav-icon" src="/nav-icons/consumables.png" class="w-20 h-20" />
+					<img alt="consumable-nav-icon" src="/nav-icons/consumables.svg" class="w-20 h-20" />
 				</div>
 			{/if}
 		</div>
@@ -302,9 +363,7 @@
 	{#if selectedHeroAbilities && selectedHeroAbilities.length > 0}
 		<div class="h1 font-evercore mt-12">ABILITIES</div>
 		<div class="flex swapToCol justify items-center mt-4">
-			<div
-				class={`flex swapToRow items-center m-4 gap-x-1 gap-1`}
-			>
+			<div class={`flex swapToRow items-center m-4 gap-x-1 gap-1`}>
 				<div class="w-12 h-12">
 					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'P')} />
 				</div>
@@ -331,8 +390,8 @@
 							<div
 								on:click={() => setAbility(index, slot)}
 								on:keyup={(e) => e.key === 'Enter' && setAbility(index, slot)}
-								style= "border-radius: 4px;"
-								class= "w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 flex flex-col items-center justify-center mr-2"
+								style="border-radius: 4px;"
+								class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 flex flex-col items-center justify-center mr-2"
 							>
 								{#if ability?.slot === slot}
 									<span style="font-weight: bold; font-size: 1.5rem;" class={`ability${slot}`}

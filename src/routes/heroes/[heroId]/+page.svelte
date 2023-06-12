@@ -13,8 +13,8 @@
 	let selectedStance = 1;
 	console.log(`Data ${hero?.stance_map} ${selectedStance}`);
 	$: hero = data?.hero;
-	$: src = `/characters/preview/${hero.id}-preview-cropped.png`;
-	$: abilities = filterAbility(data?.abilities, selectedStance);
+	$: src = `/characters/skins/${hero.id}-default.webp`;
+	$: abilities = data?.abilities;
 	$: talentsMap = data?.talentsMap;
 </script>
 

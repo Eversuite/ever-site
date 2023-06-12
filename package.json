@@ -13,7 +13,7 @@
 	},
 	"devDependencies": {
 		"@skeletonlabs/skeleton": "^1.7.1",
-		"@sveltejs/adapter-auto": "^2.1.0",
+		"@sveltejs/adapter-cloudflare": "^2.3.0",
 		"@sveltejs/kit": "^1.20.2",
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
@@ -36,10 +36,10 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@floating-ui/dom": "^1.2.9",
-		"buffer": "^6.0.3",
+		"@floating-ui/dom": "^1.3.0",
 		"@supabase/auth-helpers-sveltekit": "^0.10.1",
 		"@tabler/icons-svelte": "^2.22.0",
+		"buffer": "^6.0.3",
 		"postcss-nested": "^6.0.1",
 		"postcss-nesting": "^11.2.2"
 	}
