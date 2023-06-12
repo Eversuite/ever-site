@@ -124,7 +124,7 @@
 				}
 			} else if (i === 8) {
 				abilityCount.forEach((count, index) => {
-					if (count > maxAbilityFrom3To5) {
+					if (count > maxAbilityFrom6To9) {
 						validityMessages.push(
 							validationMessageFormat(
 								`You have more ${slotButtons[index]}s than possible at level 9 (${maxAbilityFrom6To9}).`,
@@ -154,7 +154,7 @@
 				}
 			} else if (i === 14) {
 				abilityCount.forEach((count, index) => {
-					if (count > maxAbilityFrom10To12) {
+					if (count > maxAbilityFrom13To15) {
 						validityMessages.push(
 							validationMessageFormat(
 								`You have more ${slotButtons[index]}s than possible at level 15 (${maxAbilityFrom13To15}).`,
