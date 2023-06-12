@@ -7,22 +7,31 @@
 	import { abilitySlot } from '$lib/Utility';
 	import { filterAbility } from '$lib/heroes/functions';
 
-	export let data: PageData;
+	export let data: PageData | undefined;
 
 	let tabSet = 0;
 	let selectedStance = 1;
 
 	$: hero = data?.hero;
-	$: src = `/characters/skins/${hero.id}-default.webp`;
-	$: talents = Array.from(data.talentsMap);
+	$: src = `/characters/skins/${hero?.id}-default.webp`;
+	$: abilities = data?.abilities ?? [];
+	$: talents = data?.talents ? Array.from(data.talents) : [];
 </script>
 
-<div class="flex items-start gap-20">
-	<div class="flex flex-col gap-3 justify-center max-w-[488px]">
-		<div class="flex gap-7">
-			<div class="basis-1/2 text-center">
-				<h1 class="mb-1.5 text-left text-5xl">{hero.name.toUpperCase()}</h1>
-				<p class="text-left">{hero.description}</p>
+<div class="flex flex-col gap-3">
+	<div class="flex flex-col lg:flex-row items-start gap-20">
+		<div class="flex flex-col gap-3 justify-center max-w-[488px]">
+			<div class="flex gap-7">
+				<div class="basis-1/2 text-center">
+					<h1 class="mb-1.5 text-left text-5xl">{hero?.name.toUpperCase()}</h1>
+					<p class="text-left">{hero?.description}</p>
+				</div>
+				<img {src} alt="character portrait" class="object-scale-down max-h-[326px] max-w-[200px]" />
+			</div>
+			<div class="grid justify-items-center gap-2 col-span-2">
+				<img src="/svg/border.svg" alt="border" />
+				<p>art credit: Author</p>
+				>>>>>>> 3ca4b7f (add basic RWD)
 			</div>
 			<img {src} alt="character portrait" class="object-scale-down max-h-[326px] max-w-[200px]" />
 		</div>
@@ -34,9 +43,9 @@
 	<div class="flex flex-col justify-between">
 		<div class="flex flex-col gap-2">
 			<h2 class="w-full text-4xl">ABILITIES</h2>
-			{#if hero.stance_map}
+			{#if hero?.stance_map}
 				<div class="flex justify-center">
-					{#each [...Object.entries(hero.stance_map)] as [stanceNumber, stanceName]}
+					{#each [...Object.entries(hero?.stance_map)] as [stanceNumber, stanceName]}
 						<Tab
 							bind:group={selectedStance}
 							name={stanceName}
@@ -106,7 +115,7 @@
 		</div>
 	</div>
 	<div>
-		<h2 class="text-[40px] leading-[48px] uppercase mb-2">Reccomended Build</h2>
+		<h2 class="text-[40px] leading-[48px] uppercase mb-2">Recommended Build</h2>
 		<p class="max-w-[677px]">
 			These are the recommended shards to look out for when building for Skye, as determined by
 			community votes, If you are already familiar with how to play Skye this is a great resource to
@@ -117,7 +126,7 @@
 	</div>
 	<div>
 		<h2 class="text-[40px] leading-[48px] uppercase mb-2">Best rated player builds</h2>
-		<div class="flex gap-3">
+		<div class="flex flex-wrap gap-3">
 			{#each { length: 3 } as _, i}
 				<div class="flex items-center gap-3 bg-dark-1 px-6 py-4 rounded-md">
 					<img
@@ -148,7 +157,7 @@
 	</div>
 	<div>
 		<h2 class="text-[40px] leading-[48px] uppercase mb-6">Skins</h2>
-		<div class="flex gap-10">
+		<div class="flex flex-wrap gap-10">
 			{#each { length: 4 } as _, i}
 				<div class="flex flex-col gap-4 items-center">
 					<img
