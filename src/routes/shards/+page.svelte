@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Shard } from '$lib/class/Shard';
+	import type { Shard } from '$lib/class/Shard';
 	import ShardIcon from './ShardIcon.svelte';
 
 	export let data: PageData;
