@@ -6,6 +6,7 @@ export class Ability {
 	private readonly _description: string;
 	private readonly _source: string;
 	private readonly _slot: string;
+	private readonly _stance: number;
 	private readonly _properties: Map<string, Property[]>;
 
 	constructor(
@@ -14,7 +15,8 @@ export class Ability {
 		description: string,
 		source: string,
 		slot: string,
-		properties: Map<string, Property[]>
+		properties: Map<string, Property[]>,
+		stance: number
 	) {
 		this._id = id;
 		this._name = name;
@@ -22,6 +24,7 @@ export class Ability {
 		this._source = source;
 		this._slot = slot;
 		this._properties = properties;
+		this._stance = stance;
 	}
 
 	get id(): string {
@@ -41,6 +44,10 @@ export class Ability {
 	}
 	get slot(): string {
 		return this._slot;
+	}
+
+	get stance(): number {
+		return this._stance;
 	}
 
 	get properties(): Map<string, Property[]> {

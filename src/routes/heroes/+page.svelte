@@ -4,14 +4,13 @@
 	import { Avatar } from '@skeletonlabs/skeleton';
 	import type { Ability } from '$lib/class/Ability';
 	import AbilityIcon from './[heroId]/AbilityIcon.svelte';
-	import { IconBoxPadding } from '@tabler/icons-svelte';
 	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 
 	let searchTerm = '';
 	$: heroes = heroFilter(data?.heroData, searchTerm);
-	
+
 	let groupBy = function <TItem, K>(list: TItem[], keyGetter: (TItem) => K): Map<K, TItem[]> {
 		const map = new Map();
 		for (const item of list) {
@@ -29,9 +28,7 @@
 	$: byRole = groupBy(heroes, (hero) => hero.role);
 
 	function heroFilter(heroes: Hero[] | undefined, term: string): Hero[] {
-		heroes = heroes || []; // heroes is either the defined array or an empty array
-
-		return heroes.filter((hero) => contains(hero.name, term) || contains(hero.role, term));
+		return (heroes || []).filter((hero) => contains(hero.name, term) || contains(hero.role, term));
 	}
 
 	function contains(source: string, term: string): boolean {
@@ -42,7 +39,7 @@
 	$: selectedHero;
 
 	async function selectHero(heroDetails: Hero) {
-		if(window.innerWidth < 1050) {
+		if (window.innerWidth < 1050) {
 			goto(`/heroes/${heroDetails.id}`);
 		}
 		selectedHero = undefined;
@@ -54,8 +51,8 @@
 			(ability) => ability.source === selectedHeroObject?.id
 		);
 
-		return fetchedAbilities
-			?.filter((ab) => ab.slot != undefined || ab.slot != null)
+		return (fetchedAbilities || [])
+			.filter((ab) => ab.slot)
 			.find((ability) => ability.slot.toUpperCase() === slot.toUpperCase());
 	}
 </script>
@@ -98,7 +95,9 @@
 				<div class="flex flex-col items-center p-4 heroDetailsContainer">
 					<div class="flex flex-row" style="transition all .2s ease-in-out">
 						<div class="flex flex-col items-start">
-							<h1 class="mb-2 text-7xl heroLabel" style="">{selectedHero?.name.toUpperCase()}</h1>
+							<h1 class="mb-2 text-7xl heroLabel font-evercore" style="">
+								{selectedHero?.name.toUpperCase()}
+							</h1>
 							<p class="mb-2 text-2xl heroDescription" style="">
 								{selectedHero?.description}
 							</p>
@@ -178,7 +177,6 @@
 
 	.heroLabel {
 		max-width: 350px;
-		font-family: 'EVERCORE';
 		color: white;
 	}
 
