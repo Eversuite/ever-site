@@ -1,11 +1,11 @@
 <script lang="ts">
+	import dayjs from 'dayjs';
 	import type { PageData } from './$types';
 	import AbilityIcon from './AbilityIcon.svelte';
-	import { RadioGroup, RadioItem, Tab } from '@skeletonlabs/skeleton';
+	import { Tab } from '@skeletonlabs/skeleton';
 	import TalentIcon from './TalentIcon.svelte';
 	import { IconArrowBigRightFilled } from '@tabler/icons-svelte';
 	import { abilitySlot } from '$lib/Utility';
-	import { filterAbility } from '$lib/heroes/functions';
 
 	export let data: PageData | undefined;
 
@@ -16,6 +16,7 @@
 	$: src = `/characters/skins/${hero?.id}-default.webp`;
 	$: abilities = data?.abilities ?? [];
 	$: talents = data?.talents ? Array.from(data.talents) : [];
+	$: builds = data?.builds ?? [];
 </script>
 
 <div class="flex flex-col gap-3">
@@ -117,37 +118,29 @@
 	<div>
 		<h2 class="text-[40px] leading-[48px] uppercase mb-2">Recommended Build</h2>
 		<p class="max-w-[677px]">
-			These are the recommended shards to look out for when building for Skye, as determined by
-			community votes, If you are already familiar with how to play Skye this is a great resource to
-			quickly get a good rune selection for Patch 0.1 CB. However, if you are a new Skye player we
-			highly recommend reading through some of the guides above to learn why this build is strong on
-			Skye!
+			These are the recommended shards to look out for when building for {hero?.name}, as determined
+			by community votes, If you are already familiar with how to play {hero?.name} this is a great resource
+			to quickly get a good rune selection for Patch 0.1 CB. However, if you are a new {hero?.name} player
+			we highly recommend reading through some of the guides above to learn why this build is strong
+			on {hero?.name}!
 		</p>
 	</div>
 	<div>
 		<h2 class="text-[40px] leading-[48px] uppercase mb-2">Best rated player builds</h2>
 		<div class="flex flex-wrap gap-3">
-			{#each { length: 3 } as _, i}
+			{#each builds as build, i}
 				<div class="flex items-center gap-3 bg-dark-1 px-6 py-4 rounded-md">
-					<img
-						src="/characters/portraits/artillery-mage-portrait.png"
-						alt=""
-						width="76"
-						height="74"
-						class="rounded-md"
-					/>
+					<img src={build.image} alt="" width="76" height="74" class="rounded-md" />
 					<div class="flex flex-col gap-1.5">
-						<p class="leading-[10px] text-[11px]">0.1CB insta win skye</p>
-						<p class="leading-[10px] text-[11px]">by Junivieve updated June 6, 2023</p>
+						<p class="leading-[10px] text-[11px]">{build.title}</p>
+						<p class="leading-[10px] text-[11px]">
+							by <span class="text-egg-blue">{build.author}</span> updated {dayjs(
+								build.updatedAt
+							).format('MMM D, YYYY')}
+						</p>
 						<div class="flex justify-between gap-2">
-							{#each { length: 4 } as _, i}
-								<img
-									src="/talents/berserker-tank-battle-master.png"
-									alt=""
-									width="35"
-									height="33"
-									class="rounded-sm"
-								/>
+							{#each build.talents as talent, i}
+								<img src={talent.image} alt="" width="35" height="33" class="rounded-sm" />
 							{/each}
 						</div>
 					</div>

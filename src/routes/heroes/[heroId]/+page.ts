@@ -48,9 +48,88 @@ export const load: PageLoad = async ({ params, parent }) => {
 		talentTreesMap.set(talentTree, sortedTreeTalentsMap);
 	}
 
+	const builds = [
+		{
+			id: 1,
+			title: '0.1CB insta win skye',
+			author: 'Junivieve',
+			updatedAt: '2023-06-06',
+			image: '/characters/portraits/artillery-mage.png',
+			talents: [
+				{
+					id: 11,
+					image: '/talents/berserker-tank-frothing-warrior.png'
+				},
+				{
+					id: 12,
+					image: '/talents/berserker-tank-rage.png'
+				},
+				{
+					id: 13,
+					image: '/talents/control-mage-quest-oathof-emergency.png'
+				},
+				{
+					id: 14,
+					image: '/talents/melee-healer-weapon-mastery.png'
+				}
+			]
+		},
+		{
+			id: 2,
+			title: '0.1CB insta win skye',
+			author: 'Junivieve',
+			updatedAt: '2023-06-06',
+			image: '/characters/portraits/artillery-mage.png',
+			talents: [
+				{
+					id: 11,
+					image: '/talents/berserker-tank-frothing-warrior.png'
+				},
+				{
+					id: 12,
+					image: '/talents/berserker-tank-rage.png'
+				},
+				{
+					id: 13,
+					image: '/talents/control-mage-quest-oathof-emergency.png'
+				},
+				{
+					id: 14,
+					image: '/talents/melee-healer-weapon-mastery.png'
+				}
+			]
+		},
+		{
+			id: 3,
+			title: '0.1CB insta win skye',
+			author: 'Junivieve',
+			updatedAt: '2023-06-06',
+			image: '/characters/portraits/artillery-mage.png',
+			talents: [
+				{
+					id: 11,
+					image: '/talents/berserker-tank-frothing-warrior.png'
+				},
+				{
+					id: 12,
+					image: '/talents/berserker-tank-rage.png'
+				},
+				{
+					id: 13,
+					image: '/talents/control-mage-quest-oathof-emergency.png'
+				},
+				{
+					id: 14,
+					image: '/talents/melee-healer-weapon-mastery.png'
+				}
+			]
+		}
+	];
+
 	return {
 		hero,
 		abilities,
-		talents: Array.from(talentTreesMap)
+		talents: Array.from(talentTreesMap),
+		builds
 	};
 };
