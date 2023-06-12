@@ -14,7 +14,7 @@
 	console.log(`Data ${hero?.stance_map} ${selectedStance}`);
 	$: hero = data?.hero;
 	$: src = `/characters/skins/${hero.id}-default.webp`;
-	$: abilities = data?.abilities;
+	$: abilities = filterAbility(data?.abilities, selectedStance);
 	$: talentsMap = data?.talentsMap;
 </script>
 
