@@ -11,7 +11,7 @@ const config = {
         adapter: adapter({
             routes: {
                 include: ['/*'],
-                exclude: ['<build>', '<prerendered>', '/abilities/*', '/characters/*', '/consumables/*', '/shards/*', '/talents/*']
+                exclude: ['<build>', '<prerendered>']
             }
         })
     }
