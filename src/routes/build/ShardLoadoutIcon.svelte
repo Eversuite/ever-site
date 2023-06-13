@@ -9,7 +9,7 @@
 		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
-		target: `${shard?.id ?? 'dummy'}-popup`,
+		target: "shard-popup",
 		state: (e: Record<string, boolean>) => console.log(e)
 	};
 
@@ -29,18 +29,24 @@
 
 {#if shard !== undefined}
 	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
-	<div class="flex flex-col center-text items-center">
+	<div class="flex flex-col center-text items-center" use:popup={shardPopup}>
 		<img
-			use:popup={shardPopup}
+			
 			id="{shard.id}-image"
 			src="/shards/{shard.id}.webp"
 			alt="image for {shard.name}"
 			class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500 [&>*]:pointer-events-none"
 		/>
 	</div>
-	<div data-popup="{shard.id}-popup" class="card p-4">
+	<div data-popup="shard-popup" class="card p-4" class:hidden={shard?.id !== undefined}>
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
 	</div>
 {/if}
+
+<style>
+	.hidden {
+		display: none;
+	}
+</style>
