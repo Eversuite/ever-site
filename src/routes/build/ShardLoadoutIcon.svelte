@@ -14,7 +14,7 @@
 		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
-		target: `${shard?.id ?? 'dummy'}-popup`,
+		target: "shard-popup",
 		state: (e: Record<string, boolean>) => console.log(e)
 	};
 
@@ -42,7 +42,7 @@
 			class={iconCss}
 		/>
 	</div>
-	<div data-popup="{shard.id}-popup" class="card p-4">
+	<div data-popup="shard-popup" class="card p-4" class:hidden={shard?.id !== undefined}>
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
@@ -52,3 +52,9 @@
 		<IconPlus class={iconCss} />
 	</div>
 {/if}
+
+<style>
+	.hidden {
+		display: none;
+	}
+</style>
