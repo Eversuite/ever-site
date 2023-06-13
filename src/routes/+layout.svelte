@@ -41,6 +41,10 @@
 		return () => subscription.unsubscribe();
 	});
 </script>
+<svelte:head>
+    <title>Evercore Vault</title> 
+</svelte:head>
+
 
 <Modal />
 
