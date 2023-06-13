@@ -7,14 +7,14 @@ const config = {
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 
-    kit: {
-        adapter: adapter({
-            routes: {
-                include: ['/*'],
-                exclude: ['<build>', '<prerendered>']
-            }
-        })
-    }
+	kit: {
+		adapter: adapter({
+			routes: {
+				include: ['/*'],
+				exclude: ['<build>', '<prerendered>']
+			}
+		})
+	}
 };
 
 export default config;

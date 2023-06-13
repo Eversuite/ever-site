@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
-	import {IconPlus, IconMathGreater } from '@tabler/icons-svelte';
+	import { IconPlus, IconMathGreater } from '@tabler/icons-svelte';
 	import ModalListSelect from './ModalListSelect.svelte';
 	import ModalListStrings from './ModalListStrings.svelte';
 	import type { PageData } from '../$types';
@@ -149,7 +149,7 @@
 				});
 
 				if (abilityCount[3] > 2) {
-					console.log(abilityCount[3])
+					console.log(abilityCount[3]);
 					validityMessages.push(
 						validationMessageFormat(`You have more Rs than possible before level 12 (2).`, 'R', i)
 					);
@@ -274,8 +274,8 @@
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
-		<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
-		<!-- <div style="max-width: 850px;">
+	<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
+	<!-- <div style="max-width: 850px;">
 			Placeholder for future versions.
 		</div> -->
 	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
@@ -310,8 +310,11 @@
 			<div class="h1 font-evercore mt-12">SHARDS</div>
 			<div class="flex flex-row items-center flex-wrap">
 				{#each selectedShards as shard, index}
-					<div on:click={() => handleShardClick(index)} on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}>
-							<ShardLoadoutIcon {shard} />
+					<div
+						on:click={() => handleShardClick(index)}
+						on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
+					>
+						<ShardLoadoutIcon {shard} />
 					</div>
 					{#if index !== 4}
 						<IconMathGreater class="w-10 h-10" />
@@ -322,7 +325,10 @@
 		</div>
 		<div class="flex flex-col justify-start">
 			<div class="h1 font-evercore mt-12">CONSUMABLE</div>
-			<div on:click={() => handleConsumeableClick()} on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}>
+			<div
+				on:click={() => handleConsumeableClick()}
+				on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
+			>
 				<ConsumableLoadoutIcon consumable={selectedConsumable} />
 			</div>
 		</div>

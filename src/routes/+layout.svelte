@@ -21,9 +21,7 @@
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	import {
-		IconHammer,
-	} from '@tabler/icons-svelte';
+	import { IconHammer } from '@tabler/icons-svelte';
 
 	export let data: LayoutData;
 
@@ -41,10 +39,10 @@
 		return () => subscription.unsubscribe();
 	});
 </script>
-<svelte:head>
-    <title>Evercore Vault</title> 
-</svelte:head>
 
+<svelte:head>
+	<title>Evercore Vault</title>
+</svelte:head>
 
 <Modal />
 
