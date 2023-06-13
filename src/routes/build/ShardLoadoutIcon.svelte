@@ -43,7 +43,7 @@
 			class={iconCss}
 		/>
 	</div>
-	<div data-popup={popUpTargetString} class="card p-4" class:hidden={shard?.id !== undefined}>
+	<div data-popup={popUpTargetString} class="card p-4">
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
@@ -53,9 +53,3 @@
 		<IconPlus class={iconCss} />
 	</div>
 {/if}
-
-<style>
-	.hidden {
-		display: none;
-	}
-</style>
