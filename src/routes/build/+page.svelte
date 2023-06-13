@@ -147,7 +147,8 @@
 					}
 				});
 
-				if (abilityCount[3] >= 2) {
+				if (abilityCount[3] > 2) {
+					console.log(abilityCount[3])
 					validityMessages.push(
 						validationMessageFormat(`You have more Rs than possible before level 12 (2).`, 'R', i)
 					);
@@ -190,7 +191,7 @@
 
 	function setAbility(index: number, slot: string) {
 		let ability = abilitySlot(selectedHeroAbilities, slot);
-		if (abilityLadder[index - 1] === ability || (ability.slot == 'R' && !canSkillUltimate(index))) {
+		if (ability.slot == 'R' && !canSkillUltimate(index)) {
 			return;
 		}
 		abilityLadder[index] = ability;
