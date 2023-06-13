@@ -39,15 +39,9 @@
 			class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500 [&>*]:pointer-events-none"
 		/>
 	</div>
-	<div data-popup={popUpTargetString} class="card p-4" class:hidden={shard?.id !== undefined}>
+	<div data-popup={popUpTargetString} class="card p-4">
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
 	</div>
 {/if}
-
-<style>
-	.hidden {
-		display: none;
-	}
-</style>
