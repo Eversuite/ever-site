@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
-	import { IconCrown, IconPlus, IconMoneybag, IconMathGreater } from '@tabler/icons-svelte';
+	import { IconPlus, IconMathGreater } from '@tabler/icons-svelte';
 	import ModalListSelect from './ModalListSelect.svelte';
 	import ModalListStrings from './ModalListStrings.svelte';
 	import type { PageData } from '../$types';
@@ -14,6 +14,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { copyText } from 'svelte-copy';
+	import ConsumableLoadoutIcon from './ConsumableLoadoutIcon.svelte';
 
 	export let data: PageData;
 	let selectedHero: Hero = data?.selectedHero ?? undefined;
@@ -148,7 +149,7 @@
 				});
 
 				if (abilityCount[3] > 2) {
-					console.log(abilityCount[3])
+					console.log(abilityCount[3]);
 					validityMessages.push(
 						validationMessageFormat(`You have more Rs than possible before level 12 (2).`, 'R', i)
 					);
@@ -273,8 +274,8 @@
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
-		<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
-		<!-- <div style="max-width: 850px;">
+	<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
+	<!-- <div style="max-width: 850px;">
 			Placeholder for future versions.
 		</div> -->
 	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
@@ -303,16 +304,6 @@
 				CLICK TO CHOOSE A HERO
 			</div>
 		{/if}
-		{#each Array(5 - selectedShards.length) as _, index (index)}
-			<div
-				class="{borderCss} self-center p-3 w-20 h-20 flex flex-col items-center justify-center"
-				on:click={() => handleShardClick(index)}
-				on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
-			/>
-			{#if selectedShards.length + index !== 4}
-				<IconMathGreater class="w-10 h-10" />
-			{/if}
-		{/each}
 	</div>
 	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
 		<div class="flex flex-col">
@@ -323,13 +314,7 @@
 						on:click={() => handleShardClick(index)}
 						on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
 					>
-						{#if shard}
-							<ShardLoadoutIcon {shard} />
-						{:else}
-							<IconPlus
-								class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
-							/>
-						{/if}
+						<ShardLoadoutIcon {shard} />
 					</div>
 					{#if index !== 4}
 						<IconMathGreater class="w-10 h-10" />
@@ -340,25 +325,12 @@
 		</div>
 		<div class="flex flex-col justify-start">
 			<div class="h1 font-evercore mt-12">CONSUMABLE</div>
-			{#if selectedConsumable}
-				<img
-					on:click={handleConsumeableClick}
-					alt="Image for {selectedConsumable.name}"
-					class="w-20 h-20 {borderCss} self-center"
-					style="margin-right: auto; "
-					src="/consumables/{selectedConsumable.id}.webp"
-					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
-				/>
-			{:else}
-				<div
-					class="{borderCss} self-center"
-					style="margin-right: auto; "
-					on:click={handleConsumeableClick}
-					on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
-				>
-					<img alt="consumable-nav-icon" src="/nav-icons/consumables.svg" class="w-20 h-20" />
-				</div>
-			{/if}
+			<div
+				on:click={() => handleConsumeableClick()}
+				on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
+			>
+				<ConsumableLoadoutIcon consumable={selectedConsumable} />
+			</div>
 		</div>
 	</div>
 	{#if selectedHeroAbilities && selectedHeroAbilities.length > 0}

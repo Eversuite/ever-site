@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Ability } from '$lib/class/Ability';
+	import type { Ability } from '$lib/class/Ability';
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 

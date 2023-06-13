@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		Avatar,
-		ListBox,
-		ListBoxItem,
-		modalStore,
-	} from '@skeletonlabs/skeleton';
+	import { Avatar, ListBox, ListBoxItem, modalStore } from '@skeletonlabs/skeleton';
 	import ModalListItem from './ModalListItem.svelte';
 
 	// Props

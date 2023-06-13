@@ -1,7 +1,5 @@
 <script lang="ts">
-	import {
-		modalStore,
-	} from '@skeletonlabs/skeleton';
+	import { modalStore } from '@skeletonlabs/skeleton';
 
 	// Props
 	/** Exposes parent props to this component. */

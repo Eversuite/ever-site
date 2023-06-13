@@ -1,9 +1,14 @@
 <script lang="ts">
 	import type { Shard } from '$lib/class/Shard';
+	import { IconPlus } from '@tabler/icons-svelte';
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
 	export let shard: Shard;
+
+	const iconCss =
+		'w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500';
+	const iconDivCss = 'flex flex-col center-text items-center';
 
 	let shardPopup: PopupSettings = {
 		// Set the event as: click | hover | hover-click | focus | focus-click
@@ -29,18 +34,21 @@
 
 {#if shard !== undefined}
 	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
-	<div class="flex flex-col center-text items-center">
+	<div class={iconDivCss} use:popup={shardPopup}>
 		<img
-			use:popup={shardPopup}
 			id="{shard.id}-image"
 			src="/shards/{shard.id}.webp"
 			alt="image for {shard.name}"
-			class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500 [&>*]:pointer-events-none"
+			class={iconCss}
 		/>
 	</div>
 	<div data-popup="{shard.id}-popup" class="card p-4">
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
+	</div>
+{:else}
+	<div class={iconDivCss}>
+		<IconPlus class={iconCss} />
 	</div>
 {/if}
