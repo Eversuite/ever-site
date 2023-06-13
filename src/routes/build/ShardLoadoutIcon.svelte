@@ -4,12 +4,13 @@
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
 	export let shard: Shard;
+	const popUpTargetString = `shard-popup-${Math.floor(Math.random() * 100000)}` 
 
 	let shardPopup: PopupSettings = {
 		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
-		target: "shard-popup",
+		target: popUpTargetString,
 		state: (e: Record<string, boolean>) => console.log(e)
 	};
 
@@ -38,7 +39,7 @@
 			class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500 [&>*]:pointer-events-none"
 		/>
 	</div>
-	<div data-popup="shard-popup" class="card p-4" class:hidden={shard?.id !== undefined}>
+	<div data-popup={popUpTargetString} class="card p-4" class:hidden={shard?.id !== undefined}>
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
