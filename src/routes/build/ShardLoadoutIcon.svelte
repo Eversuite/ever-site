@@ -9,7 +9,8 @@
 		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
 		// Provide a matching 'data-popup' value.
-		target: `${shard !== undefined ? shard.id : 'dummy'}-popup`
+		target: `${shard?.id ?? 'dummy'}-popup`,
+		state: (e: Record<string, boolean>) => console.log(e)
 	};
 
 	function resolveDescription(sh: Shard): string {
@@ -34,7 +35,7 @@
 			id="{shard.id}-image"
 			src="/shards/{shard.id}.webp"
 			alt="image for {shard.name}"
-			class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
+			class="w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500 [&>*]:pointer-events-none"
 		/>
 	</div>
 	<div data-popup="{shard.id}-popup" class="card p-4">
