@@ -30,7 +30,6 @@
 {#if shard !== undefined}
 	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
 	<div class="flex flex-col center-text items-center">
-		<span>{shardPopup.target}</span>
 		<img
 			use:popup={shardPopup}
 			id="{shard.id}-image"
