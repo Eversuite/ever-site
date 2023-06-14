@@ -51,6 +51,6 @@ export const load: PageLoad = async ({ params, parent }) => {
 	return {
 		hero,
 		abilities,
-		talentsMap: talentTreesMap
+		talents: Array.from(talentTreesMap)
 	};
 };
