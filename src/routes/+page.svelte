@@ -5,8 +5,12 @@
 		<!-- Message -->
 		<div class="alert-message">
 			<p>
-				We are still in early development, and description values are messy. The vertical separators
-				represent the scaling based on level or rarity.
+				Evercore Heroes is currently in the early-development stage. There will be regular updates
+				to address issues and introduce new features.
+				<br />If you encounter any issues or have suggestions, contact the Dev Team on the
+				<a style="text-decoration: underline;" href="https://discord.gg/Ayvw4vHS3u">
+					<b>Evercore Vault</b> discord.
+				</a>
 			</p>
 		</div>
 	</aside>

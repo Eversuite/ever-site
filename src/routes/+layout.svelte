@@ -123,8 +123,8 @@
 						</AppRailAnchor>
 					</div>
 				</div>
-				<div class="text-center text-sm disclosure bg-dark">
-					<div class="sideBarContentAnchor">
+				<div>
+					<div class="sideBarContentAnchor bg-dark" style="margin-top: auto;">
 						<AppRailAnchor regionLead="flex justify-center" href="https://discord.gg/qbPjBQRnDf">
 							<svelte:fragment slot="lead">
 								<img
@@ -137,12 +137,14 @@
 							<span class="text-sm">JOIN OUR DISCORD</span>
 						</AppRailAnchor>
 					</div>
-					<p class="opacity-50">
-						Evercore Vault is an unofficial fansite created by fans for fans and is not affiliated
-						with or endorsed by Vela Games. All trademarks, copyrights, and other intellectual
-						property related to Evercore Heroes belong to their respective owners. No copyright
-						infringement is intended.
-					</p>
+					<div class="p-4 text-center text-sm disclosure bg-dark">
+						<p class="opacity-50">
+							Evercore Vault is an unofficial fansite created by fans for fans and is not affiliated
+							with or endorsed by Vela Games. All trademarks, copyrights, and other intellectual
+							property related to Evercore Heroes belong to their respective owners. No copyright
+							infringement is intended.
+						</p>
+					</div>
 				</div>
 			</div>
 		</AppRail>
@@ -219,7 +221,7 @@
 	.disclosure {
 		transition: ease-in-out 0.2s all;
 		margin-top: auto;
-
+		padding-top: 0;
 		@media (max-width: 1175px) {
 			display: none;
 		}
