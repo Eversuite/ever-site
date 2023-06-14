@@ -5,7 +5,7 @@
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
 	export let shard: Shard;
-	const popUpTargetString = `shard-popup-${Math.floor(Math.random() * 100000)}` 
+	const popUpTargetString = `shard-popup-${Math.floor(Math.random() * 100000)}`;
 
 	const iconCss =
 		'w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500';
@@ -35,8 +35,9 @@
 
 {#if shard !== undefined}
 	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
-	<div class={iconDivCss} use:popup={shardPopup}>
+	<div class={iconDivCss}>
 		<img
+			use:popup={shardPopup}
 			id="{shard.id}-image"
 			src="/shards/{shard.id}.webp"
 			alt="image for {shard.name}"
