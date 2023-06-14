@@ -6,10 +6,9 @@
 	export let ability: Ability;
 
 	let abilityPopup: PopupSettings = {
-		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
-		// Provide a matching 'data-popup' value.
-		target: `${ability?.id ?? 'dummy'}-popup`
+		target: `${ability?.id ?? 'dummy'}-popup`,
+		placement: 'right'
 	};
 
 	function resolveDescription(ab: Ability): string {
@@ -27,7 +26,6 @@
 </script>
 
 {#if ability !== undefined}
-	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
 	<div class="flex center-text items-center">
 		<img
 			use:popup={abilityPopup}

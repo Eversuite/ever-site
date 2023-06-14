@@ -134,7 +134,7 @@
 									height="35px"
 								/>
 							</svelte:fragment>
-							<span>DISCORD</span>
+							<span class="text-sm">JOIN OUR DISCORD</span>
 						</AppRailAnchor>
 					</div>
 					<div class="p-4 text-center text-sm disclosure bg-dark">

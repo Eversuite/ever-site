@@ -5,18 +5,16 @@
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
 	export let shard: Shard;
-	const popUpTargetString = `shard-popup-${Math.floor(Math.random() * 100000)}` 
+	const popUpTargetString = `shard-popup-${Math.floor(Math.random() * 100000)}`;
 
 	const iconCss =
 		'w-20 h-20 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500';
 	const iconDivCss = 'flex flex-col center-text items-center';
 
 	let shardPopup: PopupSettings = {
-		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
-		// Provide a matching 'data-popup' value.
 		target: popUpTargetString,
-		state: (e: Record<string, boolean>) => console.log(e)
+		placement: 'top'
 	};
 
 	function resolveDescription(sh: Shard): string {
@@ -33,10 +31,10 @@
 	}
 </script>
 
-{#if shard !== undefined}
-	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
-	<div class={iconDivCss} use:popup={shardPopup}>
+{#if shard}
+	<div class={iconDivCss}>
 		<img
+			use:popup={shardPopup}
 			id="{shard.id}-image"
 			src="/shards/{shard.id}.webp"
 			alt="image for {shard.name}"
