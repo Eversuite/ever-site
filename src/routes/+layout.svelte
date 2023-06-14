@@ -123,7 +123,7 @@
 						</AppRailAnchor>
 					</div>
 				</div>
-				<div class="p-4 text-center text-sm disclosure bg-dark">
+				<div class="text-center text-sm disclosure bg-dark">
 					<div class="sideBarContentAnchor">
 						<AppRailAnchor regionLead="flex justify-center" href="https://discord.gg/qbPjBQRnDf">
 							<svelte:fragment slot="lead">
@@ -134,7 +134,7 @@
 									height="35px"
 								/>
 							</svelte:fragment>
-							<span>DISCORD</span>
+							<span class="text-sm">JOIN OUR DISCORD</span>
 						</AppRailAnchor>
 					</div>
 					<p class="opacity-50">
