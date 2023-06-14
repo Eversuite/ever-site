@@ -12,11 +12,9 @@
 	const iconDivCss = 'flex flex-col center-text items-center';
 
 	let shardPopup: PopupSettings = {
-		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
-		// Provide a matching 'data-popup' value.
 		target: popUpTargetString,
-		state: (e: Record<string, boolean>) => console.log(e)
+		placement: 'top'
 	};
 
 	function resolveDescription(sh: Shard): string {
@@ -33,8 +31,7 @@
 	}
 </script>
 
-{#if shard !== undefined}
-	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
+{#if shard}
 	<div class={iconDivCss}>
 		<img
 			use:popup={shardPopup}

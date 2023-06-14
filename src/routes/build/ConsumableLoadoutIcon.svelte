@@ -12,15 +12,13 @@
 	const popUpTargetString = `consumable-popup-${Math.floor(Math.random() * 100000)}`;
 
 	let consumablePopup: PopupSettings = {
-		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
-		// Provide a matching 'data-popup' value.
-		target: popUpTargetString
+		target: popUpTargetString,
+		placement: 'top'
 	};
 </script>
 
 {#if consumable}
-	<!--This '#if' prevents the breaking of the entire page if no ability was found-->
 	<div class={iconDivCss}>
 		<img
 			use:popup={consumablePopup}
