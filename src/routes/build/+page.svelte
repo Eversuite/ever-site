@@ -15,6 +15,7 @@
 	import { page } from '$app/stores';
 	import { copyText } from 'svelte-copy';
 	import ConsumableLoadoutIcon from './ConsumableLoadoutIcon.svelte';
+	import AbilityLadder from './AbilityLadder.svelte';
 
 	export let data: PageData;
 	let selectedHero: Hero = data?.selectedHero ?? undefined;
@@ -353,29 +354,7 @@
 					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'R')} />
 				</div>
 			</div>
-			<div class="flex swapToCol">
-				{#each abilityLadder as ability, index}
-					<div class="flex swapToRow items-center gap-1">
-						<div class="w-12 h-12 flex flex-col items-center justify-center">
-							<span style="font-weight: bold; font-size: 1.2rem;">{index + 1}</span>
-						</div>
-						{#each ['Q', 'W', 'E', 'R'] as slot, slotIndex}
-							<div
-								on:click={() => setAbility(index, slot)}
-								on:keyup={(e) => e.key === 'Enter' && setAbility(index, slot)}
-								style="border-radius: 4px;"
-								class="w-12 h-12 border-2 border-surface-300-600-token hover:!border-primary-500 flex flex-col items-center justify-center mr-2"
-							>
-								{#if ability?.slot === slot}
-									<span style="font-weight: bold; font-size: 1.5rem;" class={`ability${slot}`}
-										>{ability.slot}</span
-									>
-								{/if}
-							</div>
-						{/each}
-					</div>
-				{/each}
-			</div>
+			<AbilityLadder />
 			<div />
 		</div>
 	{/if}
@@ -389,22 +368,6 @@
 	.buildInput {
 		max-width: 380px;
 		border-radius: 14px;
-	}
-
-	.abilityQ {
-		color: #3fa6d2;
-	}
-
-	.abilityW {
-		color: #d23f51;
-	}
-
-	.abilityE {
-		color: #803fd2;
-	}
-
-	.abilityR {
-		color: #dfaf51;
 	}
 
 	.swapToRow {
