@@ -63,26 +63,30 @@
 		</div>
 		<div class="flex flex-col justify-between">
 			<div class="flex flex-col items-start gap-2">
-				<div class="flex items-end">
+				<div class="flex flex-col sm:flex-row items-start sm:items-end">
 					<h2 class="text-center text-4xl mr-4">ABILITIES</h2>
 					{#if hero?.stance_map}
-						{#each [...Object.entries(hero?.stance_map)] as [stanceNumber, stanceName]}
-							<Tab
-								bind:group={selectedStance}
-								name={stanceName}
-								value={Number(stanceNumber)}
-								class="uppercase text-gray flex"
-							>
-								<span
-									class={selectedStance === Number(stanceNumber) ? 'text-white font-semibold' : ''}
+						<div class="flex">
+							{#each [...Object.entries(hero?.stance_map)] as [stanceNumber, stanceName]}
+								<Tab
+									bind:group={selectedStance}
+									name={stanceName}
+									value={Number(stanceNumber)}
+									class="uppercase text-gray flex"
 								>
-									{stanceName}
-								</span>
-								{#if Number(stanceNumber) < [...Object.entries(hero.stance_map)].length}
-									<span class="mx-1">/</span>
-								{/if}
-							</Tab>
-						{/each}
+									<span
+										class={selectedStance === Number(stanceNumber)
+											? 'text-white font-semibold'
+											: ''}
+									>
+										{stanceName}
+									</span>
+									{#if Number(stanceNumber) < [...Object.entries(hero.stance_map)].length}
+										<span class="mx-1">/</span>
+									{/if}
+								</Tab>
+							{/each}
+						</div>
 					{/if}
 				</div>
 				<div class="flex flex-wrap justify-start gap-3">
@@ -104,21 +108,24 @@
 				</div>
 			</div>
 			<div class="flex flex-col items-start gap-2">
-				<div class="flex items-end">
+				<div class="flex flex-col sm:flex-row items-start sm:items-end">
 					<h2 class="text-center text-4xl mr-4">TALENTS</h2>
-					{#each talents as [talentTree, _], i}
-						<Tab bind:group={tabSet} name={talentTree.id} value={i} class="uppercase text-gray">
-							<span class={tabSet === i ? 'text-white font-semibold' : ''}>{talentTree.name}</span>
-							{#if i < talents.length - 1}
-								<span class="mx-1">/</span>
-							{/if}
-						</Tab>
-					{/each}
+					<div class="flex">
+						{#each talents as [talentTree, _], i}
+							<Tab bind:group={tabSet} name={talentTree.id} value={i} class="uppercase text-gray">
+								<span class={tabSet === i ? 'text-white font-semibold' : ''}>{talentTree.name}</span
+								>
+								{#if i < talents.length - 1}
+									<span class="mx-1">/</span>
+								{/if}
+							</Tab>
+						{/each}
+					</div>
 				</div>
 				<div class="flex items-end">
 					{#each talents as [_, talentTreeMap], i}
 						{#if tabSet === i}
-							<div class="flex flex-wrap justify-between">
+							<div class="flex flex-wrap gap-3 justify-between">
 								{#each [...talentTreeMap] as [_, talents], i}
 									<div class="flex flex-col gap-y-3">
 										{#each talents as talent}
