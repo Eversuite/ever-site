@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Talent } from '$lib/class/Talent';
+	import type { Talent } from '$lib/class/Talent';
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 

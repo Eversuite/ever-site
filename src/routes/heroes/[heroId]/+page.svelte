@@ -2,10 +2,11 @@
 	import dayjs from 'dayjs';
 	import type { PageData } from './$types';
 	import AbilityIcon from './AbilityIcon.svelte';
-	import { Tab } from '@skeletonlabs/skeleton';
+	import { Tab, type ModalComponent, type ModalSettings, modalStore } from '@skeletonlabs/skeleton';
 	import TalentIcon from './TalentIcon.svelte';
 	import { IconArrowBigRightFilled } from '@tabler/icons-svelte';
 	import { abilitySlot } from '$lib/Utility';
+	import ModalImage from './ModalImage.svelte';
 
 	export let data: PageData | undefined;
 
@@ -17,6 +18,25 @@
 	$: abilities = data?.abilities ?? [];
 	$: talents = data?.talents ? Array.from(data.talents) : [];
 	$: builds = data?.builds ?? [];
+	$: skins = data?.skins ?? [];
+
+	const imageModalComponent: ModalComponent = {
+		// Pass a reference to your custom component
+		ref: ModalImage
+	};
+
+	function imageModal(skinModalUri: string): ModalSettings {
+		return {
+		type: 'component',
+		component: imageModalComponent,
+		image: skinModalUri,
+		};
+	};
+
+	function skinPreviewClick(skinId: string) {
+		modalStore.trigger(imageModal(`/characters/skins/${skinId}.webp`));
+	}
+
 </script>
 
 <div class="flex flex-col gap-3">
@@ -38,7 +58,6 @@
 					class="grid justify-items-center gap-2 col-span-2 absolute left-0 right-0 top-[calc(100%+20px)]"
 				>
 					<img src="/svg/border.svg" alt="border" />
-					<p>art credit: Author</p>
 				</div>
 			</div>
 		</div>
@@ -119,7 +138,7 @@
 			</div>
 		</div>
 	</div>
-	<div>
+	<!-- <div>
 		<h2 class="text-[40px] leading-[48px] uppercase mb-2">Recommended Build</h2>
 		<p class="max-w-[677px]">
 			These are the recommended shards to look out for when building for {hero?.name}, as determined
@@ -128,8 +147,8 @@
 			we highly recommend reading through some of the guides above to learn why this build is strong
 			on {hero?.name}!
 		</p>
-	</div>
-	<div>
+	</div> -->
+	<!-- <div>
 		<h2 class="text-[40px] leading-[48px] uppercase mb-2">Best rated player builds</h2>
 		<div class="flex flex-wrap gap-3">
 			{#each builds as build, i}
@@ -151,20 +170,20 @@
 				</div>
 			{/each}
 		</div>
-	</div>
+	</div> -->
 	<div>
 		<h2 class="text-[40px] leading-[48px] uppercase mb-6">Skins</h2>
 		<div class="flex flex-wrap gap-10">
-			{#each { length: 4 } as _, i}
-				<div class="flex flex-col gap-4 items-center">
+			{#each skins as skin (skin.id)}
+				<div class="flex flex-col gap-4 items-center text-center">
 					<img
-						src="/characters/preview/berserker-tank-preview.png"
+						on:click={() => skinPreviewClick(skin.id)}
+						on:keyup={(e) => e.key === 'Enter' && skinPreviewClick(skin.id)}
+						src="/characters/skins/{skin.id}.webp"
 						alt=""
-						width="212"
-						height="340"
-						class="rounded-lg"
+						class="rounded-lg max-h-[300px]"
 					/>
-					<p class="uppercase text-[24px] leading-[22px]">Default</p>
+					<p class="uppercase text-[24px] font-ardela">{skin.name}</p>
 				</div>
 			{/each}
 		</div>
