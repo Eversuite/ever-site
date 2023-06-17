@@ -27,8 +27,6 @@ export const load: PageLoad = async ({ params, parent }) => {
 	const talentTrees = talentTreesResult.data as TalentTree[];
 	const skins = skinsResults.data as Skin[];
 
-	console.log(skins)
-
 	// Sort talentTrees with "Default" first, then alphabetically
 	talentTrees.sort((a, b) => {
 		if (a.name === 'Default') return -1;
