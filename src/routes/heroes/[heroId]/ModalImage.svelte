@@ -5,7 +5,6 @@
 
 	const cButton = 'fixed top-4 right-4 z-50 font-bold shadow-xl';
 	const cImage = 'max-w-[80%] max-h-[90%]';
-    console.log(parent)
 </script>
 
 {#if $modalStore[0]}
