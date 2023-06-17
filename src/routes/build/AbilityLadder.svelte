@@ -6,63 +6,168 @@
 
 	let selectedAbilities: string[] = [];
 
-	$: lastSelectedAbilityIndex = selectedAbilities.length - 1;
-	$: lastSelectedAbilitySlot = selectedAbilities[lastSelectedAbilityIndex];
+	$: heroLevel = selectedAbilities.length;
+	$: lastSelectedAbilityIndex = heroLevel - 1;
 
-	function getAbilitySlotQuantity(slot: AbilitySlot): number {
+	function getHeroAbilityLevelThreshold(): number {
+		if (heroLevel <= 2) return 1;
+		if (heroLevel <= 5) return 2;
+		if (heroLevel <= 9) return 3;
+		if (heroLevel <= 12) return 4;
+		return 5;
+	}
+
+	function getHeroUltimateLevelThreshold(): number {
+		if (heroLevel <= 6) return 1;
+		if (heroLevel <= 12) return 2;
+		return 3;
+	}
+
+	function getAbilityCurrentLevel(slot: AbilitySlot): number {
 		return selectedAbilities.filter((ability) => ability === slot).length;
 	}
 
-	function selectAbility(id: number, slot: AbilitySlot) {
-		// remove last ability (do not need validation)
+	function getAbilityLevelInScope(slot: AbilitySlot, levelScope: number) {
+		return selectedAbilities.slice(0, levelScope).filter((ability) => ability === slot).length;
+	}
+
+	function clickAbility(id: number, slot: AbilitySlot) {
+		// Remove last ability
 		if (slot === selectedAbilities[id] && id === lastSelectedAbilityIndex) {
 			selectedAbilities = [...selectedAbilities.slice(0, lastSelectedAbilityIndex)];
 			return;
 		}
+		if (id <= lastSelectedAbilityIndex) {
+			// Switch ability validation
+			if (slot === 'R') {
+				switchUltimate(id, slot);
+			} else {
+				switchAbility(id, slot);
+			}
+		} else {
+			// Select ability validation
+			if (slot === 'R') {
+				selectUltimate(id, slot);
+			} else {
+				selectAbility(id, slot);
+			}
+		}
+	}
 
-		const abilitySlotQuantity = getAbilitySlotQuantity(slot);
+	function selectAbility(id: number, slot: AbilitySlot) {
+		const abilityCurrentLevel = getAbilityCurrentLevel(slot);
 
-		// Abilities threshold validation
-		if (abilitySlotQuantity >= 5) {
+		if (abilityCurrentLevel === 5) {
 			console.warn('You cant level up ability more than 5 times');
 			return;
 		}
-
-		if (
-			lastSelectedAbilitySlot === slot ||
-			selectedAbilities[id - 1] === slot ||
-			selectedAbilities[id + 1] === slot
-		) {
-			console.warn('You cant level up same ability again');
+		if (heroLevel < 2 && abilityCurrentLevel === 1) {
+			console.warn('You can level up this ability on level 3');
 			return;
 		}
-
-		// Ultimate threshold logic
-		if (slot === 'R') {
-			if (abilitySlotQuantity === 3) {
-				console.warn('You cant level up ability more than 3 times');
-			}
-			if (lastSelectedAbilityIndex < 4 || id <= 4) {
-				console.warn('You can level up ultimate on level 6');
-				return;
-			}
-			if ((lastSelectedAbilityIndex < 10 || id <= 10) && abilitySlotQuantity === 1) {
-				console.warn('You can level up ultimate on level 12');
-				return;
-			}
-			if ((lastSelectedAbilityIndex < 13 || id <= 13) && abilitySlotQuantity === 2) {
-				console.warn('You can level up ultimate on level 15');
-				return;
-			}
+		if (heroLevel < 5 && abilityCurrentLevel === 2) {
+			console.warn('You can level up this ability on level 6');
+			return;
 		}
-
-		// Abilities adding / switching (actions after sucessful validation)
-		if (id <= lastSelectedAbilityIndex) {
-			selectedAbilities[id] = slot;
+		if (heroLevel < 9 && abilityCurrentLevel === 3) {
+			console.warn('You can level up this ability on level 10');
+			return;
+		}
+		if (heroLevel < 12 && abilityCurrentLevel === 4) {
+			console.warn('You can level up this ability on level 13');
 			return;
 		}
 
 		selectedAbilities = [...selectedAbilities, slot];
+	}
+
+	function selectUltimate(id: number, slot: AbilitySlot) {
+		const abilityCurrentLevel = getAbilityCurrentLevel(slot);
+		if (abilityCurrentLevel === 3) {
+			console.warn('You cant level up ability more than 3 times');
+			return;
+		}
+		if (heroLevel < 5) {
+			console.warn('You can level up ultimate on level 6');
+			return;
+		}
+		if (heroLevel < 11 && abilityCurrentLevel === 1) {
+			console.warn('You can level up ultimate on level 12');
+			return;
+		}
+		if (heroLevel < 14 && abilityCurrentLevel === 2) {
+			console.warn('You can level up ultimate on level 15');
+			return;
+		}
+		selectedAbilities = [...selectedAbilities, slot];
+	}
+
+	function switchAbility(id: number, slot: AbilitySlot) {
+		const heroAbilityLevelThreshold = getHeroAbilityLevelThreshold();
+		const abilityCurrentLevel = getAbilityCurrentLevel(slot);
+
+		if (abilityCurrentLevel === heroAbilityLevelThreshold) {
+			console.warn('You cant level up ability on this level');
+			return;
+		}
+		if (id < 2) {
+			const selectedAbilityScope = getAbilityLevelInScope(slot, 2);
+			if (selectedAbilityScope === 1) {
+				console.warn('You cant level up this ability in this scope');
+				return;
+			}
+		}
+		if (id < 5) {
+			const selectedAbilityScope = getAbilityLevelInScope(slot, 5);
+			if (selectedAbilityScope === 2) {
+				console.warn('You cant level up this ability in this scope');
+				return;
+			}
+		}
+		if (id < 9) {
+			const selectedAbilityScope = getAbilityLevelInScope(slot, 9);
+			if (selectedAbilityScope === 3) {
+				console.warn('You cant level up this ability in this scope');
+				return;
+			}
+		}
+		if (id < 12) {
+			const selectedAbilityScope = getAbilityLevelInScope(slot, 12);
+			if (selectedAbilityScope === 4) {
+				console.warn('You cant level up this ability in this scope');
+				return;
+			}
+		}
+		selectedAbilities[id] = slot;
+	}
+
+	function switchUltimate(id: number, slot: AbilitySlot) {
+		const heroAbilityLevelThreshold = getHeroUltimateLevelThreshold();
+		const abilityCurrentLevel = getAbilityCurrentLevel(slot);
+
+		if (abilityCurrentLevel === heroAbilityLevelThreshold) {
+			console.warn('You cant level up ability on this level');
+			return;
+		}
+		if (id < 5) {
+			console.warn('You cant level up ultimate in this scope');
+			return;
+		}
+		if (id < 11) {
+			const selectedAbilityScope = getAbilityLevelInScope(slot, 11);
+			if (selectedAbilityScope === 1) {
+				console.warn('You cant level up ultimate in this scope');
+				return;
+			}
+		}
+		if (id < 14) {
+			const selectedAbilityScope = getAbilityLevelInScope(slot, 14);
+			if (selectedAbilityScope === 2) {
+				console.warn('You cant level up ultimate in this scope');
+				return;
+			}
+		}
+		selectedAbilities[id] = slot;
 	}
 </script>
 
@@ -77,8 +182,8 @@
 			{#each abilitySlots as slot}
 				<button
 					class="w-12 h-12 border-2 rouneded-[4px] border-surface-300-600-token hover:!border-primary-500 flex flex-col items-center justify-center mr-2"
-					on:click={() => selectAbility(index, slot)}
-					on:keyup={(e) => e.key === 'Enter' && selectAbility(index, slot)}
+					on:click={() => clickAbility(index, slot)}
+					on:keyup={(e) => e.key === 'Enter' && clickAbility(index, slot)}
 				>
 					{#if selectedAbilities[index] === slot}
 						<span style="font-weight: bold; font-size: 1.5rem;" class={`ability${slot}`}>
