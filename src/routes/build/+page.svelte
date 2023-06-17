@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
-	import { IconPlus, IconMathGreater } from '@tabler/icons-svelte';
+	import ShardsPicker from './ShardsPicker.svelte';
 	import ModalListSelect from './ModalListSelect.svelte';
 	import ModalListStrings from './ModalListStrings.svelte';
 	import type { PageData } from '../$types';
@@ -10,7 +10,6 @@
 	import type { Ability } from '$lib/class/Ability';
 	import { abilitySlot } from '$lib/Utility';
 	import AbilityLoadoutIcon from './AbilityLoadoutIcon.svelte';
-	import ShardLoadoutIcon from './ShardLoadoutIcon.svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { copyText } from 'svelte-copy';
@@ -21,7 +20,6 @@
 	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
 	let abilityLadder = data?.abilityLadder ?? new Array(15).fill(null);
 	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
-	let selectedShards: Shard[] = data?.selectedShards ?? new Array<Shard>(5);
 
 	let buildTitle = data?.buildTitle ?? '';
 
@@ -52,16 +50,6 @@
 			title: 'Build validation issues',
 			meta: { messages: messages },
 			response: (accepted: boolean) => shareBuild(accepted)
-		};
-	}
-
-	function shardModal(index: number): ModalSettings {
-		return {
-			type: 'component',
-			component: modalComponent,
-			title: 'Select a shard',
-			meta: { items: data?.shards, path: '/shards' },
-			response: (shard: Shard) => addShard(shard, index)
 		};
 	}
 
@@ -221,10 +209,6 @@
 		}
 	}
 
-	function handleShardClick(index) {
-		modalStore.trigger(shardModal(index));
-	}
-
 	function handleConsumeableClick() {
 		modalStore.trigger(consumableModal);
 	}
@@ -238,13 +222,6 @@
 		modalStore.trigger(abilityValidationModal(messages));
 	}
 
-	function addShard(shard: Shard, index: number) {
-		if (shard) {
-			selectedShards[index] = shard;
-		}
-		shardModal(index).meta.items = data?.shards.filter((item) => !selectedShards.includes(item));
-	}
-
 	function shareBuild(accepted: boolean) {
 		if (!accepted) return;
 
@@ -255,13 +232,13 @@
 				return null;
 			}
 		});
-		let selectedShardsIds = selectedShards.map((shard) => shard.id);
+		// TODO: combine data from components (store or context maybe ?)
+		// let selectedShardsIds = selectedShards.map((shard) => shard.id);
 		let build = {
 			buildTitle: buildTitle,
 			heroId: selectedHero.id,
 			abilityIds: abilityLadderIds,
-			consumableId: selectedConsumable?.id,
-			shardIds: selectedShardsIds
+			consumableId: selectedConsumable?.id
 		};
 		let jsonBuild = JSON.stringify(build);
 		let encodedBuild = window.btoa(jsonBuild);
@@ -306,23 +283,7 @@
 		{/if}
 	</div>
 	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
-		<div class="flex flex-col">
-			<div class="h1 font-evercore mt-12">SHARDS</div>
-			<div class="flex flex-row items-center flex-wrap">
-				{#each selectedShards as shard, index}
-					<div
-						on:click={() => handleShardClick(index)}
-						on:keyup={(e) => e.key === 'Enter' && handleShardClick(index)}
-					>
-						<ShardLoadoutIcon {shard} />
-					</div>
-					{#if index !== 4}
-						<IconMathGreater class="w-10 h-10" />
-					{/if}
-				{/each}
-			</div>
-			<div class="flex flex-row flex-wrap w-[35vw] gap-4 items-center self-center" />
-		</div>
+		<ShardsPicker shards={data?.shards} />
 		<div class="flex flex-col justify-start">
 			<div class="h1 font-evercore mt-12">CONSUMABLE</div>
 			<div
