@@ -19,6 +19,7 @@
 	let selectedHero: Hero = data?.selectedHero ?? undefined;
 	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
 	let abilityLadder = data?.abilityLadder ?? new Array(15).fill(null);
+	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
 	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
 
 	let buildTitle = data?.buildTitle ?? '';
@@ -223,7 +224,7 @@
 	}
 
 	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
-	
+
 	function shareBuild(accepted: boolean) {
 		if (!accepted) return;
 
@@ -234,8 +235,8 @@
 				return null;
 			}
 		});
-		// TODO: combine data from components (store or context maybe ?)
-		let selectedShardsIds = selectedShards.map((shard) => shard.id ?? "");
+
+		let selectedShardsIds = selectedShards.map((shard) => shard?.id ?? '');
 
 		let build = {
 			buildTitle: buildTitle,
@@ -287,7 +288,7 @@
 		{/if}
 	</div>
 	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
-		<ShardsPicker shards={data?.shards} setSelectedShards={(index, shard) => {selectedShards[index] = shard;}} selectedShards={selectedShards}/>
+		<ShardsPicker shards={data?.shards} bind:selectedShards />
 		<div class="flex flex-col justify-start">
 			<div class="h1 font-evercore mt-12">CONSUMABLE</div>
 			<div
