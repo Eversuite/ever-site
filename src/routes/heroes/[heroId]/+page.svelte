@@ -12,6 +12,7 @@
 
 	let tabSet = 0;
 	let selectedStance = 1;
+	let imageSkinHeight= 300
 
 	$: hero = data?.hero;
 	$: src = `/characters/skins/${hero?.id}-default.webp`;
@@ -186,9 +187,9 @@
 					<img
 						on:click={() => skinPreviewClick(skin.id)}
 						on:keyup={(e) => e.key === 'Enter' && skinPreviewClick(skin.id)}
-						src="/characters/skins/{skin.id}.webp"
+						src="https://imagedelivery.net/pN8GFELhJ98nSaTzuFvu3Q/{skin.id}.webp/h={imageSkinHeight},sharpen=1,fit=scale-down"
 						alt=""
-						class="rounded-lg max-h-[300px]"
+						class="rounded-lg max-h-[{imageSkinHeight}px]"
 					/>
 					<p class="uppercase text-[24px] font-ardela">{skin.name}</p>
 				</div>
