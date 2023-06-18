@@ -1,13 +1,21 @@
 <script lang="ts">
 	import { Avatar, ListBox, ListBoxItem, modalStore } from '@skeletonlabs/skeleton';
 	import ModalListItem from './ModalListItem.svelte';
+	import type { Shard } from '$lib/class/Shard';
 
 	// Props
 	/** Exposes parent props to this component. */
 	export let parent: any;
 
+	const selectedItemIndex = $modalStore[0].meta.items.findIndex(
+		(item: Shard) => item.id === $modalStore[0].meta.selectedItemId
+	);
+
 	// Local
-	let selectedItem = $modalStore[0].meta.items[0];
+	let selectedItem =
+		selectedItemIndex >= 0
+			? $modalStore[0].meta.items[selectedItemIndex]
+			: $modalStore[0].meta.items[0];
 
 	// Handle Form Submission
 	function onFormSubmit(): void {
