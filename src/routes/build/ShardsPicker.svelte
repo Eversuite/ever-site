@@ -6,7 +6,6 @@
 	import ShardLoadoutIcon from './ShardLoadoutIcon.svelte';
 
 	export let shards: Shard[];
-	export let setSelectedShards;
 
 	export let selectedShards: (Shard | null)[];
 
@@ -20,7 +19,7 @@
 			type: 'component',
 			component: modalComponent,
 			title: 'Select a shard',
-			meta: { items: shards, selectedShardId: selectedShards[index]?.id, path: '/shards' },
+			meta: { items: shards, selectedItemId: selectedShards[index]?.id, path: '/shards' },
 			response: (shard: Shard) => addShard(shard, index)
 		};
 	}
@@ -28,7 +27,7 @@
 	function addShard(shard: Shard, index: number) {
 		const previousShardIndex = selectedShards.findIndex((item) => item?.id === shard.id);
 
-		setSelectedShards(index, shard);
+		selectedShards[index] = shard;
 
 		if (previousShardIndex >= 0 && index !== previousShardIndex) {
 			selectedShards[previousShardIndex] = null;

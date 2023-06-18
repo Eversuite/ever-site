@@ -7,13 +7,14 @@
 	/** Exposes parent props to this component. */
 	export let parent: any;
 
-	const selectedShardIndex = $modalStore[0].meta.items.findIndex(
-		(item: Shard) => item.id === $modalStore[0].meta.selectedShardId
+	const selectedItemIndex = $modalStore[0].meta.items.findIndex(
+		(item: Shard) => item.id === $modalStore[0].meta.selectedItemId
 	);
+
 	// Local
 	let selectedItem =
-		selectedShardIndex >= 0
-			? $modalStore[0].meta.items[selectedShardIndex]
+		selectedItemIndex >= 0
+			? $modalStore[0].meta.items[selectedItemIndex]
 			: $modalStore[0].meta.items[0];
 
 	// Handle Form Submission
