@@ -6,8 +6,9 @@
 	import ShardLoadoutIcon from './ShardLoadoutIcon.svelte';
 
 	export let shards: Shard[];
+	export let setSelectedShards;
 
-	let selectedShards: (Shard | null)[] = new Array<Shard | null>(5);
+	export let selectedShards: (Shard | null)[];
 
 	const modalComponent: ModalComponent = {
 		// Pass a reference to your custom component
@@ -27,7 +28,7 @@
 	function addShard(shard: Shard, index: number) {
 		const previousShardIndex = selectedShards.findIndex((item) => item?.id === shard.id);
 
-		selectedShards[index] = shard;
+		setSelectedShards(index, shard);
 
 		if (previousShardIndex >= 0 && index !== previousShardIndex) {
 			selectedShards[previousShardIndex] = null;
