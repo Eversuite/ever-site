@@ -41,7 +41,7 @@
 		type: 'component',
 		component: modalComponent,
 		title: 'Select a hero',
-		meta: { items: data?.heroes, path: '/characters/portraits' },
+		meta: { items: data?.heroes, path: '/characters/portraits', searchQueries: ["name", "role"] },
 		response: (hero: Hero) => heroSelected(hero)
 	};
 
@@ -60,7 +60,7 @@
 			type: 'component',
 			component: modalComponent,
 			title: 'Select a shard',
-			meta: { items: data?.shards, path: '/shards' },
+			meta: { items: data?.shards, path: '/shards', searchQueries: ["name"]  },
 			response: (shard: Shard) => addShard(shard, index)
 		};
 	}
