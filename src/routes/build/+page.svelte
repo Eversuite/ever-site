@@ -223,8 +223,6 @@
 		modalStore.trigger(abilityValidationModal(messages));
 	}
 
-	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
-
 	function shareBuild(accepted: boolean) {
 		if (!accepted) return;
 

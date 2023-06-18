@@ -10,6 +10,7 @@
 	const selectedItemIndex = $modalStore[0].meta.items.findIndex(
 		(item: Shard) => item.id === $modalStore[0].meta.selectedItemId
 	);
+
 	// Local
 	let selectedItem =
 		selectedItemIndex >= 0
