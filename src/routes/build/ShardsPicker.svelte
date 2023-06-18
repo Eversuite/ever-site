@@ -19,7 +19,7 @@
 			type: 'component',
 			component: modalComponent,
 			title: 'Select a shard',
-			meta: { items: shards, selectedShardId: selectedShards[index]?.id, path: '/shards' },
+			meta: { items: shards, selectedShardId: selectedShards[index]?.id, path: '/shards', searchQueries: ["name"]  },
 			response: (shard: Shard) => addShard(shard, index)
 		};
 	}
