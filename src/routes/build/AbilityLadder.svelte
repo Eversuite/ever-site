@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { AbilitySlot } from './types';
 
-	// import ModalListStrings from './ModalListStrings.svelte';
-
 	export let selectedAbilities: string[] = [];
 
 	const abilitySlots: AbilitySlot[] = ['Q', 'W', 'E', 'R'];
@@ -170,31 +168,6 @@
 		}
 		selectedAbilities[id] = slot;
 	}
-
-	// TODO: make it free to add abilites everywhere but validate at the end ?
-
-	// const abilityValidationModalComponent: ModalComponent = {
-	// 	ref: ModalListStrings
-	// };
-
-	// async function handleBuildClick() {
-	// 	let messages = validateAbilityChoice();
-	// 	if (messages.length === 0) {
-	// 		return shareBuild(true);
-	// 	}
-
-	// 	modalStore.trigger(abilityValidationModal(messages));
-	// }
-
-	// function abilityValidationModal(messages): ModalSettings {
-	// 	return {
-	// 		type: 'component',
-	// 		component: abilityValidationModalComponent,
-	// 		title: 'Build validation issues',
-	// 		meta: { messages: messages },
-	// 		response: (accepted: boolean) => shareBuild(accepted)
-	// 	};
-	// }
 </script>
 
 <div class="flex swapToCol">

@@ -3,7 +3,7 @@ export class Skin {
 	private readonly _name: string;
 	private readonly _source: string;
 
-	constructor(id: string, name: string, source: string, ) {
+	constructor(id: string, name: string, source: string) {
 		this._id = id;
 		this._name = name;
 		this._source = source;

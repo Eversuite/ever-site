@@ -22,7 +22,6 @@
 	$: skins = data?.skins ?? [];
 
 	const imageModalComponent: ModalComponent = {
-		// Pass a reference to your custom component
 		ref: ModalImage
 	};
 
