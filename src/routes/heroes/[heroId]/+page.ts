@@ -4,17 +4,20 @@ import type { Talent } from '$lib/class/Talent';
 import type { Hero } from '$lib/class/Hero';
 import type { Ability } from '$lib/class/Ability';
 import type { TalentTree } from '$lib/class/TalentTree';
+import type { Skin } from '$lib/class/Skin';
 
 export const load: PageLoad = async ({ params, parent }) => {
 	const { supabase } = await parent();
 
 	// Load the wanted character from the database.
-	const [heroesResult, abilitiesResult, talentsResult, talentTreesResult] = await Promise.all([
+	const [heroesResult, abilitiesResult, talentsResult, talentTreesResult, skinsResults] = await Promise.all([
 		supabase.from('heroes').select().eq('id', params.heroId).single(),
 		supabase.from('abilities').select().eq('source', params.heroId),
 		supabase.from('talents').select().eq('hero', params.heroId),
-		supabase.from('talent_trees').select().eq('source', params.heroId)
+		supabase.from('talent_trees').select().eq('source', params.heroId),
+		supabase.from('skins').select().eq('source', params.heroId)
 	]);
+	
 
 	if (heroesResult.error) throw error(404, `Could not find a hero for id [${params.heroId}]`);
 
@@ -22,6 +25,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 	const abilities = abilitiesResult.data as Ability[];
 	const talents = talentsResult.data as Talent[];
 	const talentTrees = talentTreesResult.data as TalentTree[];
+	const skins = skinsResults.data as Skin[];
 
 	// Sort talentTrees with "Default" first, then alphabetically
 	talentTrees.sort((a, b) => {
@@ -130,6 +134,7 @@ export const load: PageLoad = async ({ params, parent }) => {
 		hero,
 		abilities,
 		talents: Array.from(talentTreesMap),
+		skins,
 		builds
 	};
 };

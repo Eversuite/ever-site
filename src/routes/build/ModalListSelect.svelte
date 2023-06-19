@@ -23,7 +23,7 @@
 <!-- @component This example creates a simple form modal. -->
 
 {#if $modalStore[0]}
-	<div class="modal-example-form {cBase}">
+	<div class="{cBase}">
 		<header class={cHeader}>{$modalStore[0].title ?? '(title missing)'}</header>
 		<ListBox class="border border-surface-500 p-4 max h-[40vh] overflow-y-auto">
 			{#each $modalStore[0].meta.items as item}

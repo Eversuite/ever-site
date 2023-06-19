@@ -149,7 +149,6 @@
 				});
 
 				if (abilityCount[3] > 2) {
-					console.log(abilityCount[3]);
 					validityMessages.push(
 						validationMessageFormat(`You have more Rs than possible before level 12 (2).`, 'R', i)
 					);
