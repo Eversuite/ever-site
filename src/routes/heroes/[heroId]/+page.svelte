@@ -182,7 +182,7 @@
 		<h2 class="text-[40px] leading-[48px] uppercase mb-6">Skins</h2>
 		<div class="flex flex-wrap gap-10">
 			{#each skins as skin (skin.id)}
-				<div class="flex flex-col gap-4 items-center text-center">
+				<div class="flex flex-col gap-4 items-center text-center cursor-pointer">
 					<img
 						on:click={() => skinPreviewClick(skin.id)}
 						on:keyup={(e) => e.key === 'Enter' && skinPreviewClick(skin.id)}
