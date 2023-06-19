@@ -41,11 +41,11 @@ export const load: PageLoad = async ({ parent, url }) => {
 			const result = selectedHeroAbilities.find((ability) => ability.id === id);
 			return result ? result : null;
 		});
-
+		
 		const selectedConsumable = consumables.find(
 			(consumable) => consumable.id === build.consumableId
 		);
-
+		
 		const selectedShards = build.shardIds.map((id) => shards.find((shard) => shard.id === id));
 
 		return {

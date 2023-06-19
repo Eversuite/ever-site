@@ -4,7 +4,7 @@
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
-	export let shard: Shard;
+	export let shard: Shard | null;
 	const popUpTargetString = `shard-popup-${Math.floor(Math.random() * 100000)}`;
 
 	const iconCss =
