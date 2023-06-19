@@ -18,9 +18,10 @@
 	export let data: PageData;
 	let selectedHero: Hero = data?.selectedHero ?? undefined;
 	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
-	let abilityLadder = data?.abilityLadder ?? new Array(15).fill(null);
 	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
-	let selectedAbilities: string[] = (data?.abilityLadder ?? new Array(15)).map((ability) => ability?.slot ?? "");
+	let selectedAbilities: string[] = (data?.abilityLadder ?? new Array(15)).map(
+		(ability) => ability?.slot ?? ''
+	);
 	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
 
 	let buildTitle = data?.buildTitle ?? '';
@@ -29,7 +30,6 @@
 		'border-4 rounded-2xl border-surface-300-600-token hover:!border-primary-500 cursor-pointer';
 
 	const modalComponent: ModalComponent = {
-		// Pass a reference to your custom component
 		ref: ModalListSelect
 	};
 
@@ -37,7 +37,7 @@
 		type: 'component',
 		component: modalComponent,
 		title: 'Select a hero',
-		meta: { items: data?.heroes, path: '/characters/portraits', searchQueries: ["name", "role"] },
+		meta: { items: data?.heroes, path: '/characters/portraits', searchQueries: ['name', 'role'] },
 		response: (hero: Hero) => heroSelected(hero)
 	};
 
@@ -92,15 +92,11 @@
 		$page.url.searchParams.set('code', encodedBuild);
 		goto(`?${$page.url.searchParams.toString()}`);
 		copyText($page.url.toString());
-		// validateAbilityChoice();
 	}
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
 	<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
-	<!-- <div style="max-width: 850px;">
-			Placeholder for future versions.
-		</div> -->
 	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
 	<input
 		bind:value={buildTitle}

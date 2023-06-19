@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { Avatar, ListBox, ListBoxItem, modalStore } from '@skeletonlabs/skeleton';
-	import ModalListItem from './ModalListItem.svelte';
 	import type { Shard } from '$lib/class/Shard';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	import { popup } from '@skeletonlabs/skeleton';
-	// Props
-	/** Exposes parent props to this component. */
+
 	export let parent: any;
 
 	const selectedItemIndex = $modalStore[0].meta.items.findIndex(
@@ -15,13 +13,17 @@
 	$: items = itemFilter(searchTerm);
 	const searchQueries = $modalStore[0].meta.searchQueries;
 	function itemFilter(term: string): any[] {
-		return ($modalStore[0].meta.items || []).filter((item) => !searchQueries || searchQueries.length === 0 || searchQueries.some((query:string) => item[query] && contains(item[query], term)));
+		return ($modalStore[0].meta.items || []).filter(
+			(item) =>
+				!searchQueries ||
+				searchQueries.length === 0 ||
+				searchQueries.some((query: string) => item[query] && contains(item[query], term))
+		);
 	}
 
 	function contains(source: string, term: string): boolean {
 		return source.toLowerCase().indexOf(term.toLowerCase()) !== -1;
 	}
-
 
 	// Local
 	let selectedItem =
@@ -49,10 +51,8 @@
 	const cHeader = 'text-2xl font-ardela text-center';
 </script>
 
-<!-- @component This example creates a simple form modal. -->
-
 {#if $modalStore[0]}
-	<div class="{cBase}">
+	<div class={cBase}>
 		<header class={cHeader}>{$modalStore[0].title ?? '(title missing)'}</header>
 		{#if searchQueries && searchQueries.length > 0}
 			<input bind:value={searchTerm} type="text" placeholder="Filter" class="mb-8 input" />
@@ -72,7 +72,7 @@
 										border="border-2 border-surface-300-600-token"
 										cursor="cursor-pointer"
 										src="{$modalStore[0].meta.path}/{item.id}.webp"
-										width="w-12"
+										width="w-16"
 									/>
 								</div>
 							</ListBoxItem>

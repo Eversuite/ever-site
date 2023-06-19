@@ -6,9 +6,7 @@
 	export let talent: Talent;
 
 	let talentPopup: PopupSettings = {
-		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
-		// Provide a matching 'data-popup' value.
 		target: `${talent !== undefined ? talent.id : 'dummy'}-popup`,
 		placement: 'top'
 	};

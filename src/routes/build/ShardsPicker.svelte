@@ -6,11 +6,9 @@
 	import ShardLoadoutIcon from './ShardLoadoutIcon.svelte';
 
 	export let shards: Shard[];
-
 	export let selectedShards: (Shard | null)[];
 
 	const modalComponent: ModalComponent = {
-		// Pass a reference to your custom component
 		ref: ModalListSelect
 	};
 
@@ -19,7 +17,12 @@
 			type: 'component',
 			component: modalComponent,
 			title: 'Select a shard',
-			meta: { items: shards, selectedItemId: selectedShards[index]?.id, path: '/shards', searchQueries: ["name"]  },
+			meta: {
+				items: shards,
+				selectedItemId: selectedShards[index]?.id,
+				path: '/shards',
+				searchQueries: ['name']
+			},
 			response: (shard: Shard) => addShard(shard, index)
 		};
 	}

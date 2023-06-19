@@ -10,14 +10,14 @@ export const load: PageLoad = async ({ params, parent }) => {
 	const { supabase } = await parent();
 
 	// Load the wanted character from the database.
-	const [heroesResult, abilitiesResult, talentsResult, talentTreesResult, skinsResults] = await Promise.all([
-		supabase.from('heroes').select().eq('id', params.heroId).single(),
-		supabase.from('abilities').select().eq('source', params.heroId),
-		supabase.from('talents').select().eq('hero', params.heroId),
-		supabase.from('talent_trees').select().eq('source', params.heroId),
-		supabase.from('skins').select().eq('source', params.heroId)
-	]);
-	
+	const [heroesResult, abilitiesResult, talentsResult, talentTreesResult, skinsResults] =
+		await Promise.all([
+			supabase.from('heroes').select().eq('id', params.heroId).single(),
+			supabase.from('abilities').select().eq('source', params.heroId),
+			supabase.from('talents').select().eq('hero', params.heroId),
+			supabase.from('talent_trees').select().eq('source', params.heroId),
+			supabase.from('skins').select().eq('source', params.heroId)
+		]);
 
 	if (heroesResult.error) throw error(404, `Could not find a hero for id [${params.heroId}]`);
 

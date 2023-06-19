@@ -6,16 +6,13 @@
 	export let consumable: Consumable;
 
 	let consumablePopup: PopupSettings = {
-		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
-		// Provide a matching 'data-popup' value.
 		target: `${consumable !== undefined ? consumable.id : 'dummy'}-popup`,
 		placement: 'top'
 	};
 </script>
 
 {#if consumable !== undefined}
-	<!--This '#if' prevents the breaking of the entire page if no consumable was found-->
 	<div class="flex flex-col center-text items-center">
 		<img
 			use:popup={consumablePopup}
