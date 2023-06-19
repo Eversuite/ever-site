@@ -52,7 +52,7 @@
 <!-- @component This example creates a simple form modal. -->
 
 {#if $modalStore[0]}
-	<div class="modal-example-form {cBase}">
+	<div class="{cBase}">
 		<header class={cHeader}>{$modalStore[0].title ?? '(title missing)'}</header>
 		{#if searchQueries && searchQueries.length > 0}
 			<input bind:value={searchTerm} type="text" placeholder="Filter" class="mb-8 input" />
