@@ -7,6 +7,7 @@
 	import { IconArrowBigRightFilled } from '@tabler/icons-svelte';
 	import { abilitySlot } from '$lib/Utility';
 	import ModalImage from './ModalImage.svelte';
+	import { filterAbility } from '$lib/heroes/functions.js';
 
 	export let data: PageData | undefined;
 
@@ -15,7 +16,7 @@
 
 	$: hero = data?.hero;
 	$: src = `/characters/skins/${hero?.id}-default.webp`;
-	$: abilities = data?.abilities ?? [];
+	$: abilities = filterAbility(data?.abilities, selectedStance) ?? [];
 	$: talents = data?.talents ? Array.from(data.talents) : [];
 	$: builds = data?.builds ?? [];
 	$: skins = data?.skins ?? [];
@@ -27,16 +28,15 @@
 
 	function imageModal(skinModalUri: string): ModalSettings {
 		return {
-		type: 'component',
-		component: imageModalComponent,
-		image: skinModalUri,
+			type: 'component',
+			component: imageModalComponent,
+			image: skinModalUri
 		};
-	};
+	}
 
 	function skinPreviewClick(skinId: string) {
 		modalStore.trigger(imageModal(`/characters/skins/${skinId}.webp`));
 	}
-
 </script>
 
 <div class="flex flex-col gap-3">
