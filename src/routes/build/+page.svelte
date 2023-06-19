@@ -20,7 +20,7 @@
 	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
 	let abilityLadder = data?.abilityLadder ?? new Array(15).fill(null);
 	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
-	let selectedAbilities: string[] = [];
+	let selectedAbilities: string[] = (data?.abilityLadder ?? new Array(15)).map((ability) => ability.slot);
 	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
 
 	let buildTitle = data?.buildTitle ?? '';
