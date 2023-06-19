@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { AbilitySlot } from './types';
-	import type { Ability } from '$lib/class/Ability';
 
 	// import ModalListStrings from './ModalListStrings.svelte';
 
