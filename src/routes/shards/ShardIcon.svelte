@@ -38,7 +38,7 @@
 		/>
 		<p>{shard.name}</p>
 	</div>
-	<div data-popup="{shard.id}-popup" class="card p-4">
+	<div data-popup="{shard.id}-popup" class="card p-4 z-index-50">
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
