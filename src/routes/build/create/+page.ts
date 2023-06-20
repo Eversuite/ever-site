@@ -16,8 +16,10 @@ export const load: PageLoad = async ({ parent, url }) => {
 	]);
 
 	const heroes = heroesResult.data as Hero[];
-	// const shards = shardsResult.data as Shard[];
-	// const consumables = consumablesResult.data as Consumable[];
+	const shards = shardsResult.data as Shard[];
+	const consumables = consumablesResult.data as Consumable[];
+
+	const encodedBuild = url.searchParams.get('code');
 
 	if (encodedBuild) {
 		let build;

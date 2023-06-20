@@ -1,71 +1,48 @@
 <script lang="ts">
-	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
 	import ShardsPicker from './ShardsPicker.svelte';
-	import ModalListSelect from './ModalListSelect.svelte';
 	import type { PageData } from '../$types';
 	import type { Shard } from '$lib/class/Shard';
 	import type { Consumable } from '$lib/class/Consumable';
 	import type { Hero } from '$lib/class/Hero';
 	import type { Ability } from '$lib/class/Ability';
-	import type { Build } from '$lib/class/Build';
 	import { abilitySlot } from '$lib/Utility';
 	import AbilityLoadoutIcon from './AbilityLoadoutIcon.svelte';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { copyText } from 'svelte-copy';
 	import ConsumableLoadoutIcon from './ConsumableLoadoutIcon.svelte';
 	import AbilityLadder from './AbilityLadder.svelte';
 
 	export let data: PageData;
-	let builds: Build[] = data?.builds;
+	let selectedHero: Hero = data?.selectedHero ?? undefined;
+	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
+	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
+	let selectedAbilities: string[] = (data?.abilityLadder ?? new Array(15)).map(
+		(ability) => ability?.slot ?? ''
+	);
+	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
 
-	let searchTitle = '';
+	let buildTitle = data?.buildTitle ?? '';
 
 	const borderCss =
-		'border-4 rounded-2xl border-surface-300-600-token hover:!border-primary-500 cursor-pointer';
+		'border-4 rounded-2xl border-surface-300-600-token cursor-pointer';
+
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
-	<div class="b-2 text-6xl font-ardela mb-5">FIND YOUR BUILD</div>
-	<div class="flex flex-row flex-wrap p-4 gap-2">
-		<input
-			bind:value={searchTitle}
-			type="text"
-			placeholder="Filter by title"
-			class="mb-8 input buildInput"
-		/>
-		<button class="btn modalButton buildInput">Filter by hero (WIP)</button>
-		<button class="btn modalButton buildInput">Filter by role (WIP)</button>
-	</div>
-	<!--
+	<div class="b-2 text-6xl font-ardela mb-5">{buildTitle}</div>
 	<div>
 		<div class="h3 font-evercore mb-3">HERO*</div>
 		{#if selectedHero}
 			<img
-				on:click={handleHeroClick}
 				alt="Image for {selectedHero.name}"
 				class="w-48 h-48 {borderCss} self-center"
 				src="/characters/portraits/{selectedHero.id}.webp"
-				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
 			/>
-		{:else}
-			<div
-				class="{borderCss} self-center w-48 h-48 flex flex-col items-center justify-center h3 font-evercore text-center"
-				on:click={handleHeroClick}
-				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
-			>
-				CLICK TO CHOOSE A HERO
-			</div>
 		{/if}
 	</div>
 	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
 		<ShardsPicker shards={data?.shards} bind:selectedShards />
 		<div class="flex flex-col justify-start">
 			<div class="h1 font-evercore mt-12">CONSUMABLE</div>
-			<div
-				on:click={() => handleConsumeableClick()}
-				on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
-			>
+			<div>
 				<ConsumableLoadoutIcon consumable={selectedConsumable} />
 			</div>
 		</div>
@@ -90,19 +67,15 @@
 					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'R')} />
 				</div>
 			</div>
-			<AbilityLadder bind:selectedAbilities />
+			<AbilityLadder bind:selectedAbilities readOnly/>
 		</div>
 	{/if}
-
-	<button on:click={handleBuildClick} type="button" class="btn variant-filled mt-12">
-		<span>Copy shareable link</span>
-	</button> -->
 </div>
 
 <style global lang="postcss">
 	.buildInput {
 		max-width: 380px;
-		border-radius: 4px;
+		border-radius: 14px;
 	}
 
 	.swapToRow {
@@ -117,17 +90,5 @@
 		@media (max-width: 940px) {
 			flex-direction: column;
 		}
-	}
-
-	.buildInput {
-		height: 2.5rem;
-	}
-
-	.modalButton {
-		background-color: #1e5e6d;
-		border: 2px solid #b7d4e9;
-		border-radius: 4px;
-		color: white;
-		
 	}
 </style>

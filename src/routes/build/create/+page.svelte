@@ -7,7 +7,6 @@
 	import type { Consumable } from '$lib/class/Consumable';
 	import type { Hero } from '$lib/class/Hero';
 	import type { Ability } from '$lib/class/Ability';
-	import type { Build } from '$lib/class/Build';
 	import { abilitySlot } from '$lib/Utility';
 	import AbilityLoadoutIcon from './AbilityLoadoutIcon.svelte';
 	import { goto } from '$app/navigation';
@@ -17,27 +16,97 @@
 	import AbilityLadder from './AbilityLadder.svelte';
 
 	export let data: PageData;
-	let builds: Build[] = data?.builds;
+	let selectedHero: Hero = data?.selectedHero ?? undefined;
+	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
+	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
+	let selectedAbilities: string[] = (data?.abilityLadder ?? new Array(15)).map(
+		(ability) => ability?.slot ?? ''
+	);
+	let selectedConsumable: Consumable = data?.selectedConsumable ?? undefined;
 
-	let searchTitle = '';
+	let buildTitle = data?.buildTitle ?? '';
 
 	const borderCss =
 		'border-4 rounded-2xl border-surface-300-600-token hover:!border-primary-500 cursor-pointer';
+
+	const modalComponent: ModalComponent = {
+		ref: ModalListSelect
+	};
+
+	const heroModal: ModalSettings = {
+		type: 'component',
+		component: modalComponent,
+		title: 'Select a hero',
+		meta: { items: data?.heroes, path: '/characters/portraits', searchQueries: ['name', 'role'] },
+		response: (hero: Hero) => heroSelected(hero)
+	};
+
+	const consumableModal: ModalSettings = {
+		type: 'component',
+		component: modalComponent,
+		title: 'Select a consumable',
+		meta: { items: data?.consumables, path: '/consumables' },
+		response: (r: Consumable) => (selectedConsumable = r)
+	};
+
+	function handleHeroClick() {
+		modalStore.trigger(heroModal);
+	}
+
+	async function heroSelected(hero: Hero) {
+		const [abilitiesResult] = await Promise.all([
+			data.supabase.from('abilities').select().eq('source', hero.id)
+		]);
+
+		selectedHero = hero;
+		selectedHeroAbilities = abilitiesResult.data as Ability[];
+	}
+
+	function handleConsumeableClick() {
+		modalStore.trigger(consumableModal);
+	}
+
+	async function handleBuildClick() {
+		shareBuild(true);
+	}
+
+	async function shareBuild(accepted: boolean) {
+		if (!accepted) return;
+
+		let abilityLadderIds = selectedAbilities.map((ability) => {
+			return selectedHeroAbilities.find((item) => item.slot === ability)?.id;
+		});
+
+		let selectedShardsIds = selectedShards.map((shard) => shard?.id ?? '');
+
+		let build = {
+			title: buildTitle,
+			hero: selectedHero.id,
+			abilities: abilityLadderIds,
+			consumables: selectedConsumable?.id,
+			shards: selectedShardsIds,
+			gameVersion: "Closed-Beta-1"
+		};
+		let jsonBuild = JSON.stringify(build);
+		let encodedBuild = window.btoa(jsonBuild);
+
+		const { data: sbData, error }  = await data.supabase .from('builds') .insert([{"url-id": `${build.gameVersion}-${buildTitle.replace(" ","-")}-${Math.floor(Math.random() * 1000000)}`, ...build}])
+		
+		// $page.url.searchParams.set('code', encodedBuild);
+		// goto(`?${$page.url.searchParams.toString()}`);
+		// copyText($page.url.toString());
+	}
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
-	<div class="b-2 text-6xl font-ardela mb-5">FIND YOUR BUILD</div>
-	<div class="flex flex-row flex-wrap p-4 gap-2">
-		<input
-			bind:value={searchTitle}
-			type="text"
-			placeholder="Filter by title"
-			class="mb-8 input buildInput"
-		/>
-		<button class="btn modalButton buildInput">Filter by hero (WIP)</button>
-		<button class="btn modalButton buildInput">Filter by role (WIP)</button>
-	</div>
-	<!--
+	<div class="b-2 text-6xl font-ardela mb-5">BUILD CREATOR</div>
+	<div class="h3 font-evercore mb-3">BUILD TITLE*</div>
+	<input
+		bind:value={buildTitle}
+		type="text"
+		placeholder="Enter your build title here..."
+		class="mb-8 input buildInput"
+	/>
 	<div>
 		<div class="h3 font-evercore mb-3">HERO*</div>
 		{#if selectedHero}
@@ -96,13 +165,13 @@
 
 	<button on:click={handleBuildClick} type="button" class="btn variant-filled mt-12">
 		<span>Copy shareable link</span>
-	</button> -->
+	</button>
 </div>
 
 <style global lang="postcss">
 	.buildInput {
 		max-width: 380px;
-		border-radius: 4px;
+		border-radius: 14px;
 	}
 
 	.swapToRow {
@@ -117,17 +186,5 @@
 		@media (max-width: 940px) {
 			flex-direction: column;
 		}
-	}
-
-	.buildInput {
-		height: 2.5rem;
-	}
-
-	.modalButton {
-		background-color: #1e5e6d;
-		border: 2px solid #b7d4e9;
-		border-radius: 4px;
-		color: white;
-		
 	}
 </style>
