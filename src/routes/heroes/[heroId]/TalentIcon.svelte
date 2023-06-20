@@ -6,9 +6,7 @@
 	export let talent: Talent;
 
 	let talentPopup: PopupSettings = {
-		// Set the event as: click | hover | hover-click | focus | focus-click
 		event: 'hover',
-		// Provide a matching 'data-popup' value.
 		target: `${talent !== undefined ? talent.id : 'dummy'}-popup`,
 		placement: 'top'
 	};
@@ -21,7 +19,7 @@
 			id="{talent.id}-image"
 			src="/talents/{talent.id}.webp"
 			alt="image for {talent.name}"
-			class="w-24 h-24 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
+			class="w-[82px] h-[82px] border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 		/>
 	</div>
 	<div data-popup="{talent.id}-popup" class="card p-4">

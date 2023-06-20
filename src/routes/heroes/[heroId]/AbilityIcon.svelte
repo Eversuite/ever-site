@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Ability } from '$lib/class/Ability';
+	import type { Ability } from '$lib/class/Ability';
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
@@ -33,7 +33,7 @@
 			id="{ability.id}-image"
 			src="/abilities/{ability.id}.webp"
 			alt="image for {ability.name}"
-			class="w-24 h-24 border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
+			class="w-[82px] h-[82px] border-4 rounded-lg border-surface-300-600-token hover:!border-primary-500"
 		/>
 		<p class="font-ardela text-lg">{ability.slot}</p>
 	</div>
