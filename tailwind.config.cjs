@@ -7,6 +7,11 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			colors: {
+				'dark-1': '#080A0D',
+				gray: '#8F8F8F',
+				'egg-blue': '#1CBAB0'
+			},
 			fontFamily: {
 				evercore: ['EVERCORE'],
 				ardela: ['ArdelaEdgeX01'],
