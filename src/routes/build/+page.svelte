@@ -1,32 +1,49 @@
 <script lang="ts">
 	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
-	import ShardsPicker from './ShardsPicker.svelte';
 	import ModalListSelect from './ModalListSelect.svelte';
 	import type { PageData } from '../$types';
-	import type { Shard } from '$lib/class/Shard';
-	import type { Consumable } from '$lib/class/Consumable';
-	import type { Hero } from '$lib/class/Hero';
-	import type { Ability } from '$lib/class/Ability';
 	import type { Build } from '$lib/class/Build';
-	import { abilitySlot } from '$lib/Utility';
-	import AbilityLoadoutIcon from './AbilityLoadoutIcon.svelte';
+	import type { Hero } from '$lib/class/Hero';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { copyText } from 'svelte-copy';
-	import ConsumableLoadoutIcon from './ConsumableLoadoutIcon.svelte';
-	import AbilityLadder from './AbilityLadder.svelte';
 
 	export let data: PageData;
-	let builds: Build[] = data?.builds;
-
+	let selectedHeroes : string[] = [];
+	let builds: Build[] = data?.builds || [];
 	let searchTitle = '';
 
-	const borderCss =
-		'border-4 rounded-2xl border-surface-300-600-token hover:!border-primary-500 cursor-pointer';
+	const modalComponent: ModalComponent = {
+		ref: ModalListSelect
+	};
+
+	const heroModal: ModalSettings = {
+		type: 'component',
+		component: modalComponent,
+		title: 'Select a hero',
+		meta: { items: data?.heroes, path: '/characters/portraits', searchQueries: ['name', 'role'], multiSelect: true, selectedItems: selectedHeroes },
+		response: (hero: Hero[]) => heroFilterSet(hero)
+	};
+
+	function handleHeroFilterClick() {
+		modalStore.trigger(heroModal);
+	}
+
+	function heroFilterSet(arr) {
+
+	}
+
+	const borderCSS =
+		'border-2 rounded-2xl border-surface-300-600-token cursor-pointer';
 </script>
 
 <div class="flex flex-col flex-wrap justify-center p-8">
-	<div class="b-2 text-6xl font-ardela mb-5">FIND YOUR BUILD</div>
+	<div class="flex flex-row flex-wrap p-4 gap-2 justify-between">
+		<div class="b-2 text-6xl font-ardela mb-5">FIND YOUR BUILD</div>
+		<button class="btn modalButton createButton font-ardela text-2xl"
+			on:click={() => goto(`/build/create`)}
+			on:keyup={(e) => e.key === 'Enter' && goto(`/build/create`)}
+		>Create</button>
+	</div>
 	<div class="flex flex-row flex-wrap p-4 gap-2">
 		<input
 			bind:value={searchTitle}
@@ -34,75 +51,42 @@
 			placeholder="Filter by title"
 			class="mb-8 input buildInput"
 		/>
-		<button class="btn modalButton buildInput">Filter by hero (WIP)</button>
+		<button class="btn modalButton buildInput"
+			on:click={() => handleHeroFilterClick()}
+			on:keyup={(e) => e.key === 'Enter' && handleHeroFilterClick()}
+		>Filter by hero (WIP)</button>
 		<button class="btn modalButton buildInput">Filter by role (WIP)</button>
 	</div>
-	<!--
-	<div>
-		<div class="h3 font-evercore mb-3">HERO*</div>
-		{#if selectedHero}
-			<img
-				on:click={handleHeroClick}
-				alt="Image for {selectedHero.name}"
-				class="w-48 h-48 {borderCss} self-center"
-				src="/characters/portraits/{selectedHero.id}.webp"
-				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
-			/>
-		{:else}
-			<div
-				class="{borderCss} self-center w-48 h-48 flex flex-col items-center justify-center h3 font-evercore text-center"
-				on:click={handleHeroClick}
-				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
+	<div class="flex flex-row flex-wrap p-4 gap-2">
+		{#each builds as build}
+			<div class="flex flex-row flex-wrap p-2 buildCardContainer {borderCSS} max-w-[25vw] min-w-[140px] gap-2" style= "flex: 1" 
+				on:click={() => goto(`/build/${build["url-id"]}`)}
+				on:keyup={(e) => e.key === 'Enter' && goto(`/build/${build["url-id"]}`)}
 			>
-				CLICK TO CHOOSE A HERO
+				<img
+					src="/characters/portraits/{build?.hero}.webp"
+					alt="character portrait"
+					class="object-scale-down max-h-[120px] max-w-[120px] {borderCSS} border-none"
+				/>
+				<div>
+					<p class="text-3xl font-ardela">{build.title}</p>
+					<p class="text-1xl font-ardela">{`<Author>`}</p>
+					<img
+						src="/consumables/{build.consumables}.webp"
+						alt="character portrait"
+						class="object-scale-down max-h-[48px] max-w-[48px] {borderCSS} border-none"
+					/>
+				</div>
 			</div>
-		{/if}
+		{/each}
 	</div>
-	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
-		<ShardsPicker shards={data?.shards} bind:selectedShards />
-		<div class="flex flex-col justify-start">
-			<div class="h1 font-evercore mt-12">CONSUMABLE</div>
-			<div
-				on:click={() => handleConsumeableClick()}
-				on:keyup={(e) => e.key === 'Enter' && handleConsumeableClick()}
-			>
-				<ConsumableLoadoutIcon consumable={selectedConsumable} />
-			</div>
-		</div>
-	</div>
-	{#if selectedHeroAbilities && selectedHeroAbilities.length > 0}
-		<div class="h1 font-evercore mt-12">ABILITIES</div>
-		<div class="flex swapToCol justify items-center mt-4">
-			<div class={`flex swapToRow items-center m-4 gap-x-1 gap-1`}>
-				<div class="w-12 h-12">
-					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'P')} />
-				</div>
-				<div class="w-12 h-12">
-					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'Q')} />
-				</div>
-				<div class="w-12 h-12">
-					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'W')} />
-				</div>
-				<div class="w-12 h-12">
-					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'E')} />
-				</div>
-				<div class="w-12 h-12">
-					<AbilityLoadoutIcon ability={abilitySlot(selectedHeroAbilities, 'R')} />
-				</div>
-			</div>
-			<AbilityLadder bind:selectedAbilities />
-		</div>
-	{/if}
-
-	<button on:click={handleBuildClick} type="button" class="btn variant-filled mt-12">
-		<span>Copy shareable link</span>
-	</button> -->
 </div>
 
 <style global lang="postcss">
 	.buildInput {
 		max-width: 380px;
 		border-radius: 4px;
+		height: 2.5rem;
 	}
 
 	.swapToRow {
@@ -119,8 +103,8 @@
 		}
 	}
 
-	.buildInput {
-		height: 2.5rem;
+	.createButton {
+		height: 3.5rem;
 	}
 
 	.modalButton {
@@ -128,6 +112,10 @@
 		border: 2px solid #b7d4e9;
 		border-radius: 4px;
 		color: white;
-		
+	}
+
+	.buildCardContainer {
+		background: linear-gradient(to bottom, #0e1216 0%, #0e1216 25%, #181b1f 100%),
+			linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
 	}
 </style>

@@ -6,34 +6,48 @@
 
 	export let parent: any;
 
-	const selectedItemIndex = $modalStore[0].meta.items.findIndex(
-		(item: Shard) => item.id === $modalStore[0].meta.selectedItemId
-	);
 	let searchTerm = '';
-	$: items = itemFilter(searchTerm);
+	let selectedItemArray = [];
 	const searchQueries = $modalStore[0].meta.searchQueries;
-	function itemFilter(term: string): any[] {
+	let newItems = itemFilter(searchTerm, selectedItemArray);
+	function itemFilter(term: string, sItems: string[]): any[] {
 		return ($modalStore[0].meta.items || []).filter(
 			(item) =>
 				!searchQueries ||
 				searchQueries.length === 0 ||
 				searchQueries.some((query: string) => item[query] && contains(item[query], term))
-		);
+		)
 	}
+
+	// $: items = () => {
+	// 	let r = newItems.map((item) => selectedItemArray.includes(item.id) ? {...item, modalSelected: true}: item)
+	// 	console.log(r)
+	// 	return r;
+	// }
+
+	$: items = newItems
+
 
 	function contains(source: string, term: string): boolean {
 		return source.toLowerCase().indexOf(term.toLowerCase()) !== -1;
 	}
 
 	// Local
-	let selectedItem =
-		selectedItemIndex >= 0
-			? $modalStore[0].meta.items[selectedItemIndex]
-			: $modalStore[0].meta.items[0];
+	// let selectedItem = new Array<string>();
+	// $: selectedItem = selectedItemArray;
+
+	function handleItemSelect(id: string) {
+		if(selectedItemArray.includes(id)) {
+			selectedItemArray = selectedItemArray.filter((item) => item !== id);
+			return;
+		}
+		selectedItemArray.push(id);
+		selectedItemArray = selectedItemArray;
+	}
 
 	// Handle Form Submission
 	function onFormSubmit(): void {
-		if ($modalStore[0].response) $modalStore[0].response(selectedItem);
+		if ($modalStore[0].response) $modalStore[0].response(selectedItemArray);
 		modalStore.close();
 	}
 
@@ -59,29 +73,28 @@
 		{/if}
 		<div style={cBaseStyle}>
 			{#if items}
-				<ListBox class="flex flex-row flex-wrap justify-evenly">
+				<div class="flex flex-row flex-wrap justify-evenly gap-2">
 					{#each items as item, index}
-						<div use:popup={getConsumablePopup(index)}>
-							<ListBoxItem bind:group={selectedItem} name={item.name} value={item}>
-								<div
-									class="flex flex-col items-center justify-center text-center"
-									use:popup={getConsumablePopup(index)}
-								>
-									<Avatar
-										rounded="rounded-xl"
-										border="border-2 border-surface-300-600-token"
-										cursor="cursor-pointer"
-										src="{$modalStore[0].meta.path}/{item.id}.webp"
-										width="w-16"
-									/>
-								</div>
-							</ListBoxItem>
-							<div data-popup={`modal-popup-${index}`} class="card p-1">
-								<p class="text-lg font-bold text-center">{item?.name}</p>
-							</div>
+						<button
+							class="flex flex-col items-center justify-center text-center"
+							use:popup={getConsumablePopup(index)}
+							on:click={() => handleItemSelect(item.id)}
+							on:keyup={(e) => e.key === 'Enter' && handleItemSelect(item.id)}
+						>
+							<Avatar
+								rounded="rounded-xl"
+								class={selectedItemArray.includes(item.id) ? 'modalSelected' : ''}
+								border="border-2 border-surface-300-600-token"
+								cursor="cursor-pointer"
+								src="{$modalStore[0].meta.path}/{item.id}.webp"
+								width="w-16"
+							/>
+						</button>
+						<div data-popup={`modal-popup-${index}`} class="card p-1">
+							<p class="text-lg font-bold text-center">{item?.name}</p>
 						</div>
 					{/each}
-				</ListBox>
+				</div>
 			{/if}
 		</div>
 		<!-- prettier-ignore -->
@@ -103,5 +116,9 @@
 		border: 2px solid #b7d4e9;
 		border-radius: 4px;
 		color: white;
+	}
+
+	button :global(.modalSelected) {
+		border-color: rgb(var(--color-primary-500) / var(--tw-border-opacity))!important;
 	}
 </style>
