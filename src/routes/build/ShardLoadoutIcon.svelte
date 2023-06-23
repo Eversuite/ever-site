@@ -45,6 +45,7 @@
 		<header class="card-header text-lg font-bold text-center">{shard.name}</header>
 		<hr class="border-2" />
 		<section class="p-4">{@html resolveDescription(shard)}</section>
+		<section class="text-sm p-4 opacity-80">Available at {shard.source}</section>
 	</div>
 {:else}
 	<div class={iconDivCss}>
