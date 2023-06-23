@@ -12,12 +12,14 @@
 	let searchTerm = '';
 	$: items = itemFilter(searchTerm);
 	const searchQueries = $modalStore[0].meta.searchQueries;
+	const filterFunc = $modalStore[0].meta.additionalFilterFunc;
 	function itemFilter(term: string): any[] {
 		return ($modalStore[0].meta.items || []).filter(
 			(item) =>
 				!searchQueries ||
 				searchQueries.length === 0 ||
-				searchQueries.some((query: string) => item[query] && contains(item[query], term))
+				searchQueries.some((query: string) => item[query] && contains(item[query], term)) ||
+				(filterFunc && filterFunc(item))
 		);
 	}
 

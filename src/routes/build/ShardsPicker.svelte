@@ -21,7 +21,8 @@
 				items: shards,
 				selectedItemId: selectedShards[index]?.id,
 				path: '/shards',
-				searchQueries: ['name']
+				additionalFilterFunc: (shard: any) => shard.source == 'Random Drop',
+				searchQueries: ['name', 'source']
 			},
 			response: (shard: Shard) => addShard(shard, index)
 		};
