@@ -11,8 +11,7 @@
 
 	function shardFilter(shards: Shard[] | undefined, term: string): Shard[] {
 		return (shards || []).filter(
-			(shard) =>
-				nameContains(shard.name, term) || sourceContains(shard, term) || isRandomDrop(shard)
+			(shard) => nameContains(shard.name, term) || sourceContains(shard, term)
 		);
 	}
 
@@ -22,10 +21,6 @@
 
 	function sourceContains(item: Shard, searchTerm: string): boolean {
 		return item.source.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
-	}
-
-	function isRandomDrop(item: Shard) {
-		return item.source == RANDOM_SHARD_SOURCE;
 	}
 </script>
 
