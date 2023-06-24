@@ -7,9 +7,9 @@
 	export let parent: any;
 
 	let searchTerm = '';
-	let selectedItemArray = [];
+	let selectedItemArray = $modalStore[0].meta.selectedItems || [];
 	const searchQueries = $modalStore[0].meta.searchQueries;
-	let newItems = itemFilter(searchTerm, selectedItemArray);
+	$: items = itemFilter(searchTerm, selectedItemArray);
 	function itemFilter(term: string, sItems: string[]): any[] {
 		return ($modalStore[0].meta.items || []).filter(
 			(item) =>
@@ -19,22 +19,10 @@
 		)
 	}
 
-	// $: items = () => {
-	// 	let r = newItems.map((item) => selectedItemArray.includes(item.id) ? {...item, modalSelected: true}: item)
-	// 	console.log(r)
-	// 	return r;
-	// }
-
-	$: items = newItems
-
 
 	function contains(source: string, term: string): boolean {
 		return source.toLowerCase().indexOf(term.toLowerCase()) !== -1;
 	}
-
-	// Local
-	// let selectedItem = new Array<string>();
-	// $: selectedItem = selectedItemArray;
 
 	function handleItemSelect(id: string) {
 		if(selectedItemArray.includes(id)) {
@@ -119,6 +107,7 @@
 	}
 
 	button :global(.modalSelected) {
-		border-color: rgb(var(--color-primary-500) / var(--tw-border-opacity))!important;
+		border-color: #3ab0ca!important;
+		border-width: 2.5px;
 	}
 </style>

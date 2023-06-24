@@ -1,9 +1,9 @@
 <script lang="ts">
-	// The ordering of these imports is critical to your app working properly
+	import { onDestroy, setContext } from 'svelte';
+	import { modalStore, type ModalSettings, type ModalComponent } from '@skeletonlabs/skeleton';
+	import ModalListSignIn from './ModalListSignIn.svelte';
 	import '../theme.postcss';
-	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
-	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 
 	//Skeleton stuff
@@ -13,6 +13,10 @@
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 
+	const modalComponent: ModalComponent = {
+		ref: ModalListSignIn
+	};
+
 	const storeValue: Writable<number> = writable(0);
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -21,16 +25,22 @@
 	import { onMount } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	import { IconHammer } from '@tabler/icons-svelte';
+	import { IconHammer, IconUser } from '@tabler/icons-svelte';
 
 	export let data: LayoutData;
 
+	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
-
+	
+	$: authenticated = false;
 	onMount(() => {
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if(_session) {
+				authenticated = true;
+				return;
+			}
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
@@ -38,6 +48,23 @@
 
 		return () => subscription.unsubscribe();
 	});
+
+	setContext("ECVAuthState", {
+		state: () => { return authenticated },
+		stateData: () => { return session }
+	});
+
+	const signInModal = (): ModalSettings => ({
+		type: 'component',
+		component: modalComponent,
+		title: authenticated ? "Are you sure?" : 'Select a sign in method',
+		meta: { supabase: supabase, authenticated },
+		response: (res: string) => {if(res === "logout") authenticated = false;}
+	});
+
+	function triggerSignInModal() {
+		modalStore.trigger(signInModal());
+	}
 </script>
 
 <svelte:head>
@@ -61,6 +88,14 @@
 						/>
 						<strong class="text-3xl uppercase header-text text-primary-600">Evercore Vault</strong>
 					</a>
+					<div class="sideBarContentAnchor bg-dark">
+						<AppRailAnchor regionLead="flex justify-center" on:click={triggerSignInModal}>
+							<svelte:fragment slot="lead">
+								<IconUser size="35" />
+							</svelte:fragment>
+							<span class="text-sm">{authenticated ? "Log out" : "Log in"}</span>
+						</AppRailAnchor>
+					</div>
 					<div class="sideBarContentAnchor">
 						<AppRailAnchor
 							regionLead="flex flex-row justify-start items-center"

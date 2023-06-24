@@ -8,10 +8,10 @@
 	import type { Hero } from '$lib/class/Hero';
 	import type { Ability } from '$lib/class/Ability';
 	import { abilitySlot } from '$lib/Utility';
-	import AbilityLoadoutIcon from './AbilityLoadoutIcon.svelte';
+	import {browser} from '$app/environment'
+	import { getContext } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
-	import { copyText } from 'svelte-copy';
+	import AbilityLoadoutIcon from './AbilityLoadoutIcon.svelte';
 	import ConsumableLoadoutIcon from './ConsumableLoadoutIcon.svelte';
 	import AbilityLadder from './AbilityLadder.svelte';
 
@@ -33,12 +33,20 @@
 		ref: ModalListSelect
 	};
 
+	
+	const { state, stateData } = getContext("ECVAuthState")
+
+	if(browser && !state()){
+		console.log(state)
+		goto("/build")
+	}
+
 	const heroModal: ModalSettings = {
 		type: 'component',
 		component: modalComponent,
 		title: 'Select a hero',
 		meta: { items: data?.heroes, path: '/characters/portraits', searchQueries: ['name', 'role'] },
-		response: (hero: Hero) => heroSelected(hero)
+		response: (hero: Hero) => (heroSelected(hero))
 	};
 
 	const consumableModal: ModalSettings = {
@@ -85,16 +93,16 @@
 			abilities: abilityLadderIds,
 			consumables: selectedConsumable?.id,
 			shards: selectedShardsIds,
-			gameVersion: "Closed-Beta-1"
+			gameVersion: "Closed-Beta-0.1"
 		};
-		let jsonBuild = JSON.stringify(build);
-		let encodedBuild = window.btoa(jsonBuild);
 
-		const { data: sbData, error }  = await data.supabase .from('builds') .insert([{"url-id": `${build.gameVersion}-${buildTitle.replace(" ","-")}-${Math.floor(Math.random() * 1000000)}`, ...build}])
-		
-		// $page.url.searchParams.set('code', encodedBuild);
-		// goto(`?${$page.url.searchParams.toString()}`);
-		// copyText($page.url.toString());
+		const sessionData = stateData()
+		let authorData = {
+			"author-id": sessionData.user.id,
+			"author-name": sessionData.user.user_metadata.full_name
+		}
+
+		const { data: sbData, error }  = await data.supabase.from('builds').insert([{"url-id": `${build.gameVersion}-${buildTitle.replace(" ","-")}-${Math.floor(Math.random() * 1000000)}`, ...build, ...authorData}])
 	}
 </script>
 
