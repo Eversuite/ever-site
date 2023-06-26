@@ -37,7 +37,6 @@
 	const { state, stateData } = getContext("ECVAuthState")
 
 	if(browser && !state()){
-		console.log(state)
 		goto("/build")
 	}
 
@@ -74,12 +73,15 @@
 		modalStore.trigger(consumableModal);
 	}
 
+
 	async function handleBuildClick() {
 		shareBuild(true);
 	}
 
 	async function shareBuild(accepted: boolean) {
 		if (!accepted) return;
+		if (buildTitle.length === 0) return; // TODO: ADD ERROR MODAL POPUP
+		if (!selectedConsumable?.id) return; // TODO: ADD ERROR MODAL POPUP
 
 		let abilityLadderIds = selectedAbilities.map((ability) => {
 			return selectedHeroAbilities.find((item) => item.slot === ability)?.id;
@@ -102,7 +104,12 @@
 			"author-name": sessionData.user.user_metadata.full_name
 		}
 
-		const { data: sbData, error }  = await data.supabase.from('builds').insert([{"url-id": `${build.gameVersion}-${buildTitle.replace(" ","-")}-${Math.floor(Math.random() * 1000000)}`, ...build, ...authorData}])
+		const buildURLID = `${build.gameVersion}-${buildTitle.replace(" ","-")}-${Math.floor(Math.random() * 1000000)}`
+		const { data: sbData, error }  = await data.supabase.from('builds').insert([{"url-id": buildURLID, ...build, ...authorData}])
+	
+		if(!error && browser) {
+			goto(`/build/${buildURLID}`)
+		}
 	}
 </script>
 
@@ -172,7 +179,7 @@
 	{/if}
 
 	<button on:click={handleBuildClick} type="button" class="btn variant-filled mt-12">
-		<span>Copy shareable link</span>
+		<span>Creat build</span>
 	</button>
 </div>
 

@@ -88,14 +88,6 @@
 						/>
 						<strong class="text-3xl uppercase header-text text-primary-600">Evercore Vault</strong>
 					</a>
-					<div class="sideBarContentAnchor bg-dark">
-						<AppRailAnchor regionLead="flex justify-center" on:click={triggerSignInModal}>
-							<svelte:fragment slot="lead">
-								<IconUser size="35" />
-							</svelte:fragment>
-							<span class="text-sm">{authenticated ? "Log out" : "Log in"}</span>
-						</AppRailAnchor>
-					</div>
 					<div class="sideBarContentAnchor">
 						<AppRailAnchor
 							regionLead="flex flex-row justify-start items-center"
@@ -159,6 +151,14 @@
 					</div>
 				</div>
 				<div>
+					<div class="sideBarContentAnchor bg-dark">
+						<AppRailAnchor regionLead="flex justify-center" on:click={triggerSignInModal}>
+							<svelte:fragment slot="lead">
+								<IconUser size="35" />
+							</svelte:fragment>
+							<span class="text-sm">{authenticated ? "Log out" : "Log in"}</span>
+						</AppRailAnchor>
+					</div>
 					<div class="sideBarContentAnchor bg-dark" style="margin-top: auto;">
 						<AppRailAnchor regionLead="flex justify-center" href="https://discord.gg/qbPjBQRnDf">
 							<svelte:fragment slot="lead">

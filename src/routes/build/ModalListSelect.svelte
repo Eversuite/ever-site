@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Avatar, ListBox, ListBoxItem, modalStore } from '@skeletonlabs/skeleton';
+	import { Avatar, modalStore } from '@skeletonlabs/skeleton';
 	import type { Shard } from '$lib/class/Shard';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	import { popup } from '@skeletonlabs/skeleton';
