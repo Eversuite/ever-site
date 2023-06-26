@@ -15,7 +15,6 @@
 	let builds: Build[] = data?.builds || [];
 	let searchTitle = '';
 
-	console.log(builds[0]);
 	const modalComponent: ModalComponent = {
 		ref: ModalListSelect
 	};
@@ -53,6 +52,7 @@
 		}
 		selectedHeroes.push(id);
 		selectedHeroes = selectedHeroes;
+		heroFilterSet(selectedHeroes);
 	}
 
 	function heroFilterSet(arr) {
