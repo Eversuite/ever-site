@@ -48,6 +48,7 @@
 	function handleItemSelect(id: string) {
 		if(selectedHeroes.includes(id)) {
 			selectedHeroes = selectedHeroes.filter((item) => item !== id);
+			heroFilterSet(selectedHeroes);
 			return;
 		}
 		selectedHeroes.push(id);
