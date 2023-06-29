@@ -13,12 +13,16 @@
 	const { state } = getContext('ECVAuthState');
 	let selectedHeroes: string[] = [];
 	let selectedMaps: string[] = [];
-	let builds: Build[] = data?.builds || [];
 	let searchTitle = '';
+	let builds: Build[] = data?.builds || [];
 
 	const modalComponent: ModalComponent = {
 		ref: ModalListSelect
 	};
+
+	function contains(source: string, term: string): boolean {
+		return source.toLowerCase().indexOf(term.toLowerCase()) !== -1;
+	}
 
 	const heroModal = (selectedHeroesArray: string[]): ModalSettings => ({
 		type: 'component',
@@ -71,15 +75,22 @@
 	function mapFilterSet(arr) {
 		if (!arr) return;
 		if (arr.length === 0) return (builds = data?.builds);
-		builds = data?.builds.filter((build) => arr.includes(build.map));
+		builds = builds.filter((build) => arr.includes(build.map) && contains(build.map, searchTitle));
 		selectedMaps = arr;
 	}
 
 	function heroFilterSet(arr) {
 		if (!arr) return;
 		if (arr.length === 0) return (builds = data?.builds);
-		builds = data?.builds.filter((build) => arr.includes(build.hero));
+		builds = builds.filter((build) => arr.includes(build.hero) && contains(build.hero, searchTitle));
 		selectedHeroes = arr;
+	}
+
+	function titleFilter(){
+		mapFilterSet(selectedMaps)
+		heroFilterSet(selectedHeroes)
+		if (searchTitle.replace(" ", "").length === 0) return;
+		builds = builds.filter((build) => contains(build.map, searchTitle) || contains(build.hero, searchTitle) || contains(build.author, searchTitle));
 	}
 
 	const borderCSS = 'border-2 border-surface-300-600-token cursor-pointer';
@@ -98,9 +109,10 @@
 			>
 		</div>
 		<div class="flex flex-row flex-wrap p-4 gap-2 justify-start">
-			<div class="flex flex-col flex-wrap p-4 gap-2 max-w-[380px]" style="flex: 1;">
+			<div class="flex flex-col flex-wrap p-4 gap-2 max-w-[364px]" style="flex: 1;">
 				<input
 					bind:value={searchTitle}
+					on:keyup={titleFilter}
 					type="text"
 					placeholder="Filter by title"
 					class="mb-8 input buildInput"
@@ -110,11 +122,11 @@
 					on:click={() => handleHeroFilterClick()}
 					on:keyup={(e) => e.key === 'Enter' && handleHeroFilterClick()}>Filter by hero</button
 				>
-				<p class="text-lg font-bold text-center font-ardela desktop">Filter by map</p>
-				<div class="flex flex-col flex-wrap justify-start gap-2 desktop">
+				<p class="text-lg font-bold text-center font-ardela">Filter by map</p>
+				<div class="flex flex-col flex-wrap justify-start gap-2">
 					{#each ["Kru-Mines", "Moxy-Treetops", "Frostborn-Harbour"] as item, index}
 						<button
-							class="flex flex-col text-center"
+							class="flex flex-col text-center flex-wrap"
 							style={`background-image: url('/maps/${item}.png'); background-size: 100%; border-radius: 4px; ${selectedMaps.includes(item) ? "filter: brightness(1.5);" : ""}`}
 							on:click={() => handleMapSelect(item)}
 							on:keyup={(e) => e.key === 'Enter' && handleMapSelect(item)}
@@ -148,7 +160,7 @@
 				</div>
 				<!-- <button class="btn modalButton buildInput">Filter by role (WIP)</button> -->
 			</div>
-			<div class="flex flex-col flex-wrap justify-center p-4 gap-2">
+			<div class="flex flex-col flex-wrap justify-start p-4 gap-2">
 				{#each builds as build}
 					<div
 						class="flex flex-row buildCardContainer {borderCSS} gap-2"
@@ -166,7 +178,8 @@
 						>
 							<div>
 								<p class="text-2xl font-ardela textMobile">{build.title}</p>
-								<p class="font-ardela textMobile">{build['author-name']}</p>
+								<p class="font-ardela font-bold">Map: {build.map.replace("-", " ")}</p>
+								<p class="font-ardela textMobile">Written by: {build['author-name']}</p>
 							</div>
 							<div class="text-right buildCardDesktop">
 								<p class="font-ardela">

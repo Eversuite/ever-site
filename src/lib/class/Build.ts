@@ -4,6 +4,7 @@ export class Build {
 	private readonly _urlID: string;
 	private readonly _title: string;
 	private readonly _hero: string;
+	private readonly _author: string;
 	private readonly _abilties: string[];
 	private readonly _shards: string[];
 	private readonly _consumables: string;
@@ -14,6 +15,7 @@ export class Build {
 		urlID: string,
 		title: string,
 		hero: string,
+		author: string,
 		abilties: string[],
 		shards: string[],
 		consumables: string,
@@ -23,6 +25,7 @@ export class Build {
 		this._urlID = urlID;
 		this._title = title;
 		this._hero = hero;
+		this._author = author;
 		this._abilties = abilties;
 		this._shards = shards;
 		this._consumables = consumables;
@@ -43,6 +46,10 @@ export class Build {
 
 	get hero(): string {
 		return this._hero;
+	}
+
+	get author(): string {
+		return this._author;
 	}
 
 	get abilties(): string[] {
