@@ -12,6 +12,7 @@
 
 	const { state } = getContext('ECVAuthState');
 	let selectedHeroes: string[] = [];
+	let selectedMaps: string[] = [];
 	let builds: Build[] = data?.builds || [];
 	let searchTitle = '';
 
@@ -45,6 +46,17 @@
 		};
 	};
 
+	function handleMapSelect(id: string) {
+		if(selectedMaps.includes(id)) {
+			selectedMaps = selectedMaps.filter((item) => item !== id);
+			mapFilterSet(selectedMaps);
+			return;
+		}
+		selectedMaps.push(id);
+		selectedMaps = selectedMaps;
+		mapFilterSet(selectedMaps);
+	}
+
 	function handleItemSelect(id: string) {
 		if(selectedHeroes.includes(id)) {
 			selectedHeroes = selectedHeroes.filter((item) => item !== id);
@@ -54,6 +66,13 @@
 		selectedHeroes.push(id);
 		selectedHeroes = selectedHeroes;
 		heroFilterSet(selectedHeroes);
+	}
+
+	function mapFilterSet(arr) {
+		if (!arr) return;
+		if (arr.length === 0) return (builds = data?.builds);
+		builds = data?.builds.filter((build) => arr.includes(build.map));
+		selectedMaps = arr;
 	}
 
 	function heroFilterSet(arr) {
@@ -91,6 +110,19 @@
 					on:click={() => handleHeroFilterClick()}
 					on:keyup={(e) => e.key === 'Enter' && handleHeroFilterClick()}>Filter by hero</button
 				>
+				<p class="text-lg font-bold text-center font-ardela desktop">Filter by map</p>
+				<div class="flex flex-col flex-wrap justify-start gap-2 desktop">
+					{#each ["Kru-Mines", "Moxy-Treetops", "Frostborn-Harbour"] as item, index}
+						<button
+							class="flex flex-col text-center"
+							style={`background-image: url('/maps/${item}.png'); background-size: 100%; border-radius: 4px; ${selectedMaps.includes(item) ? "filter: brightness(1.5);" : ""}`}
+							on:click={() => handleMapSelect(item)}
+							on:keyup={(e) => e.key === 'Enter' && handleMapSelect(item)}
+						>
+							<p class="text-lg font-bold text-center">{item.replace("-", " ")}</p>
+						</button>
+					{/each}
+				</div>
 				<p class="text-lg font-bold text-center font-ardela desktop">Filter by hero</p>
 				<div class="flex flex-row flex-wrap justify-evenly gap-2 desktop">
 					{#each data?.heroes as item, index}

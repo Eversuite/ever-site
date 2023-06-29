@@ -16,6 +16,7 @@
 	import AbilityLadder from './AbilityLadder.svelte';
 
 	export let data: PageData;
+	let selectedMap: string = "";
 	let selectedHero: Hero = data?.selectedHero ?? undefined;
 	let selectedHeroAbilities: Ability[] = data?.selectedHeroAbilities ?? [];
 	let selectedShards: (Shard | null)[] = data.selectedShards ?? new Array<Shard | null>(5);
@@ -78,10 +79,15 @@
 		shareBuild(true);
 	}
 
+	function handleMapSelect(map: string) {
+		selectedMap = map;
+	}
+
 	async function shareBuild(accepted: boolean) {
 		if (!accepted) return;
 		if (buildTitle.length === 0) return; // TODO: ADD ERROR MODAL POPUP
 		if (!selectedConsumable?.id) return; // TODO: ADD ERROR MODAL POPUP
+		if (selectedMap === "") return;// TODO: ADD ERROR MODAL POPUP
 
 		let abilityLadderIds = selectedAbilities.map((ability) => {
 			return selectedHeroAbilities.find((item) => item.slot === ability)?.id;
@@ -92,6 +98,7 @@
 		let build = {
 			title: buildTitle,
 			hero: selectedHero.id,
+			map: selectedMap,
 			abilities: abilityLadderIds,
 			consumables: selectedConsumable?.id,
 			shards: selectedShardsIds,
@@ -122,25 +129,40 @@
 		placeholder="Enter your build title here..."
 		class="mb-8 input buildInput"
 	/>
-	<div>
-		<div class="h3 font-evercore mb-3">HERO*</div>
-		{#if selectedHero}
-			<img
-				on:click={handleHeroClick}
-				alt="Image for {selectedHero.name}"
-				class="w-48 h-48 {borderCss} self-center"
-				src="/characters/portraits/{selectedHero.id}.webp"
-				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
-			/>
-		{:else}
-			<div
-				class="{borderCss} self-center w-48 h-48 flex flex-col items-center justify-center h3 font-evercore text-center"
-				on:click={handleHeroClick}
-				on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
-			>
-				CLICK TO CHOOSE A HERO
-			</div>
-		{/if}
+	<div class="flex flex-row justify-start items-baseline flex-wrap gap-5">
+		<div>
+			<div class="h3 font-evercore mb-3">HERO*</div>
+			{#if selectedHero}
+				<img
+					on:click={handleHeroClick}
+					alt="Image for {selectedHero.name}"
+					class="w-48 h-48 {borderCss} self-center"
+					src="/characters/portraits/{selectedHero.id}.webp"
+					on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
+				/>
+			{:else}
+				<div
+					class="{borderCss} self-center w-48 h-48 flex flex-col items-center justify-center h3 font-evercore text-center"
+					on:click={handleHeroClick}
+					on:keyup={(e) => e.key === 'Enter' && handleHeroClick()}
+				>
+					CLICK TO CHOOSE A HERO
+				</div>
+			{/if}
+		</div>
+		<div class="flex flex-col flex-wrap justify-start gap-2 desktop">
+			<div class="h3 font-evercore mb-3">MAP*</div>
+			{#each ["Kru-Mines", "Moxy-Treetops", "Frostborn-Harbour"] as item, index}
+				<button
+					class="flex flex-col text-center h-12 w-64 justify-center"
+					style={`background-image: url('/maps/${item}.png'); background-size: 100%; border-radius: 4px; ${selectedMap === item ? "filter: brightness(1.5);" : ""}`}
+					on:click={() => handleMapSelect(item)}
+					on:keyup={(e) => e.key === 'Enter' && handleMapSelect(item)}
+				>
+					<p class="text-lg font-bold text-center">{item.replace("-", " ")}</p>
+				</button>
+			{/each}
+		</div>
 	</div>
 	<div class="flex flex-row justify-start content-center gap-x-12 flex-wrap">
 		<ShardsPicker shards={data?.shards} bind:selectedShards />
