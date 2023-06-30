@@ -1,41 +1,39 @@
 <script lang="ts">
-	import { Avatar, modalStore } from '@skeletonlabs/skeleton';
+	import { Avatar, ListBox, ListBoxItem, modalStore } from '@skeletonlabs/skeleton';
 	import type { Shard } from '$lib/class/Shard';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	import { popup } from '@skeletonlabs/skeleton';
 
 	export let parent: any;
 
+	const selectedItemIndex = $modalStore[0].meta.items.findIndex(
+		(item: Shard) => item.id === $modalStore[0].meta.selectedItemId
+	);
 	let searchTerm = '';
-	let selectedItemArray = $modalStore[0].meta.selectedItems || [];
+	$: items = itemFilter(searchTerm);
 	const searchQueries = $modalStore[0].meta.searchQueries;
-	$: items = itemFilter(searchTerm, selectedItemArray);
-	function itemFilter(term: string, sItems: string[]): any[] {
+	function itemFilter(term: string): any[] {
 		return ($modalStore[0].meta.items || []).filter(
 			(item) =>
 				!searchQueries ||
 				searchQueries.length === 0 ||
 				searchQueries.some((query: string) => item[query] && contains(item[query], term))
-		)
+		);
 	}
-
 
 	function contains(source: string, term: string): boolean {
 		return source.toLowerCase().indexOf(term.toLowerCase()) !== -1;
 	}
 
-	function handleItemSelect(id: string) {
-		if(selectedItemArray.includes(id)) {
-			selectedItemArray = selectedItemArray.filter((item) => item !== id);
-			return;
-		}
-		selectedItemArray.push(id);
-		selectedItemArray = selectedItemArray;
-	}
+	// Local
+	let selectedItem =
+		selectedItemIndex >= 0
+			? $modalStore[0].meta.items[selectedItemIndex]
+			: $modalStore[0].meta.items[0];
 
 	// Handle Form Submission
 	function onFormSubmit(): void {
-		if ($modalStore[0].response) $modalStore[0].response(selectedItemArray);
+		if ($modalStore[0].response) $modalStore[0].response(selectedItem);
 		modalStore.close();
 	}
 
@@ -61,28 +59,29 @@
 		{/if}
 		<div style={cBaseStyle}>
 			{#if items}
-				<div class="flex flex-row flex-wrap justify-evenly gap-2">
+				<ListBox class="flex flex-row flex-wrap justify-evenly">
 					{#each items as item, index}
-						<button
-							class="flex flex-col items-center justify-center text-center"
-							use:popup={getConsumablePopup(index)}
-							on:click={() => handleItemSelect(item.id)}
-							on:keyup={(e) => e.key === 'Enter' && handleItemSelect(item.id)}
-						>
-							<Avatar
-								rounded="rounded-xl"
-								class={selectedItemArray.includes(item.id) ? 'modalSelected' : ''}
-								border="border-2 border-surface-300-600-token"
-								cursor="cursor-pointer"
-								src="{$modalStore[0].meta.path}/{item.id}.webp"
-								width="w-16"
-							/>
-						</button>
-						<div data-popup={`modal-popup-${index}`} class="card p-1">
-							<p class="text-lg font-bold text-center">{item?.name}</p>
+						<div use:popup={getConsumablePopup(index)}>
+							<ListBoxItem bind:group={selectedItem} name={item.name} value={item}>
+								<div
+									class="flex flex-col items-center justify-center text-center"
+									use:popup={getConsumablePopup(index)}
+								>
+									<Avatar
+										rounded="rounded-xl"
+										border="border-2 border-surface-300-600-token"
+										cursor="cursor-pointer"
+										src="{$modalStore[0].meta.path}/{item.id}.webp"
+										width="w-16"
+									/>
+								</div>
+							</ListBoxItem>
+							<div data-popup={`modal-popup-${index}`} class="card p-1">
+								<p class="text-lg font-bold text-center">{item?.name}</p>
+							</div>
 						</div>
 					{/each}
-				</div>
+				</ListBox>
 			{/if}
 		</div>
 		<!-- prettier-ignore -->
@@ -104,10 +103,5 @@
 		border: 2px solid #b7d4e9;
 		border-radius: 4px;
 		color: white;
-	}
-
-	button :global(.modalSelected) {
-		border-color: #3ab0ca!important;
-		border-width: 2.5px;
 	}
 </style>
