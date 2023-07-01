@@ -21,7 +21,7 @@
 				items: shards,
 				selectedItemId: selectedShards[index]?.id,
 				path: '/shards',
-				searchQueries: ['name']
+				searchQueries: ['name', 'source']
 			},
 			response: (shard: Shard) => addShard(shard, index)
 		};

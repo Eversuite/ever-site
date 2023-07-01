@@ -4,16 +4,23 @@
 	import ShardIcon from './ShardIcon.svelte';
 
 	export let data: PageData;
+	const RANDOM_SHARD_SOURCE = 'Random Drop';
 
 	let searchTerm = '';
 	$: shards = shardFilter(data?.shardData, searchTerm);
 
 	function shardFilter(shards: Shard[] | undefined, term: string): Shard[] {
-		return (shards || []).filter((shard) => contains(shard.name, term));
+		return (shards || []).filter(
+			(shard) => nameContains(shard.name, term) || sourceContains(shard, term)
+		);
 	}
 
-	function contains(source: string, term: string): boolean {
+	function nameContains(source: string, term: string): boolean {
 		return source.toLowerCase().indexOf(term.toLowerCase()) !== -1;
+	}
+
+	function sourceContains(item: Shard, searchTerm: string): boolean {
+		return item.source.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
 	}
 </script>
 
