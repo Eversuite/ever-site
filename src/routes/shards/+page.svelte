@@ -22,10 +22,6 @@
 	function sourceContains(item: Shard, searchTerm: string): boolean {
 		return item.source.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
 	}
-
-	function isRandomDrop(item: Shard) {
-		return item.source == RANDOM_SHARD_SOURCE;
-	}
 </script>
 
 <input bind:value={searchTerm} type="text" placeholder="Filter through shards" class="mb-8 input" />
