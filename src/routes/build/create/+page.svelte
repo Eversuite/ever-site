@@ -111,7 +111,7 @@
 			"author-name": sessionData.user.user_metadata.full_name
 		}
 
-		const buildURLID = `${build.gameVersion}-${buildTitle.replace(" ","-")}-${Math.floor(Math.random() * 1000000)}`
+		const buildURLID = `${build.gameVersion}-${buildTitle.replace(/[^\w\s]/gi, '').replaceAll(" ","-")}-${Math.floor(Math.random() * 1000000)}`
 		const { data: sbData, error }  = await data.supabase.from('builds').insert([{"url-id": buildURLID, ...build, ...authorData}])
 	
 		if(!error && browser) {
