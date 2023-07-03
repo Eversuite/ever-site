@@ -38,7 +38,7 @@
 	"dependencies": {
 		"@floating-ui/dom": "^1.4.3",
 		"@supabase/auth-helpers-sveltekit": "^0.10.1",
-		"@tabler/icons-svelte": "^2.22.0",
+		"@tabler/icons-svelte": "^2.23.0",
 		"buffer": "^6.0.3",
 		"dayjs": "^1.11.9",
 		"postcss-nested": "^6.0.1",
